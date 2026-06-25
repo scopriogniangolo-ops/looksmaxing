@@ -462,18 +462,16 @@ const App = {
       <span class="fc-emoji">${cat.icon}</span>`;
     list.appendChild(header);
 
-    const lv = this.getLevel(this.getXP());
     cat.exercises.forEach((ex, i) => {
-      const locked = ex.unlockLevel > lv;
       const d = document.createElement('div');
-      d.className = 'ex-card anim a' + Math.min(i + 1, 8) + (locked ? ' locked' : '');
+      d.className = 'ex-card anim a' + Math.min(i + 1, 8);
       d.innerHTML = `
         <div class="ec-icon" style="background:rgba(${this.catRgb(catId)},0.15)">${ex.icon}</div>
         <div class="ec-info"><div class="ec-name">${ex.name}</div><div class="ec-sub">${ex.subtitle}</div>
-          <div class="ec-meta"><span class="mtag d${ex.difficultyLevel}">${ex.difficulty}</span><span class="mtag">${ex.sets}x${ex.reps}</span><span class="mtag">${ex.duration}</span>${locked ? '<span class="mtag locked">Lv ' + ex.unlockLevel + '</span>' : ''}</div>
+          <div class="ec-meta"><span class="mtag d${ex.difficultyLevel}">${ex.difficulty}</span><span class="mtag">${ex.sets}x${ex.reps}</span><span class="mtag">${ex.duration}</span></div>
         </div>
         <span class="ec-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>`;
-      if (!locked) d.onclick = () => this.openDetail(ex, catId);
+      d.onclick = () => this.openDetail(ex, catId);
       list.appendChild(d);
     });
     this.go('exercises');
@@ -505,9 +503,22 @@ const App = {
     document.getElementById('det-tip').textContent = ex.tips;
 
     const videoBtn = document.getElementById('btn-video');
-    const videoUrl = EXERCISE_VIDEOS[ex.id];
-    if (videoUrl) { videoBtn.href = videoUrl; videoBtn.classList.remove('hidden'); }
-    else { videoBtn.classList.add('hidden'); }
+    const videoId = EXERCISE_VIDEOS[ex.id];
+    const vidTitle = document.getElementById('det-video-title');
+    const vidEmbed = document.getElementById('det-video');
+    if (videoId) {
+      videoBtn.classList.remove('hidden');
+      videoBtn.href = 'https://www.youtube.com/watch?v=' + videoId;
+      if (vidTitle) vidTitle.classList.remove('hidden');
+      if (vidEmbed) {
+        vidEmbed.innerHTML = '<iframe src="https://www.youtube.com/embed/' + videoId + '?rel=0&modestbranding=1" frameborder="0" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>';
+        vidEmbed.classList.remove('hidden');
+      }
+    } else {
+      videoBtn.classList.add('hidden');
+      if (vidTitle) vidTitle.classList.add('hidden');
+      if (vidEmbed) { vidEmbed.innerHTML = ''; vidEmbed.classList.add('hidden'); }
+    }
 
     this.timerReset();
     if (ex.holdTime) {
