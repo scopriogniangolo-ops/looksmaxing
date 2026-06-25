@@ -143,6 +143,10 @@
           <button class="rtab" data-lv="advanced">Pro</button>
         </div>
         <div id="routine-list"></div>
+        <button class="btn-outline-full" id="btn-custom-routine" style="margin-top:8px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Personalizza Routine
+        </button>
 
         <h3 class="sec-title">Aree di Allenamento</h3>
         <div class="cat-grid" id="cat-grid"></div>
@@ -205,9 +209,52 @@
           </div>
         </div>
 
+        <a class="btn-video hidden" id="btn-video" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M10 16.5l6-4.5-6-4.5v9z"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span>Guarda Video Tutorial</span>
+        </a>
+
         <button class="btn-hero btn-block btn-complete" id="btn-complete">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
           <span>Completa Esercizio</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════ PROGRAMS ══════ -->
+    <div id="screen-programs" class="screen">
+      <div class="prog-scroll" style="padding-top:calc(var(--safe-t) + 20px)">
+        <h2 class="screen-title">Programmi</h2>
+        <p class="text-muted" style="margin:-10px 0 16px">Guide approfondite per ogni area del looksmaxing</p>
+        <div id="programs-grid"></div>
+      </div>
+    </div>
+
+    <!-- ══════ PROGRAM DETAIL ══════ -->
+    <div id="screen-program-detail" class="screen">
+      <div class="topbar">
+        <button class="btn-icon" id="btn-prog-back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+        <h2 id="prog-det-name">Programma</h2>
+      </div>
+      <div class="progd-scroll">
+        <div class="progd-hero" id="progd-hero"></div>
+        <div class="progd-content" id="progd-content"></div>
+        <div id="progd-exercises"></div>
+      </div>
+    </div>
+
+    <!-- ══════ ROUTINE CUSTOMIZE ══════ -->
+    <div id="screen-routine-custom" class="screen">
+      <div class="topbar">
+        <button class="btn-icon" id="btn-routine-back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+        <h2>Personalizza Routine</h2>
+      </div>
+      <div class="custom-scroll">
+        <p class="screen-desc">Scegli gli esercizi per ogni area. Quelli selezionati saranno nella tua routine giornaliera.</p>
+        <div id="routine-custom-list"></div>
+        <button class="btn-hero btn-block" id="btn-save-routine" style="margin:16px">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Salva Routine</span>
         </button>
       </div>
     </div>
@@ -269,10 +316,11 @@
 
     <!-- ══════ BOTTOM NAV ══════ -->
     <nav class="bnav hidden" id="bnav">
-      <button class="bnav-item active" data-s="dashboard"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></button>
-      <button class="bnav-item" data-s="scanner"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>Scan</span></button>
-      <button class="bnav-item" data-s="progress"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span>Progressi</span></button>
-      <button class="bnav-item" data-s="profile"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profilo</span></button>
+      <button class="bnav-item active" data-s="dashboard"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></button>
+      <button class="bnav-item" data-s="scanner"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>Scan</span></button>
+      <button class="bnav-item" data-s="programs"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>Guide</span></button>
+      <button class="bnav-item" data-s="progress"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span>Stats</span></button>
+      <button class="bnav-item" data-s="profile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profilo</span></button>
     </nav>
 
     <!-- ══════ TOAST ══════ -->

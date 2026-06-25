@@ -853,3 +853,206 @@ const TIPS_DATABASE = [
   "L'acido ialuronico trattiene 1000x il suo peso in acqua nella pelle",
   "Bere 3L di acqua al giorno per 30 giorni = trasformazione visibile"
 ];
+
+const EXERCISE_VIDEOS = {
+  'basic-mewing':'https://www.youtube.com/results?search_query=how+to+mew+properly+tutorial',
+  'hard-mewing':'https://www.youtube.com/results?search_query=hard+mewing+tutorial+advanced',
+  'tongue-suction':'https://www.youtube.com/results?search_query=tongue+suction+hold+mewing',
+  'tongue-chewing':'https://www.youtube.com/results?search_query=tongue+chewing+exercise+mewing',
+  'chin-tucks':'https://www.youtube.com/results?search_query=chin+tucks+exercise+posture',
+  'jaw-clench':'https://www.youtube.com/results?search_query=jaw+clench+isometric+exercise+masseter',
+  'jaw-resistance':'https://www.youtube.com/results?search_query=jaw+resistance+training+exercise',
+  'neck-curls':'https://www.youtube.com/results?search_query=neck+curls+exercise+jawline',
+  'gum-chewing':'https://www.youtube.com/results?search_query=mastic+gum+chewing+jawline+masseter',
+  'jaw-side-to-side':'https://www.youtube.com/results?search_query=jaw+side+to+side+exercise',
+  'cheek-lifts':'https://www.youtube.com/results?search_query=cheek+lifts+face+yoga+exercise',
+  'cheekbone-sculptor':'https://www.youtube.com/results?search_query=cheekbone+sculptor+hollow+cheeks+exercise',
+  'forehead-smoother':'https://www.youtube.com/results?search_query=forehead+smoother+face+yoga',
+  'eye-lifts':'https://www.youtube.com/results?search_query=eye+area+lift+face+yoga',
+  'lip-plumper':'https://www.youtube.com/results?search_query=lip+plumper+exercise+natural',
+  'face-tightener':'https://www.youtube.com/results?search_query=full+face+tightener+exercise',
+  'neck-extensions':'https://www.youtube.com/results?search_query=neck+extension+exercise+posture',
+  'neck-side-stretch':'https://www.youtube.com/results?search_query=neck+side+stretch+exercise',
+  'wall-angels':'https://www.youtube.com/results?search_query=wall+angels+posture+exercise',
+  'scapular-squeeze':'https://www.youtube.com/results?search_query=scapular+squeeze+retraction+exercise',
+  'platysma-exercise':'https://www.youtube.com/results?search_query=platysma+exercise+neck+jawline',
+  'morning-routine':'https://www.youtube.com/results?search_query=morning+skincare+routine+men+2024',
+  'evening-routine':'https://www.youtube.com/results?search_query=evening+skincare+routine+retinol+men',
+  'weekly-treatment':'https://www.youtube.com/results?search_query=weekly+skincare+treatment+mask+men',
+  'dermarolling':'https://www.youtube.com/results?search_query=dermarolling+microneedling+tutorial+home',
+  'sleep-optimization':'https://www.youtube.com/results?search_query=sleep+optimization+looksmaxing',
+  'hydration':'https://www.youtube.com/results?search_query=hydration+protocol+skin+health',
+  'nutrition':'https://www.youtube.com/results?search_query=nutrition+for+clear+skin+jawline',
+  'body-training':'https://www.youtube.com/results?search_query=push+pull+legs+workout+beginner',
+  'sun-protocol':'https://www.youtube.com/results?search_query=sun+protection+skincare+spf+routine'
+};
+
+const PROGRAMS = [
+  {
+    id:'jaw-guide', name:'Jaw Guide', icon:'🦴',
+    image:'linear-gradient(135deg,#1a1a2e,#16213e)',
+    chapters:3, lessons:10,
+    description:'Guida completa alla mascella: anatomia, esercizi, masseteri, gonial angle, e come massimizzare la jawline.',
+    content:[
+      {title:'Anatomia della Mascella', text:'La mandibola è composta dal corpo mandibolare e dal ramo. Il gonial angle (angolo mandibolare) determina quanto la jawline appare "squadrata". Un angolo di 120° o meno è considerato ideale per gli uomini. I muscoli masseteri, attaccati lateralmente alla mandibola, contribuiscono alla larghezza facciale inferiore.'},
+      {title:'Come Sviluppare i Masseteri', text:'I masseteri crescono come qualsiasi altro muscolo: con resistenza progressiva. La gomma dura (Falim, Mastic Gum) è il metodo più efficace. Inizia con 15 min/giorno e aumenta fino a 30 min. Alterna i lati ogni 5 minuti. I risultati sono visibili in 2-3 mesi con costanza. Jaw clenches isometrici e jaw resistance training completano il lavoro.'},
+      {title:'Riduzione del Grasso Facciale', text:'La jawline emerge quando il body fat scende sotto il 15%. Sotto il 12% vedrai gli zigomi e le hollow cheeks. Non si può perdere grasso solo dal viso - serve un deficit calorico globale di 300-500 kcal/giorno combinato con allenamento di resistenza per mantenere la massa muscolare.'}
+    ],
+    relatedExercises:['chin-tucks','jaw-clench','jaw-resistance','gum-chewing','neck-curls']
+  },
+  {
+    id:'eye-area', name:'Eye Area', icon:'👁️',
+    image:'linear-gradient(135deg,#0f0f23,#1a1a3e)',
+    chapters:2, lessons:7,
+    description:'Tutto sulla zona occhi: canthal tilt, upper eyelid exposure, infraorbitali, e come migliorare lo sguardo.',
+    content:[
+      {title:'Canthal Tilt e Eye Shape', text:'Il canthal tilt è l\'angolo tra il canto interno e esterno dell\'occhio. Un positive canthal tilt (angolo esterno più alto) è considerato più attraente. L\'upper eyelid exposure (pelle visibile sopra l\'occhio) dovrebbe essere minima. Dormire bene, ridurre il sale, e usare un contorno occhi con caffeina aiutano a ridurre il gonfiore palpebrale.'},
+      {title:'Infraorbitali e Supporto Osseo', text:'Il supporto infraorbitale determina quanto gli occhi appaiono "infossati". Zigomi alti e prominenti forniscono supporto naturale. Face yoga per la zona occhi e una buona skincare contorno occhi con vitamina K e peptidi possono migliorare l\'aspetto di questa zona.'}
+    ],
+    relatedExercises:['eye-lifts','forehead-smoother','morning-routine','evening-routine']
+  },
+  {
+    id:'skincare-aging', name:'Skincare & Anti-Aging', icon:'🧴',
+    image:'linear-gradient(135deg,#1a0a2e,#2d1b69)',
+    chapters:4, lessons:12,
+    description:'Guida completa alla skincare maschile: routine, ingredienti attivi, anti-aging, e protezione solare.',
+    content:[
+      {title:'I 4 Pilastri della Skincare', text:'1. DETERSIONE: Pulire senza aggredire (pH 5.5). 2. ATTIVI: Vitamina C (mattina), Retinolo (sera), Niacinamide (sempre). 3. IDRATAZIONE: Acido ialuronico + ceramidi. 4. PROTEZIONE: SPF 30-50 ogni giorno, tutto l\'anno.'},
+      {title:'Retinolo: Il Gold Standard', text:'Il retinolo (vitamina A) accelera il turnover cellulare, stimola il collagene, riduce rughe e macchie. Inizia con 0.3% 2 volte/settimana. Dopo 4 settimane passa a 0.5% a giorni alterni. Dopo 3 mesi puoi usare 1% ogni sera. Sempre seguito da idratante. MAI senza SPF il giorno dopo.'},
+      {title:'Esfoliazione Chimica', text:'BHA (acido salicilico 2%): penetra nei pori, ideale per pelle grassa/acne. AHA (acido glicolico 5-10%): esfoliazione superficiale, ideale per texture irregolare. Non usare entrambi lo stesso giorno. Non combinare con retinolo.'},
+      {title:'Protezione Solare', text:'Il fotoinvecchiamento causa il 90% delle rughe visibili. SPF 30 blocca il 97% dei raggi UVB. SPF 50 blocca il 98%. Riapplica ogni 2 ore se sei all\'aperto. Usa filtri minerali (ossido di zinco) o chimici moderni. Mai saltare il SPF, nemmeno in inverno o con cielo coperto.'}
+    ],
+    relatedExercises:['morning-routine','evening-routine','weekly-treatment','dermarolling']
+  },
+  {
+    id:'neckmaxxing', name:'Neckmaxxing', icon:'🦒',
+    image:'linear-gradient(135deg,#0a192f,#172a45)',
+    chapters:2, lessons:8,
+    description:'Un collo grosso e definito cambia completamente il look maschile. Guida completa.',
+    content:[
+      {title:'Perché il Collo è Importante', text:'Un collo di 14-16 pollici (35-40 cm) di circonferenza è il range ideale per un uomo. Un collo grosso comunica mascolinità e forza. I muscoli target sono: SCM (sternocleidomastoideo), trapezi superiori, e i muscoli profondi del collo. Il collo si allena 2-3 volte a settimana con volume moderato.'},
+      {title:'Programma di Allenamento Collo', text:'Lunedì: Neck curls 3x15 + Neck extensions 3x12. Mercoledì: Chin tucks 4x15 + Neck side raises 3x10 per lato. Venerdì: Shrugs 4x12 + Face pulls 3x15. Inizia SENZA peso, aumenta gradualmente con un asciugamano o disco. Mai movimenti bruschi.'}
+    ],
+    relatedExercises:['neck-extensions','neck-side-stretch','wall-angels','platysma-exercise','chin-tucks']
+  },
+  {
+    id:'fat-loss', name:'Fat Loss Made Easy', icon:'🔥',
+    image:'linear-gradient(135deg,#1a0000,#3d0000)',
+    chapters:3, lessons:9,
+    description:'Come perdere grasso per far emergere la struttura facciale. Jawline, zigomi, hollow cheeks.',
+    content:[
+      {title:'Deficit Calorico', text:'Per perdere grasso serve un deficit di 300-500 kcal/giorno. Calcola il tuo TDEE (Total Daily Energy Expenditure) e mangia meno di quello. 1 kg di grasso = ~7700 kcal. Con un deficit di 500 kcal/giorno perdi circa 0.5 kg/settimana. Non scendere sotto il 10% BF per la salute.'},
+      {title:'Proteine e Composizione Corporea', text:'Mangia 1.6-2.2g di proteine per kg di peso corporeo per preservare la massa muscolare durante il deficit. Le proteine hanno anche il più alto effetto termico (25-30% delle calorie viene bruciato nella digestione). Fonti top: pollo, pesce, uova, greco yogurt.'},
+      {title:'Cardio e Definizione Facciale', text:'Il cardio LISS (camminata veloce 30-45 min) è il più efficiente per bruciare grasso senza perdere muscolo. 10.000 passi al giorno = ~400-500 kcal bruciate. Il grasso facciale è l\'ultimo ad andarsene, ma sotto il 15% BF la jawline emerge, sotto il 12% appaiono gli zigomi.'}
+    ],
+    relatedExercises:['body-training','nutrition','hydration']
+  },
+  {
+    id:'framemaxxing', name:'Framemaxxing', icon:'💪',
+    image:'linear-gradient(135deg,#0d1117,#21262d)',
+    chapters:2, lessons:6,
+    description:'Come massimizzare la struttura corporea: spalle, clavicole, postura e fisico.',
+    content:[
+      {title:'Spalle e Clavicole', text:'Le clavicole larghe creano l\'illusione di un fisico più imponente. Non puoi allargare le ossa, ma puoi sviluppare i deltoidi laterali con lateral raises (4x15-20), face pulls (3x15), e overhead press. Spalle larghe + vita stretta = rapporto ideale (1.618 Golden Ratio).'},
+      {title:'Postura e Presenza', text:'La postura influenza come vieni percepito. Spalle indietro, petto in fuori, mento leggermente sollevato. Wall angels 3x12 ogni giorno. Scapular squeezes ogni ora se lavori al computer. Un buon trapezio sviluppo e rhomboids forti mantengono la postura naturalmente.'}
+    ],
+    relatedExercises:['wall-angels','scapular-squeeze','body-training','neck-extensions']
+  },
+  {
+    id:'mewing-guide', name:'Mewing In Depth', icon:'👅',
+    image:'linear-gradient(135deg,#1a0533,#2d1069)',
+    chapters:3, lessons:8,
+    description:'Guida avanzata al mewing: postura linguale, espansione palatale, e ristrutturazione facciale.',
+    content:[
+      {title:'La Scienza del Mewing', text:'Il Dr. John Mew ha teorizzato che la postura della lingua influenza lo sviluppo del terzo medio facciale. La lingua premuta contro il palato 24/7 applica una forza costante che nel tempo può espandere il palato e migliorare la proiezione del mascellare superiore. I risultati sono più rapidi nei giovani (sotto i 25 anni) ma possibili a qualsiasi età.'},
+      {title:'Errori Comuni', text:'1. Premere solo la punta (devi premere TUTTA la lingua). 2. Respirare dalla bocca (devi respirare dal naso). 3. Non essere costante (il mewing funziona solo se fatto 24/7). 4. Aspettarsi risultati immediati (servono 6-12 mesi minimo). 5. Stringere troppo i denti (devono toccarsi leggermente).'},
+      {title:'Hard Mewing e Suction Hold', text:'Il hard mewing applica pressione extra e può accelerare i risultati, ma va fatto con cautela per evitare problemi alla ATM. Il suction hold è la tecnica più avanzata: crea un vuoto tra lingua e palato che mantiene la posizione automaticamente, anche durante il sonno.'}
+    ],
+    relatedExercises:['basic-mewing','hard-mewing','tongue-suction','tongue-chewing']
+  },
+  {
+    id:'hair-guide', name:'Hair & Hairline', icon:'💇',
+    image:'linear-gradient(135deg,#1a1a1a,#333333)',
+    chapters:2, lessons:6,
+    description:'Guida a capelli e attaccatura: cura, styling, e come massimizzare il look.',
+    content:[
+      {title:'Cura dei Capelli', text:'Lava i capelli 2-3 volte a settimana con shampoo senza solfati. Usa un balsamo dopo ogni lavaggio. Olio di argan o jojoba sulle punte per idratare. Biotina 5000 mcg/giorno per la crescita. Massaggio al cuoio capelluto 5 min/giorno per stimolare la circolazione.'},
+      {title:'Scegliere il Taglio Giusto', text:'Il taglio deve complementare la forma del viso. Viso lungo: volume ai lati, corto sopra. Viso rotondo: volume sopra, corto ai lati (fade). Viso ovale: qualsiasi taglio funziona. Fronte alta: frangia o fringe. Jawline debole: barba corta per definirla.'}
+    ],
+    relatedExercises:[]
+  },
+  {
+    id:'coloring', name:'Coloring Guide', icon:'🎨',
+    image:'linear-gradient(135deg,#2d1b4e,#1a0a2e)',
+    chapters:1, lessons:4,
+    description:'Analisi del colore: come scegliere i colori che ti valorizzano.',
+    content:[
+      {title:'Trova il Tuo Sottotono', text:'Il sottotono della pelle è caldo (giallo/dorato), freddo (rosa/blu), o neutro. Guarda le vene del polso: verdi = caldo, blu/viola = freddo, mix = neutro. Sottotono caldo: usa colori terra (beige, marrone, verde oliva). Sottotono freddo: usa colori freddi (nero, grigio, blu navy). Neutro: tutto funziona.'}
+    ],
+    relatedExercises:[]
+  },
+  {
+    id:'tanning', name:'Tanning 101', icon:'☀️',
+    image:'linear-gradient(135deg,#3d2b1f,#5c3d2e)',
+    chapters:1, lessons:5,
+    description:'Abbronzatura sicura e strategica per un aspetto più attraente.',
+    content:[
+      {title:'Tanning Sicuro', text:'Un leggero tono abbronzato migliora l\'aspetto del viso: nasconde imperfezioni, aumenta il contrasto dei lineamenti, e dà un aspetto più sano. Regole: mai scottarsi (le scottature accelerano l\'invecchiamento 10x). Esposizione graduale: 15 min il primo giorno, aumenta di 5 min ogni giorno. Sempre SPF sul viso. Il corpo può abbronzarsi, il viso va protetto.'}
+    ],
+    relatedExercises:['sun-protocol']
+  },
+  {
+    id:'browridge', name:'Browridge Guide', icon:'🦴',
+    image:'linear-gradient(135deg,#111111,#2a2a2a)',
+    chapters:1, lessons:3,
+    description:'La cresta sopraccigliare e come influenza l\'attrattività maschile.',
+    content:[
+      {title:'Anatomia del Browridge', text:'La cresta sopraccigliare (brow ridge) è una struttura ossea sopra le orbite oculari. Nei maschi è tipicamente più prominente e contribuisce a uno sguardo più "intenso" e mascolino. È largamente genetica, ma una buona postura facciale (mewing) può influenzare lo sviluppo nel lungo termine. A livello estetico, sopracciglia grosse e ben curate amplificano l\'effetto del browridge.'}
+    ],
+    relatedExercises:['forehead-smoother','basic-mewing']
+  },
+  {
+    id:'ratios', name:'Blackpilled Ratios', icon:'📐',
+    image:'linear-gradient(135deg,#0a0a0a,#1a1a2e)',
+    chapters:2, lessons:5,
+    description:'Le proporzioni facciali ideali: golden ratio, terzi facciali, FWHR.',
+    content:[
+      {title:'Il Golden Ratio (φ 1.618)', text:'Il rapporto aureo appare ripetutamente nei volti attraenti. Rapporto larghezza zigomi / larghezza mascella ≈ 1.618. Rapporto altezza facciale / larghezza facciale ≈ 1.618. I terzi facciali ideali sono uguali: fronte-sopracciglia = sopracciglia-naso = naso-mento.'},
+      {title:'FWHR (Facial Width-to-Height Ratio)', text:'Il FWHR è il rapporto tra la larghezza bizigomatica e l\'altezza del volto superiore (sopracciglia → labbro superiore). Un FWHR alto (>2.0) è associato a percezione di dominanza e mascolinità. Si può migliorare sviluppando i masseteri (aumenta la larghezza) e con mewing (migliora le proporzioni del terzo medio).'}
+    ],
+    relatedExercises:['basic-mewing','jaw-clench','cheekbone-sculptor','gum-chewing']
+  }
+];
+
+const ROUTINE_ALTERNATIVES = {
+  mewing: [
+    { id: 'basic-mewing', name: 'Basic Mewing', desc: 'Postura base — ideale per iniziare', default: true },
+    { id: 'hard-mewing', name: 'Hard Mewing', desc: 'Pressione intensa — per avanzati', default: false },
+    { id: 'tongue-suction', name: 'Suction Hold', desc: 'Aspirazione al palato — intermedio', default: false }
+  ],
+  jawline: [
+    { id: 'chin-tucks', name: 'Chin Tucks', desc: 'Retrazione mento — fondamentale', default: true },
+    { id: 'jaw-clench', name: 'Jaw Clench', desc: 'Contrazione isometrica masseteri', default: true },
+    { id: 'jaw-resistance', name: 'Jaw Resistance', desc: 'Resistenza con pugno', default: false },
+    { id: 'gum-chewing', name: 'Gomma Dura', desc: 'Masticazione intensa con mastic gum', default: true },
+    { id: 'neck-curls', name: 'Neck Curls', desc: 'Curl del collo per mento definito', default: false }
+  ],
+  faceYoga: [
+    { id: 'cheek-lifts', name: 'Cheek Lifts', desc: 'Sollevamento zigomi — base', default: true },
+    { id: 'cheekbone-sculptor', name: 'Cheekbone Sculptor', desc: 'Scolpire zigomi — hollow cheeks', default: true },
+    { id: 'eye-lifts', name: 'Eye Area Lift', desc: 'Sollevamento zona occhi', default: false },
+    { id: 'face-tightener', name: 'Face Tightener', desc: 'Tonificazione completa', default: false }
+  ],
+  neck: [
+    { id: 'neck-extensions', name: 'Neck Extensions', desc: 'Estensioni base del collo', default: true },
+    { id: 'wall-angels', name: 'Wall Angels', desc: 'Postura spalle e schiena', default: true },
+    { id: 'scapular-squeeze', name: 'Scapular Squeeze', desc: 'Retrazione scapole', default: true },
+    { id: 'platysma-exercise', name: 'Platysma Toner', desc: 'Tono del collo anteriore', default: false }
+  ],
+  skincare: [
+    { id: 'morning-routine', name: 'Routine Mattutina', desc: 'Skincare completa del mattino', default: true },
+    { id: 'evening-routine', name: 'Routine Serale', desc: 'Skincare completa della sera', default: true },
+    { id: 'weekly-treatment', name: 'Trattamento Settimanale', desc: 'Maschera + esfoliazione', default: false },
+    { id: 'dermarolling', name: 'Dermarolling', desc: 'Microneedling domiciliare', default: false }
+  ]
+};

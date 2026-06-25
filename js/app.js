@@ -22,7 +22,7 @@ const App = {
     document.querySelectorAll('.screen.active').forEach(el => el.classList.remove('active'));
     next.classList.add('active');
     const nav = document.getElementById('bnav');
-    const withNav = ['dashboard', 'progress', 'profile'];
+    const withNav = ['dashboard', 'progress', 'profile', 'programs'];
     if (withNav.includes(s)) {
       nav.classList.remove('hidden');
       document.querySelectorAll('.bnav-item').forEach(b => b.classList.toggle('active', b.dataset.s === s));
@@ -33,6 +33,7 @@ const App = {
     if (s === 'dashboard') this.renderDash();
     if (s === 'progress') this.renderProgress();
     if (s === 'profile') this.renderProfile();
+    if (s === 'programs') this.renderPrograms();
   },
   back() { this.history.length ? this.go(this.history.pop(), false) : this.go('dashboard', false); },
 
@@ -54,6 +55,10 @@ const App = {
     $('btn-complete').onclick = () => this.completeEx();
     $('btn-enable-notif').onclick = () => this.enableNotif();
     $('btn-res-back').onclick = () => { this.history = []; this.go('dashboard'); };
+    $('btn-prog-back').onclick = () => this.back();
+    $('btn-routine-back').onclick = () => this.back();
+    $('btn-save-routine').onclick = () => { this.saveCustomRoutine(); this.toast('✅','Routine salvata!'); this.back(); };
+    $('btn-custom-routine').onclick = () => this.openRoutineCustom();
     $('btn-reset-all').onclick = () => {
       if (confirm('Eliminare tutti i dati?')) { localStorage.clear(); location.reload(); }
     };
@@ -102,9 +107,11 @@ const App = {
   },
   camStop() { if (this.stream) { this.stream.getTracks().forEach(t => t.stop()); this.stream = null; } },
   updateScanUI() {
-    document.getElementById('scan-step-badge').textContent = this.scanStep + '/2';
-    document.getElementById('scan-title').textContent = this.scanStep === 1 ? '📸 Foto Frontale' : '📐 Foto Laterale';
-    document.getElementById('scan-desc').textContent = this.scanStep === 1 ? 'Guarda dritto nella fotocamera. Espressione neutra, luce uniforme.' : 'Gira la testa di 90° a destra. Mostra il profilo completo.';
+    document.getElementById('scan-step-badge').textContent = this.scanStep + '/3';
+    const titles = ['📸 Foto Frontale', '📐 Profilo Destro', '📐 Profilo Sinistro'];
+    const descs = ['Guarda dritto nella fotocamera. Espressione neutra, luce uniforme.', 'Gira la testa di 90° verso DESTRA. Mostra il profilo completo.', 'Gira la testa di 90° verso SINISTRA. Mostra il profilo completo.'];
+    document.getElementById('scan-title').textContent = titles[this.scanStep - 1] || titles[0];
+    document.getElementById('scan-desc').textContent = descs[this.scanStep - 1] || descs[0];
   },
   capture() {
     const v = document.getElementById('camera'), c = document.getElementById('cam-canvas');
@@ -115,11 +122,12 @@ const App = {
     document.getElementById('preview-img').src = url;
     document.getElementById('preview-overlay').classList.remove('hidden');
     this.camStop();
-    this.photos[this.scanStep === 1 ? 'front' : 'side'] = url;
+    const keys = ['front', 'right', 'left'];
+    this.photos[keys[this.scanStep - 1]] = url;
   },
   confirmPhoto() {
     document.getElementById('preview-overlay').classList.add('hidden');
-    if (this.scanStep === 1) { this.scanStep = 2; this.camStart(); }
+    if (this.scanStep < 3) { this.scanStep++; this.camStart(); }
     else { this.camStop(); this.analyze(); }
   },
 
@@ -496,6 +504,11 @@ const App = {
     });
     document.getElementById('det-tip').textContent = ex.tips;
 
+    const videoBtn = document.getElementById('btn-video');
+    const videoUrl = EXERCISE_VIDEOS[ex.id];
+    if (videoUrl) { videoBtn.href = videoUrl; videoBtn.classList.remove('hidden'); }
+    else { videoBtn.classList.add('hidden'); }
+
     this.timerReset();
     if (ex.holdTime) {
       this.timerTotal = ex.holdTime; this.timerSets = ex.sets || 1; this.timerSet = 1;
@@ -686,6 +699,87 @@ const App = {
     localStorage.setItem('lm_streak', JSON.stringify(d));
   },
   findExInCat(id, cat) { return EXERCISES[cat]?.exercises.find(e => e.id === id); },
+
+  // ── PROGRAMS ──
+  renderPrograms() {
+    const g = document.getElementById('programs-grid'); g.innerHTML = '';
+    PROGRAMS.forEach((p, i) => {
+      const card = document.createElement('div');
+      card.className = 'prog-card' + (i === 0 ? ' wide' : '');
+      card.style.background = p.image;
+      card.innerHTML = `<span class="pc-icon">${p.icon}</span><div><div class="pc-name">${p.name}</div><div class="pc-meta">${p.chapters} capitoli • ${p.lessons} lezioni</div></div>`;
+      card.onclick = () => this.openProgram(p);
+      g.appendChild(card);
+    });
+  },
+
+  openProgram(prog) {
+    document.getElementById('prog-det-name').textContent = prog.name;
+    const hero = document.getElementById('progd-hero');
+    hero.style.background = prog.image;
+    hero.innerHTML = `<h2>${prog.icon} ${prog.name}</h2><p>${prog.description}</p><div class="ph-meta"><span>📖 ${prog.chapters} capitoli</span><span>📝 ${prog.lessons} lezioni</span></div>`;
+
+    const content = document.getElementById('progd-content'); content.innerHTML = '';
+    prog.content.forEach(ch => {
+      const d = document.createElement('div'); d.className = 'progd-chapter';
+      d.innerHTML = `<h3>${ch.title}</h3><p>${ch.text}</p>`;
+      content.appendChild(d);
+    });
+
+    const exDiv = document.getElementById('progd-exercises'); exDiv.innerHTML = '';
+    if (prog.relatedExercises && prog.relatedExercises.length) {
+      exDiv.innerHTML = '<h3 class="progd-ex-title">Esercizi Correlati</h3>';
+      prog.relatedExercises.forEach(exId => {
+        const found = this.findEx(exId); if (!found) return;
+        const ex = found.data, cat = found.cat;
+        const card = document.createElement('div'); card.className = 'ex-card';
+        card.innerHTML = `<div class="ec-icon" style="background:rgba(${this.catRgb(cat)},0.15)">${ex.icon}</div><div class="ec-info"><div class="ec-name">${ex.name}</div><div class="ec-sub">${ex.subtitle}</div><div class="ec-meta"><span class="mtag">${ex.sets}x${ex.reps}</span><span class="mtag">${ex.duration}</span></div></div><span class="ec-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>`;
+        card.onclick = () => this.openDetail(ex, cat);
+        exDiv.appendChild(card);
+      });
+      const addBtn = document.createElement('button'); addBtn.className = 'progd-add-btn';
+      addBtn.innerHTML = '+ Aggiungi tutti alla routine';
+      addBtn.onclick = () => { this.toast('✅', 'Esercizi aggiunti alla routine!'); };
+      exDiv.appendChild(addBtn);
+    }
+    this.go('program-detail');
+  },
+
+  // ── ROUTINE CUSTOMIZATION ──
+  openRoutineCustom() {
+    const list = document.getElementById('routine-custom-list'); list.innerHTML = '';
+    const saved = this.getCustomRoutine();
+    Object.entries(ROUTINE_ALTERNATIVES).forEach(([catId, alts]) => {
+      const cat = EXERCISES[catId]; if (!cat) return;
+      const sec = document.createElement('div'); sec.className = 'rc-section';
+      sec.innerHTML = `<h3><span>${cat.icon}</span> ${cat.name}</h3>`;
+      alts.forEach(alt => {
+        const isSelected = saved[catId] ? saved[catId].includes(alt.id) : alt.default;
+        const item = document.createElement('div');
+        item.className = 'rc-item' + (isSelected ? ' selected' : '');
+        item.dataset.cat = catId; item.dataset.ex = alt.id;
+        item.innerHTML = `<div class="rc-check"></div><div class="rc-info"><div class="rc-name">${alt.name}</div><div class="rc-desc">${alt.desc}</div></div>`;
+        item.onclick = () => { item.classList.toggle('selected'); };
+        sec.appendChild(item);
+      });
+      list.appendChild(sec);
+    });
+    this.go('routine-custom');
+  },
+
+  saveCustomRoutine() {
+    const result = {};
+    document.querySelectorAll('.rc-item.selected').forEach(el => {
+      const cat = el.dataset.cat, ex = el.dataset.ex;
+      if (!result[cat]) result[cat] = [];
+      result[cat].push(ex);
+    });
+    localStorage.setItem('lm_custom_routine', JSON.stringify(result));
+  },
+
+  getCustomRoutine() {
+    try { return JSON.parse(localStorage.getItem('lm_custom_routine') || '{}'); } catch { return {}; }
+  },
 
   // ── UTIL ──
   scoreCol(s) { return s >= 8 ? '#10b981' : s >= 6.5 ? '#a78bfa' : s >= 5 ? '#f59e0b' : '#ef4444'; },

@@ -344,6 +344,45 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .app-ver{text-align:center;padding:24px 0 0;border-top:1px solid var(--border);margin-top:24px;font-size:12px;color:var(--t3)}
 .app-ver small{font-size:10px;display:block;margin-top:4px;max-width:280px;margin-left:auto;margin-right:auto;line-height:1.5}
 
+/* ══════ PROGRAMS ══════ */
+.programs-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.prog-card{position:relative;border-radius:var(--r);overflow:hidden;cursor:pointer;min-height:120px;padding:14px;display:flex;flex-direction:column;justify-content:flex-end;transition:all .2s}
+.prog-card:active{transform:scale(.97)}
+.prog-card .pc-icon{font-size:28px;margin-bottom:6px}
+.prog-card .pc-name{font-size:14px;font-weight:800;color:#fff;line-height:1.2}
+.prog-card .pc-meta{font-size:10px;color:rgba(255,255,255,0.6);margin-top:3px}
+.prog-card::after{content:'';position:absolute;top:0;right:0;width:60px;height:60px;border-radius:50%;background:rgba(255,255,255,0.06)}
+.prog-card.wide{grid-column:1/-1;min-height:100px;flex-direction:row;align-items:center;gap:14px}
+.prog-card.wide .pc-icon{font-size:36px;margin-bottom:0}
+
+.progd-scroll{padding:8px 16px calc(var(--nav-h) + 20px)}
+.progd-hero{border-radius:var(--r-lg);padding:28px 20px;margin-bottom:20px;min-height:120px;display:flex;flex-direction:column;justify-content:flex-end}
+.progd-hero h2{font-size:24px;font-weight:900;color:#fff}
+.progd-hero p{font-size:12px;color:rgba(255,255,255,0.7);margin-top:4px}
+.progd-hero .ph-meta{display:flex;gap:14px;margin-top:10px;font-size:11px;color:rgba(255,255,255,0.8);font-weight:600}
+.progd-chapter{margin-bottom:20px}
+.progd-chapter h3{font-size:16px;font-weight:700;margin-bottom:8px;color:var(--accent2)}
+.progd-chapter p{font-size:13px;color:var(--t2);line-height:1.7;padding:14px;background:var(--card);border:1px solid var(--border);border-radius:var(--r)}
+.progd-ex-title{font-size:15px;font-weight:700;margin:20px 0 10px}
+.progd-add-btn{display:flex;align-items:center;gap:6px;margin-top:8px;padding:8px 14px;background:rgba(124,58,237,0.1);border:1px solid var(--border-a);border-radius:var(--r-full);color:var(--accent2);font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .15s}
+.progd-add-btn:active{background:rgba(124,58,237,0.2)}
+
+/* ══════ VIDEO BUTTON ══════ */
+.btn-video{display:flex;align-items:center;gap:10px;justify-content:center;width:100%;padding:14px;background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;margin:16px 0;text-decoration:none;box-shadow:0 4px 16px rgba(220,38,38,0.25)}
+.btn-video:active{transform:scale(.97)}
+
+/* ══════ ROUTINE CUSTOMIZE ══════ */
+.custom-scroll{padding:8px 16px calc(var(--nav-h) + 20px)}
+.rc-section{margin-bottom:20px}
+.rc-section h3{font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.rc-section h3 span{font-size:18px}
+.rc-item{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:6px;cursor:pointer;transition:all .15s}
+.rc-item.selected{background:rgba(124,58,237,0.1);border-color:var(--accent)}
+.rc-item .rc-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:11px;color:#fff}
+.rc-item.selected .rc-check{background:var(--accent);border-color:var(--accent)}
+.rc-item.selected .rc-check::after{content:'✓'}
+.rc-item .rc-info{flex:1}.rc-item .rc-name{font-size:13px;font-weight:600}.rc-item .rc-desc{font-size:10px;color:var(--t3)}
+
 /* ══════ BOTTOM NAV ══════ */
 .bnav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:430px;height:var(--nav-h);padding-bottom:var(--safe-b);background:rgba(7,7,26,0.88);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-top:1px solid var(--border);display:flex;align-items:center;z-index:100;transition:transform .3s}
 .bnav.hidden{transform:translateX(-50%) translateY(100%)}
