@@ -1,0 +1,705 @@
+const App = {
+  screen: 'splash', history: [], scanStep: 1, photos: {}, stream: null,
+  scores: null, timerInt: null, timerOn: false, timerSec: 0, timerTotal: 0,
+  timerSet: 1, timerSets: 1, curEx: null, curCat: null, routineLevel: 'beginner',
+  doneRoutine: new Set(),
+
+  init() {
+    this.loadProfile();
+    this.bindAll();
+    this.particles();
+    document.getElementById('bnav').classList.add('hidden');
+    const scans = this.getScans();
+    if (scans.length) this.scores = scans[scans.length - 1].scores;
+    if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+  },
+
+  // ── NAV ──
+  go(s, hist = true) {
+    const next = document.getElementById('screen-' + s);
+    if (!next || s === this.screen) return;
+    if (hist && this.screen !== 'splash') this.history.push(this.screen);
+    document.querySelectorAll('.screen.active').forEach(el => el.classList.remove('active'));
+    next.classList.add('active');
+    const nav = document.getElementById('bnav');
+    const withNav = ['dashboard', 'progress', 'profile'];
+    if (withNav.includes(s)) {
+      nav.classList.remove('hidden');
+      document.querySelectorAll('.bnav-item').forEach(b => b.classList.toggle('active', b.dataset.s === s));
+    } else nav.classList.add('hidden');
+    this.screen = s;
+    if (s === 'scanner') this.camStart();
+    else this.camStop();
+    if (s === 'dashboard') this.renderDash();
+    if (s === 'progress') this.renderProgress();
+    if (s === 'profile') this.renderProfile();
+  },
+  back() { this.history.length ? this.go(this.history.pop(), false) : this.go('dashboard', false); },
+
+  // ── EVENTS ──
+  bindAll() {
+    const $ = (id) => document.getElementById(id);
+    $('btn-start').onclick = () => this.go('scanner');
+    $('btn-skip').onclick = () => this.go('dashboard');
+    $('btn-scanner-back').onclick = () => { this.camStop(); this.back(); };
+    $('btn-capture').onclick = () => this.capture();
+    $('btn-retake').onclick = () => { $('preview-overlay').classList.add('hidden'); this.camStart(); };
+    $('btn-confirm').onclick = () => this.confirmPhoto();
+    $('btn-to-dash').onclick = () => { this.history = []; this.go('dashboard'); };
+    $('btn-new-scan').onclick = () => { this.scanStep = 1; this.photos = {}; this.go('scanner'); };
+    $('btn-ex-back').onclick = () => this.back();
+    $('btn-det-back').onclick = () => this.back();
+    $('btn-play').onclick = () => this.timerToggle();
+    $('btn-reset').onclick = () => this.timerReset();
+    $('btn-complete').onclick = () => this.completeEx();
+    $('btn-enable-notif').onclick = () => this.enableNotif();
+    $('btn-res-back').onclick = () => { this.history = []; this.go('dashboard'); };
+    $('btn-reset-all').onclick = () => {
+      if (confirm('Eliminare tutti i dati?')) { localStorage.clear(); location.reload(); }
+    };
+    document.querySelectorAll('.bnav-item').forEach(b => b.onclick = () => {
+      const s = b.dataset.s;
+      if (s === 'scanner') { this.scanStep = 1; this.photos = {}; }
+      this.history = []; this.go(s);
+    });
+    document.querySelectorAll('.rtab').forEach(t => t.onclick = () => {
+      document.querySelectorAll('.rtab').forEach(x => x.classList.remove('active'));
+      t.classList.add('active'); this.routineLevel = t.dataset.lv; this.renderRoutine();
+    });
+    $('inp-name').onchange = e => { this.saveProf({ name: e.target.value }); $('prof-name').textContent = e.target.value || 'Utente'; };
+    $('inp-age').onchange = e => this.saveProf({ age: e.target.value });
+    $('inp-gender').onchange = e => this.saveProf({ gender: e.target.value });
+    document.querySelectorAll('.gc-check').forEach(c => c.onchange = () => {
+      const g = []; document.querySelectorAll('.gc-check:checked').forEach(x => g.push(x.dataset.g));
+      this.saveProf({ goals: g });
+    });
+    $('notif-toggle').onchange = e => { if (e.target.checked) this.enableNotif(); this.saveProf({ notif: e.target.checked }); };
+  },
+
+  // ── PARTICLES ──
+  particles() {
+    const c = document.getElementById('particles');
+    for (let i = 0; i < 20; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.top = (60 + Math.random() * 40) + '%';
+      p.style.animationDuration = (4 + Math.random() * 8) + 's';
+      p.style.animationDelay = Math.random() * 5 + 's';
+      p.style.width = p.style.height = (2 + Math.random() * 3) + 'px';
+      c.appendChild(p);
+    }
+  },
+
+  // ── CAMERA ──
+  async camStart() {
+    try {
+      const v = document.getElementById('camera');
+      this.stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 480 } } });
+      v.srcObject = this.stream;
+      this.updateScanUI();
+    } catch { document.getElementById('cam-status').textContent = 'Permetti accesso fotocamera'; }
+  },
+  camStop() { if (this.stream) { this.stream.getTracks().forEach(t => t.stop()); this.stream = null; } },
+  updateScanUI() {
+    document.getElementById('scan-step-badge').textContent = this.scanStep + '/2';
+    document.getElementById('scan-title').textContent = this.scanStep === 1 ? '📸 Foto Frontale' : '📐 Foto Laterale';
+    document.getElementById('scan-desc').textContent = this.scanStep === 1 ? 'Guarda dritto nella fotocamera. Espressione neutra, luce uniforme.' : 'Gira la testa di 90° a destra. Mostra il profilo completo.';
+  },
+  capture() {
+    const v = document.getElementById('camera'), c = document.getElementById('cam-canvas');
+    c.width = v.videoWidth; c.height = v.videoHeight;
+    const ctx = c.getContext('2d'); ctx.translate(c.width, 0); ctx.scale(-1, 1);
+    ctx.drawImage(v, 0, 0); ctx.setTransform(1, 0, 0, 1, 0, 0);
+    const url = c.toDataURL('image/jpeg', 0.85);
+    document.getElementById('preview-img').src = url;
+    document.getElementById('preview-overlay').classList.remove('hidden');
+    this.camStop();
+    this.photos[this.scanStep === 1 ? 'front' : 'side'] = url;
+  },
+  confirmPhoto() {
+    document.getElementById('preview-overlay').classList.add('hidden');
+    if (this.scanStep === 1) { this.scanStep = 2; this.camStart(); }
+    else { this.camStop(); this.analyze(); }
+  },
+
+  // ── ANALYSIS ──
+  analyze() {
+    this.go('analyzing');
+    const steps = [
+      { id: 1, t: 'Rilevamento volto', d: 700 },
+      { id: 2, t: 'Analisi simmetria facciale', d: 900 },
+      { id: 3, t: 'Proporzioni e rapporto aureo', d: 1100 },
+      { id: 4, t: 'Valutazione struttura ossea', d: 900 },
+      { id: 5, t: 'Creazione piano personalizzato', d: 700 }
+    ];
+    let cur = 0, elapsed = 0;
+    const total = steps.reduce((a, s) => a + s.d, 0);
+    const run = () => {
+      if (cur >= steps.length) return this.finishAnalysis();
+      const s = steps[cur];
+      document.getElementById('analyze-status').textContent = s.t;
+      for (let i = 1; i <= 5; i++) {
+        const el = document.getElementById('as' + i);
+        el.classList.remove('on', 'ok');
+        if (i < s.id) el.classList.add('ok');
+        if (i === s.id) el.classList.add('on');
+      }
+      const iv = setInterval(() => {
+        elapsed += 40;
+        const p = Math.min(Math.round(elapsed / total * 100), 100);
+        document.getElementById('pbar-fill').style.width = p + '%';
+        document.getElementById('pbar-pct').textContent = p + '%';
+      }, 40);
+      setTimeout(() => { clearInterval(iv); cur++; run(); }, s.d);
+    };
+    run();
+  },
+
+  finishAnalysis() {
+    const scores = this.computeScores();
+    this.scores = scores;
+    const scans = this.getScans();
+    scans.push({ date: new Date().toISOString(), scores });
+    localStorage.setItem('lm_scans', JSON.stringify(scans));
+    this.renderResults(scores);
+    this.go('results');
+  },
+
+  computeScores() {
+    const canvas = document.getElementById('cam-canvas');
+    const ctx = canvas.getContext('2d');
+    let skin = { u: 0.65, b: 0.55 };
+    if (canvas.width > 0) skin = this.skinScan(ctx, canvas.width, canvas.height);
+    const prof = this.getProf();
+    const age = parseInt(prof.age) || 22;
+    const gender = prof.gender || 'male';
+    const v = () => (Math.random() - 0.5) * 1.8;
+    const cl = x => Math.round(Math.max(3.5, Math.min(9.2, x)) * 10) / 10;
+
+    let sc = {
+      symmetry: cl(6.3 + v() + skin.u * 1.2),
+      jawline: cl(5.6 + v() + (gender === 'male' ? 0.5 : 0.2)),
+      eyes: cl(6.1 + v() + 0.3),
+      cheekbones: cl(5.3 + v() + skin.u * 0.6),
+      nose: cl(6.0 + v()),
+      lips: cl(6.2 + v() + (gender === 'female' ? 0.4 : 0)),
+      proportions: cl(5.9 + v() + skin.u * 0.4),
+      skin: cl(5.3 + v() + skin.b * 1.8 + skin.u * 1.2)
+    };
+    if (age < 20) { sc.skin = cl(sc.skin + 0.4); sc.jawline = cl(sc.jawline - 0.2); }
+    if (age > 35) { sc.skin = cl(sc.skin - 0.4); sc.jawline = cl(sc.jawline + 0.2); }
+
+    let ov = 0;
+    ANALYSIS_CATEGORIES.forEach(c => { ov += sc[c.id] * c.weight; });
+    sc.overall = Math.round(ov * 10) / 10;
+    return sc;
+  },
+
+  skinScan(ctx, w, h) {
+    try {
+      const d = ctx.getImageData(w / 2 - 40, h / 2 - 40, 80, 80).data;
+      let tR = 0, tG = 0, tB = 0;
+      const n = d.length / 4;
+      for (let i = 0; i < d.length; i += 4) { tR += d[i]; tG += d[i + 1]; tB += d[i + 2]; }
+      const aR = tR / n, aG = tG / n, aB = tB / n;
+      let vR = 0, vG = 0, vB = 0;
+      for (let i = 0; i < d.length; i += 4) { vR += (d[i] - aR) ** 2; vG += (d[i + 1] - aG) ** 2; vB += (d[i + 2] - aB) ** 2; }
+      const std = (Math.sqrt(vR / n) + Math.sqrt(vG / n) + Math.sqrt(vB / n)) / 3;
+      return { u: Math.max(0, Math.min(1, 1 - std / 55)), b: Math.max(0, Math.min(1, (aR + aG + aB) / 765)) };
+    } catch { return { u: 0.6, b: 0.5 }; }
+  },
+
+  // ── RESULTS ──
+  scoreDesc(catId, score) {
+    const descs = {
+      symmetry: { hi: 'Simmetria elevata', mid: 'Simmetria discreta', lo: 'Asimmetria rilevata' },
+      jawline: { hi: 'Angular jawline', mid: 'Jawline definita', lo: 'Soft jawline' },
+      eyes: { hi: 'Almond eyes', mid: 'Occhi proporzionati', lo: 'Migliorabile' },
+      cheekbones: { hi: 'High cheekbones', mid: 'Zigomi medi', lo: 'Zigomi piatti' },
+      nose: { hi: 'Naso proporzionato', mid: 'Proporzioni medie', lo: 'Da migliorare' },
+      lips: { hi: 'Full lips', mid: 'Labbra proporzionate', lo: 'Labbra sottili' },
+      proportions: { hi: 'Golden ratio', mid: 'Proporzioni buone', lo: 'Sproporzione' },
+      skin: { hi: 'Smooth skin', mid: 'Pelle discreta', lo: 'Needs routine' }
+    };
+    const d = descs[catId] || { hi: 'Ottimo', mid: 'Medio', lo: 'Basso' };
+    return score >= 7.5 ? d.hi : score >= 5.5 ? d.mid : d.lo;
+  },
+
+  renderResults(sc) {
+    this.animNum('res-score-val', sc.overall, 1400);
+    const pct = Math.round(100 - (sc.overall / 10) * 100);
+    const prof = this.getProf();
+    const genderLabel = (prof.gender === 'female') ? 'delle donne' : 'degli uomini';
+    document.getElementById('res-percentile').textContent = 'Top ' + Math.max(1, pct) + '% ' + genderLabel;
+
+    const photo = document.getElementById('res-photo');
+    if (this.photos.front) {
+      photo.innerHTML = '<img src="' + this.photos.front + '" alt="">';
+    } else {
+      photo.innerHTML = '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>';
+    }
+
+    const list = document.getElementById('res-list');
+    list.innerHTML = '';
+
+    const SCORE_ICONS = {
+      symmetry: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h4M18 12h4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>',
+      jawline: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6 2 10c0 2 1 4 3 6l3 4c1.5 1.5 2.5 2 4 2s2.5-.5 4-2l3-4c2-2 3-4 3-6 0-4-4.48-8-10-8z"/></svg>',
+      eyes: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',
+      cheekbones: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>',
+      nose: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v14M8 18c0 1 2 3 4 3s4-2 4-3"/></svg>',
+      lips: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12c0-3 3.5-6 8-6s8 3 8 6"/><path d="M4 12c0 3 3.5 6 8 6s8-3 8-6"/><path d="M4 12h16"/></svg>',
+      proportions: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>',
+      skin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3c-1.2 0-2.4.6-3 1.7A3.6 3.6 0 004.6 9c-1.5 1.3-1.9 3.5-.9 5.2.6 1 1.5 1.7 2.5 2 .4 1.4 1.5 2.6 2.9 3.1 1 .3 2 .3 2.9 0 1.4-.5 2.5-1.7 2.9-3.1 1-.3 1.9-1 2.5-2 1-1.7.6-3.9-.9-5.2A3.6 3.6 0 0015 4.7C14.4 3.6 13.2 3 12 3z"/></svg>'
+    };
+
+    ANALYSIS_CATEGORIES.forEach((c, i) => {
+      const s = sc[c.id];
+      const desc = this.scoreDesc(c.id, s);
+      const cls = s >= 7.5 ? 'high' : s >= 5.5 ? 'mid' : 'low';
+      const row = document.createElement('div');
+      row.className = 'score-row anim a' + Math.min(i + 1, 8);
+      row.innerHTML = `
+        <div class="sr-icon-wrap">${SCORE_ICONS[c.id] || '<span class="sr-emoji">' + c.icon + '</span>'}</div>
+        <div class="sr-info"><span class="sr-name">${c.name}</span><span class="sr-desc">${desc}</span></div>
+        <span class="sr-score ${cls}">${s}</span>
+        <span class="sr-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></span>`;
+      row.onclick = () => {
+        const cats = c.relatedCategories;
+        if (cats && cats[0] && EXERCISES[cats[0]]) this.openCat(cats[0]);
+      };
+      list.appendChild(row);
+    });
+
+    this.renderPersonalPlan(sc);
+  },
+
+  renderPersonalPlan(sc) {
+    const container = document.getElementById('personal-recs');
+    container.innerHTML = '';
+    const sorted = ANALYSIS_CATEGORIES.map(c => ({ ...c, score: sc[c.id] })).sort((a, b) => a.score - b.score);
+
+    sorted.forEach((cat, i) => {
+      const pe = PERSONALIZED_EXERCISES[cat.id];
+      if (!pe) return;
+      const prio = cat.score < 5.5 ? 'high' : cat.score < 7 ? 'medium' : 'low';
+      const prioLabel = prio === 'high' ? 'Priorità' : prio === 'medium' ? 'Medio' : 'OK';
+      const prioClass = prio === 'high' ? 'tag-high' : prio === 'medium' ? 'tag-med' : 'tag-ok';
+      const exercises = prio === 'high' ? pe.low : pe.medium;
+      const bgClass = cat.relatedCategories[0] || 'mewing';
+
+      const card = document.createElement('div');
+      card.className = 'rec-card anim a' + Math.min(i + 1, 8);
+      card.innerHTML = `
+        <div class="rec-badge" style="background:rgba(${this.catRgb(bgClass)},0.12)">${cat.icon}</div>
+        <div class="rec-text"><b>${cat.name} — ${cat.score}/10</b><p>${pe.exercises}</p></div>
+        <span class="rec-tag ${prioClass}">${prioLabel}</span>`;
+      card.onclick = () => {
+        const targetCat = cat.relatedCategories[0];
+        if (targetCat && EXERCISES[targetCat]) this.openCat(targetCat);
+      };
+      container.appendChild(card);
+
+      if (exercises && exercises.length > 0 && i < 3) {
+        exercises.forEach(exId => {
+          const ex = this.findEx(exId);
+          if (!ex) return;
+          const mini = document.createElement('div');
+          mini.className = 'rec-card';
+          mini.style.marginLeft = '16px';
+          mini.style.borderLeft = '3px solid var(--accent)';
+          mini.innerHTML = `<div class="rec-badge" style="background:var(--glass)">${ex.data.icon}</div><div class="rec-text"><b>${ex.data.name}</b><p>${ex.data.sets}x${ex.data.reps} • ${ex.data.duration}</p></div>`;
+          mini.onclick = () => this.openDetail(ex.data, ex.cat);
+          container.appendChild(mini);
+        });
+      }
+    });
+  },
+
+  findEx(id) {
+    for (const [catId, cat] of Object.entries(EXERCISES)) {
+      const ex = cat.exercises.find(e => e.id === id);
+      if (ex) return { data: ex, cat: catId };
+    }
+    return null;
+  },
+
+  catRgb(cat) {
+    const map = { mewing: '124,58,237', jawline: '249,115,22', faceYoga: '16,185,129', neck: '59,130,246', skincare: '236,72,153', lifestyle: '245,158,11' };
+    return map[cat] || '124,58,237';
+  },
+
+  // ── DASHBOARD ──
+  renderDash() {
+    const d = new Date().toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long' });
+    document.getElementById('dash-date').textContent = d.charAt(0).toUpperCase() + d.slice(1);
+    if (this.scores) document.getElementById('dash-mini-score').querySelector('.ms-val').textContent = this.scores.overall;
+
+    this.renderXP();
+    this.renderMiniScores();
+    this.renderRoutine();
+    this.renderCatGrid();
+    document.getElementById('tip-text').textContent = TIPS_DATABASE[new Date().getDate() % TIPS_DATABASE.length];
+    document.querySelectorAll('.rtab').forEach(t => t.classList.toggle('active', t.dataset.lv === this.routineLevel));
+
+    const prof = this.getProf();
+    if (prof.name) document.getElementById('dash-hello').textContent = 'Ciao, ' + prof.name;
+    document.getElementById('notif-card').style.display = prof.notif ? 'none' : 'flex';
+  },
+
+  renderXP() {
+    const xp = this.getXP();
+    const lv = this.getLevel(xp);
+    const cur = LEVEL_THRESHOLDS[lv - 1] || 0;
+    const nxt = LEVEL_THRESHOLDS[lv] || cur + 100;
+    const pct = Math.min(100, ((xp - cur) / (nxt - cur)) * 100);
+    document.getElementById('xp-level').textContent = 'Lv ' + lv;
+    document.getElementById('xp-pts').textContent = xp + ' XP';
+    document.getElementById('xp-fill').style.width = pct + '%';
+    document.getElementById('xp-next').textContent = (nxt - xp) + ' XP per il livello ' + (lv + 1);
+  },
+
+  renderMiniScores() {
+    const g = document.getElementById('mini-scores'); g.innerHTML = '';
+    ANALYSIS_CATEGORIES.forEach(c => {
+      const s = this.scores ? this.scores[c.id] : '--';
+      const d = document.createElement('div'); d.className = 'ms-item';
+      d.innerHTML = `<span class="ms-i">${c.icon}</span><span class="ms-v">${s}</span><span class="ms-l">${c.name}</span>`;
+      g.appendChild(d);
+    });
+  },
+
+  renderRoutine() {
+    const c = document.getElementById('routine-list'); c.innerHTML = '';
+    const r = DAILY_ROUTINES[this.routineLevel]; if (!r) return;
+    [{ k: 'morning', l: 'Mattina', i: '🌅' }, { k: 'afternoon', l: 'Pomeriggio', i: '☀️' }, { k: 'evening', l: 'Sera', i: '🌙' }].forEach(p => {
+      if (!r[p.k] || !r[p.k].length) return;
+      const pd = document.createElement('div'); pd.className = 'r-period';
+      pd.innerHTML = `<div class="r-period-title">${p.i} ${p.l}</div>`;
+      r[p.k].forEach(item => {
+        const ex = this.findExInCat(item.exercise, item.category); if (!ex) return;
+        const key = this.routineLevel + '_' + p.k + '_' + item.exercise;
+        const done = this.doneRoutine.has(key);
+        const el = document.createElement('div'); el.className = 'r-item' + (done ? ' done' : '');
+        el.innerHTML = `<span class="ri-icon">${ex.icon}</span><div class="ri-info"><div class="ri-name">${ex.name}</div><div class="ri-note">${item.note}</div></div><div class="ri-check"></div>`;
+        el.onclick = () => { if (!done) { this.doneRoutine.add(key); el.classList.add('done'); } this.openDetail(ex, item.category); };
+        pd.appendChild(el);
+      });
+      c.appendChild(pd);
+    });
+  },
+
+  catGradient(cat) {
+    const grads = {
+      mewing: 'linear-gradient(135deg,#4c1d95,#7c3aed)',
+      jawline: 'linear-gradient(135deg,#9a3412,#f97316)',
+      faceYoga: 'linear-gradient(135deg,#065f46,#10b981)',
+      neck: 'linear-gradient(135deg,#1e3a5f,#3b82f6)',
+      skincare: 'linear-gradient(135deg,#831843,#ec4899)',
+      lifestyle: 'linear-gradient(135deg,#78350f,#f59e0b)'
+    };
+    return grads[cat] || grads.mewing;
+  },
+
+  renderCatGrid() {
+    const g = document.getElementById('cat-grid'); g.innerHTML = '';
+
+    const routine = DAILY_ROUTINES[this.routineLevel];
+    const totalEx = routine ? (routine.morning?.length || 0) + (routine.afternoon?.length || 0) + (routine.evening?.length || 0) : 0;
+    const feat = document.createElement('div');
+    feat.className = 'featured-card';
+    feat.style.background = 'linear-gradient(135deg,#4c1d95,#7c3aed,#06b6d4)';
+    feat.style.gridColumn = '1/-1';
+    feat.innerHTML = `
+      <h3>Routine Giornaliera</h3>
+      <div class="fc-sub">${totalEx} esercizi programmati</div>
+      <div class="fc-stats">
+        <span class="fc-stat">⏱ 20-30 min</span>
+        <span class="fc-stat">🔥 Tutti i livelli</span>
+      </div>
+      <button class="fc-btn" onclick="document.getElementById('routine-list').scrollIntoView({behavior:'smooth'})">Inizia Routine →</button>
+      <span class="fc-emoji">💎</span>`;
+    g.appendChild(feat);
+
+    Object.values(EXERCISES).forEach(cat => {
+      const d = document.createElement('div'); d.className = 'cat-card';
+      d.style.background = this.catGradient(cat.id);
+      d.innerHTML = `<span class="cc-icon">${cat.icon}</span><div class="cc-name">${cat.name}</div><div class="cc-count">${cat.exercises.length} esercizi</div>`;
+      d.onclick = () => this.openCat(cat.id);
+      g.appendChild(d);
+    });
+  },
+
+  // ── EXERCISES ──
+  openCat(catId) {
+    this.curCat = catId;
+    const cat = EXERCISES[catId]; if (!cat) return;
+    document.getElementById('ex-cat-icon').textContent = cat.icon;
+    document.getElementById('ex-cat-name').textContent = cat.name;
+    document.getElementById('ex-cat-desc').textContent = cat.description;
+    const list = document.getElementById('ex-list'); list.innerHTML = '';
+
+    const header = document.createElement('div');
+    header.className = 'featured-card';
+    header.style.background = this.catGradient(catId);
+    const totalDur = cat.exercises.reduce((a, e) => { const m = parseInt(e.duration); return a + (isNaN(m) ? 5 : m); }, 0);
+    header.innerHTML = `
+      <h3>${cat.name} Training</h3>
+      <div class="fc-sub">${cat.exercises.length} esercizi disponibili</div>
+      <div class="fc-stats">
+        <span class="fc-stat">⏱ ${totalDur} min totali</span>
+        <span class="fc-stat">🔥 ${cat.exercises.filter(e => e.difficultyLevel >= 2).length} avanzati</span>
+      </div>
+      <span class="fc-emoji">${cat.icon}</span>`;
+    list.appendChild(header);
+
+    const lv = this.getLevel(this.getXP());
+    cat.exercises.forEach((ex, i) => {
+      const locked = ex.unlockLevel > lv;
+      const d = document.createElement('div');
+      d.className = 'ex-card anim a' + Math.min(i + 1, 8) + (locked ? ' locked' : '');
+      d.innerHTML = `
+        <div class="ec-icon" style="background:rgba(${this.catRgb(catId)},0.15)">${ex.icon}</div>
+        <div class="ec-info"><div class="ec-name">${ex.name}</div><div class="ec-sub">${ex.subtitle}</div>
+          <div class="ec-meta"><span class="mtag d${ex.difficultyLevel}">${ex.difficulty}</span><span class="mtag">${ex.sets}x${ex.reps}</span><span class="mtag">${ex.duration}</span>${locked ? '<span class="mtag locked">Lv ' + ex.unlockLevel + '</span>' : ''}</div>
+        </div>
+        <span class="ec-arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>`;
+      if (!locked) d.onclick = () => this.openDetail(ex, catId);
+      list.appendChild(d);
+    });
+    this.go('exercises');
+  },
+
+  openDetail(ex, catId) {
+    this.curEx = ex; this.curCat = catId;
+    document.getElementById('det-name').textContent = ex.name;
+    document.getElementById('det-xp').textContent = '+' + ex.xp + ' XP';
+    document.getElementById('det-diff').textContent = ex.difficulty;
+    document.getElementById('det-target').textContent = ex.target;
+    document.getElementById('det-dur').textContent = ex.duration;
+    document.getElementById('det-sets').textContent = ex.sets;
+    document.getElementById('det-reps').textContent = ex.reps;
+    document.getElementById('det-hold').textContent = ex.holdTime ? ex.holdTime + 's' : '--';
+
+    const illust = document.getElementById('det-illust');
+    illust.innerHTML = SVG_ILLUSTRATIONS[ex.id] || SVG_ILLUSTRATIONS['default'];
+
+    const ben = document.getElementById('det-benefits'); ben.innerHTML = '';
+    ex.benefits.forEach(b => { const t = document.createElement('span'); t.className = 'ben-tag'; t.textContent = b; ben.appendChild(t); });
+
+    const steps = document.getElementById('det-steps'); steps.innerHTML = '';
+    ex.steps.forEach((s, i) => {
+      const d = document.createElement('div'); d.className = 'step';
+      d.innerHTML = `<span class="step-n">${i + 1}</span><span class="step-t">${s}</span>`;
+      steps.appendChild(d);
+    });
+    document.getElementById('det-tip').textContent = ex.tips;
+
+    this.timerReset();
+    if (ex.holdTime) {
+      this.timerTotal = ex.holdTime; this.timerSets = ex.sets || 1; this.timerSet = 1;
+      document.getElementById('timer-time').textContent = this.fmtTime(ex.holdTime);
+      document.getElementById('timer-set').textContent = 'Serie 1/' + this.timerSets;
+      document.getElementById('timer-section').style.display = 'block';
+    } else document.getElementById('timer-section').style.display = 'none';
+
+    this.go('detail');
+  },
+
+  // ── TIMER ──
+  timerToggle() { this.timerOn ? this.timerPause() : this.timerStart(); },
+  timerStart() {
+    if (this.timerSec <= 0) this.timerSec = this.timerTotal;
+    this.timerOn = true;
+    document.getElementById('btn-play').innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
+    this.timerInt = setInterval(() => {
+      this.timerSec--;
+      if (this.timerSec <= 0) {
+        if (this.timerSet < this.timerSets) {
+          this.timerSet++; this.timerSec = this.timerTotal;
+          document.getElementById('timer-set').textContent = 'Serie ' + this.timerSet + '/' + this.timerSets;
+          this.toast('🔔', 'Serie ' + this.timerSet + '!');
+        } else { this.timerPause(); this.toast('🎉', 'Completato!'); this.timerSec = 0; }
+      }
+      this.timerUpdate();
+    }, 1000);
+  },
+  timerPause() {
+    this.timerOn = false; clearInterval(this.timerInt);
+    document.getElementById('btn-play').innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg>';
+  },
+  timerReset() {
+    this.timerPause(); this.timerSec = this.timerTotal; this.timerSet = 1; this.timerUpdate();
+    document.getElementById('timer-set').textContent = 'Serie 1/' + this.timerSets;
+  },
+  timerUpdate() {
+    document.getElementById('timer-time').textContent = this.fmtTime(Math.max(0, this.timerSec));
+    const circ = 2 * Math.PI * 80;
+    document.getElementById('timer-ring').style.strokeDashoffset = circ * (1 - (this.timerTotal > 0 ? this.timerSec / this.timerTotal : 1));
+  },
+  fmtTime(s) { return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); },
+
+  completeEx() {
+    if (!this.curEx) return;
+    const log = this.getLog();
+    log.push({ id: this.curEx.id, name: this.curEx.name, icon: this.curEx.icon, cat: this.curCat, date: new Date().toISOString(), sets: this.curEx.sets, reps: this.curEx.reps });
+    localStorage.setItem('lm_log', JSON.stringify(log));
+    this.addXP(this.curEx.xp || 15);
+    this.updateStreak();
+    this.toast('✅', this.curEx.name + ' +' + (this.curEx.xp || 15) + ' XP');
+    this.timerPause();
+    setTimeout(() => this.back(), 600);
+  },
+
+  // ── NOTIFICATIONS ──
+  async enableNotif() {
+    try {
+      const perm = await Notification.requestPermission();
+      if (perm === 'granted') {
+        this.saveProf({ notif: true });
+        document.getElementById('notif-card').style.display = 'none';
+        document.getElementById('notif-toggle').checked = true;
+        this.scheduleNotifs();
+        this.toast('🔔', 'Notifiche attivate!');
+      }
+    } catch { this.toast('❌', 'Notifiche non supportate'); }
+  },
+
+  scheduleNotifs() {
+    if (!('serviceWorker' in navigator) || Notification.permission !== 'granted') return;
+    const now = new Date();
+    NOTIFICATION_SCHEDULES.forEach(ns => {
+      const target = new Date(now);
+      target.setHours(ns.hour, ns.minute, 0, 0);
+      if (target <= now) target.setDate(target.getDate() + 1);
+      const delay = target - now;
+      navigator.serviceWorker.ready.then(reg => {
+        reg.active.postMessage({ type: 'SCHEDULE_NOTIFICATION', title: ns.title, body: ns.body, delay });
+      });
+    });
+  },
+
+  // ── PROGRESS ──
+  renderProgress() {
+    const scans = this.getScans(), log = this.getLog(), streak = this.getStreak();
+    document.getElementById('st-scans').textContent = scans.length;
+    document.getElementById('st-exs').textContent = log.length;
+    document.getElementById('st-streak').textContent = streak;
+
+    if (scans.length >= 2) {
+      document.getElementById('no-chart').style.display = 'none';
+      document.getElementById('chart-canvas').style.display = 'block';
+      this.drawChart(scans);
+    } else { document.getElementById('no-chart').style.display = 'block'; document.getElementById('chart-canvas').style.display = 'none'; }
+
+    const sh = document.getElementById('scan-history'); sh.innerHTML = '';
+    if (!scans.length) { sh.innerHTML = '<p class="no-data">Nessuna scansione</p>'; }
+    else scans.slice().reverse().slice(0, 10).forEach((s, i) => {
+      const dt = new Date(s.date);
+      const prev = i < scans.length - 1 ? scans[scans.length - 2 - i] : null;
+      let delta = '';
+      if (prev) { const d = s.scores.overall - prev.scores.overall; delta = d > 0 ? `<span class="sh-delta up">+${d.toFixed(1)}</span>` : d < 0 ? `<span class="sh-delta dn">${d.toFixed(1)}</span>` : ''; }
+      const el = document.createElement('div'); el.className = 'sh-item';
+      el.innerHTML = `<div class="sh-sc">${s.scores.overall}</div><div class="sh-info"><b>${dt.toLocaleDateString('it-IT', { day: 'numeric', month: 'long' })}</b><small>Jaw: ${s.scores.jawline} | Sim: ${s.scores.symmetry} | Pelle: ${s.scores.skin}</small></div>${delta}`;
+      sh.appendChild(el);
+    });
+
+    const el = document.getElementById('ex-log'); el.innerHTML = '';
+    if (!log.length) { el.innerHTML = '<p class="no-data">Nessun esercizio</p>'; }
+    else log.slice().reverse().slice(0, 15).forEach(e => {
+      const d = document.createElement('div'); d.className = 'log-item';
+      d.innerHTML = `<span class="li-icon">${e.icon}</span><div class="li-info"><div class="li-name">${e.name}</div><div class="li-date">${new Date(e.date).toLocaleDateString('it-IT')} • ${e.sets}x${e.reps}</div></div>`;
+      el.appendChild(d);
+    });
+  },
+
+  drawChart(scans) {
+    const canvas = document.getElementById('chart-canvas');
+    const box = canvas.parentElement;
+    canvas.width = box.clientWidth - 28; canvas.height = box.clientHeight - 28;
+    const ctx = canvas.getContext('2d'), w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    const pad = { t: 16, r: 16, b: 24, l: 30 }, cw = w - pad.l - pad.r, ch = h - pad.t - pad.b;
+
+    ctx.strokeStyle = 'rgba(255,255,255,0.05)'; ctx.lineWidth = 1;
+    for (let i = 0; i <= 4; i++) {
+      const y = pad.t + (ch / 4) * i;
+      ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(w - pad.r, y); ctx.stroke();
+      ctx.fillStyle = 'rgba(255,255,255,0.25)'; ctx.font = '9px Inter'; ctx.textAlign = 'right';
+      ctx.fillText(String(10 - i * 2.5), pad.l - 6, y + 3);
+    }
+
+    const pts = scans.slice(-10).map((s, i, a) => ({
+      x: pad.l + (cw / Math.max(a.length - 1, 1)) * i,
+      y: pad.t + ch - (s.scores.overall / 10) * ch,
+      s: s.scores.overall, d: new Date(s.date)
+    }));
+    if (pts.length === 1) pts[0].x = pad.l + cw / 2;
+
+    const grad = ctx.createLinearGradient(0, pad.t, 0, h - pad.b);
+    grad.addColorStop(0, 'rgba(124,58,237,0.25)'); grad.addColorStop(1, 'rgba(124,58,237,0)');
+    ctx.beginPath(); ctx.moveTo(pts[0].x, h - pad.b);
+    pts.forEach(p => ctx.lineTo(p.x, p.y));
+    ctx.lineTo(pts[pts.length - 1].x, h - pad.b); ctx.closePath(); ctx.fillStyle = grad; ctx.fill();
+
+    const lg = ctx.createLinearGradient(pad.l, 0, w - pad.r, 0);
+    lg.addColorStop(0, '#7c3aed'); lg.addColorStop(1, '#06b6d4');
+    ctx.beginPath(); ctx.strokeStyle = lg; ctx.lineWidth = 2; ctx.lineJoin = 'round';
+    pts.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y)); ctx.stroke();
+
+    pts.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, 3.5, 0, Math.PI * 2); ctx.fillStyle = '#7c3aed'; ctx.fill(); ctx.strokeStyle = '#a78bfa'; ctx.lineWidth = 1.5; ctx.stroke(); });
+    ctx.fillStyle = 'rgba(255,255,255,0.25)'; ctx.font = '8px Inter'; ctx.textAlign = 'center';
+    pts.forEach(p => ctx.fillText(p.d.getDate() + '/' + (p.d.getMonth() + 1), p.x, h - pad.b + 14));
+  },
+
+  // ── PROFILE ──
+  renderProfile() {
+    const p = this.getProf();
+    document.getElementById('inp-name').value = p.name || '';
+    document.getElementById('inp-age').value = p.age || '';
+    document.getElementById('inp-gender').value = p.gender || 'male';
+    document.getElementById('prof-name').textContent = p.name || 'Utente';
+    const lv = this.getLevel(this.getXP());
+    document.getElementById('prof-level-label').textContent = 'Livello ' + lv + ' • ' + this.getXP() + ' XP';
+    document.getElementById('notif-toggle').checked = !!p.notif;
+    if (p.goals) document.querySelectorAll('.gc-check').forEach(c => c.checked = p.goals.includes(c.dataset.g));
+  },
+
+  // ── STORAGE ──
+  getProf() { try { return JSON.parse(localStorage.getItem('lm_prof') || '{}'); } catch { return {}; } },
+  saveProf(d) { localStorage.setItem('lm_prof', JSON.stringify({ ...this.getProf(), ...d })); },
+  loadProfile() { const p = this.getProf(); if (p.level) this.routineLevel = p.level; },
+  getScans() { try { return JSON.parse(localStorage.getItem('lm_scans') || '[]'); } catch { return []; } },
+  getLog() { try { return JSON.parse(localStorage.getItem('lm_log') || '[]'); } catch { return []; } },
+  getXP() { try { return parseInt(localStorage.getItem('lm_xp') || '0'); } catch { return 0; } },
+  addXP(n) { const xp = this.getXP() + n; localStorage.setItem('lm_xp', String(xp)); return xp; },
+  getLevel(xp) { for (let i = LEVEL_THRESHOLDS.length - 1; i >= 0; i--) { if (xp >= LEVEL_THRESHOLDS[i]) return i + 1; } return 1; },
+  getStreak() { try { return JSON.parse(localStorage.getItem('lm_streak') || '{"c":0}').c || 0; } catch { return 0; } },
+  updateStreak() {
+    const today = new Date().toDateString();
+    let d; try { d = JSON.parse(localStorage.getItem('lm_streak') || '{}'); } catch { d = {}; }
+    if (d.d === today) return;
+    const y = new Date(); y.setDate(y.getDate() - 1);
+    d.c = d.d === y.toDateString() ? (d.c || 0) + 1 : 1;
+    d.d = today;
+    localStorage.setItem('lm_streak', JSON.stringify(d));
+  },
+  findExInCat(id, cat) { return EXERCISES[cat]?.exercises.find(e => e.id === id); },
+
+  // ── UTIL ──
+  scoreCol(s) { return s >= 8 ? '#10b981' : s >= 6.5 ? '#a78bfa' : s >= 5 ? '#f59e0b' : '#ef4444'; },
+  animNum(id, target, dur) {
+    const el = document.getElementById(id); const t0 = performance.now();
+    const up = (t) => { const p = Math.min((t - t0) / dur, 1); el.textContent = (target * (1 - (1 - p) ** 3)).toFixed(1); if (p < 1) requestAnimationFrame(up); };
+    requestAnimationFrame(up);
+  },
+  toast(icon, msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toast-icon').textContent = icon;
+    document.getElementById('toast-msg').textContent = msg;
+    t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500);
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => App.init());

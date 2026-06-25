@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="LooksMax Pro">
+  <meta name="theme-color" content="#07071a">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💎</text></svg>">
+  <title>LooksMax Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- ══════ SPLASH ══════ -->
+    <div id="screen-splash" class="screen active">
+      <div class="splash-bg">
+        <div class="glow glow-1"></div>
+        <div class="glow glow-2"></div>
+        <div class="glow glow-3"></div>
+        <div class="particles" id="particles"></div>
+      </div>
+      <div class="splash-content">
+        <div class="logo-wrap">
+          <div class="logo-icon">💎</div>
+          <h1 class="logo-title">LooksMax<span>Pro</span></h1>
+          <p class="logo-sub">AI FACE ANALYSIS & TRAINING</p>
+        </div>
+        <p class="splash-desc">Scansiona il tuo viso con l'AI, ricevi un piano personalizzato di esercizi e routine per massimizzare il tuo potenziale.</p>
+        <button class="btn-hero" id="btn-start">
+          <span>Inizia Scansione</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <button class="btn-ghost" id="btn-skip">Vai alla Dashboard</button>
+      </div>
+    </div>
+
+    <!-- ══════ SCANNER ══════ -->
+    <div id="screen-scanner" class="screen">
+      <div class="topbar">
+        <button class="btn-icon" id="btn-scanner-back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+        <h2>Face Scanner</h2>
+        <span class="badge" id="scan-step-badge">1/2</span>
+      </div>
+      <div class="scanner-wrap">
+        <div class="scan-prompt">
+          <h3 id="scan-title">📸 Foto Frontale</h3>
+          <p id="scan-desc">Guarda dritto nella fotocamera. Espressione neutra, luce uniforme.</p>
+        </div>
+        <div class="cam-box">
+          <video id="camera" autoplay playsinline muted></video>
+          <canvas id="cam-canvas" style="display:none"></canvas>
+          <div class="cam-guide">
+            <svg viewBox="0 0 280 380" fill="none"><ellipse cx="140" cy="180" rx="100" ry="140" stroke="url(#cg)" stroke-width="2.5" stroke-dasharray="10,6" opacity="0.7"/><defs><linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient></defs></svg>
+            <span class="corner c-tl"></span><span class="corner c-tr"></span><span class="corner c-bl"></span><span class="corner c-br"></span>
+          </div>
+          <div class="cam-status" id="cam-status">Posiziona il viso nell'ovale</div>
+        </div>
+        <button class="btn-shutter" id="btn-capture"><div class="shutter-ring"><div class="shutter-dot"></div></div></button>
+        <p class="hint">Tocca per scattare</p>
+      </div>
+      <div class="preview-overlay hidden" id="preview-overlay">
+        <img id="preview-img" alt="Preview">
+        <div class="preview-btns">
+          <button class="btn-pill btn-pill-outline" id="btn-retake">Riscatta</button>
+          <button class="btn-pill" id="btn-confirm">Conferma</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ ANALYZING ══════ -->
+    <div id="screen-analyzing" class="screen">
+      <div class="analyze-wrap">
+        <div class="analyze-anim">
+          <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+          <span class="analyze-emoji">🔬</span>
+        </div>
+        <h2>Analisi AI in corso</h2>
+        <p class="analyze-status" id="analyze-status">Rilevamento landmark facciali</p>
+        <div class="pbar-wrap"><div class="pbar"><div class="pbar-fill" id="pbar-fill"></div></div><span id="pbar-pct">0%</span></div>
+        <div class="analyze-steps">
+          <div class="astep" id="as1"><i></i>Rilevamento volto</div>
+          <div class="astep" id="as2"><i></i>Analisi simmetria</div>
+          <div class="astep" id="as3"><i></i>Proporzioni e rapporto aureo</div>
+          <div class="astep" id="as4"><i></i>Valutazione struttura ossea</div>
+          <div class="astep" id="as5"><i></i>Piano personalizzato</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ RESULTS ══════ -->
+    <div id="screen-results" class="screen">
+      <div class="res-scroll">
+        <div class="res-top-bar">
+          <button class="btn-icon" id="btn-res-back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+          <div class="res-photo" id="res-photo"></div>
+        </div>
+        <div class="res-hero">
+          <h1 id="res-main-score">You're a <span id="res-score-val">0.0</span></h1>
+          <p id="res-percentile">Analisi in corso...</p>
+        </div>
+        <div class="res-list" id="res-list"></div>
+        <h3 class="sec-title" style="margin-top:28px">🎯 Piano Personalizzato</h3>
+        <p class="sec-sub">Esercizi per migliorare i tuoi punti deboli</p>
+        <div id="personal-recs"></div>
+        <button class="btn-view-analysis" id="btn-to-dash">Vai alla Dashboard</button>
+      </div>
+    </div>
+
+    <!-- ══════ DASHBOARD ══════ -->
+    <div id="screen-dashboard" class="screen">
+      <div class="dash-scroll">
+        <div class="dash-top">
+          <div><h2 id="dash-hello">Dashboard</h2><p class="text-muted" id="dash-date"></p></div>
+          <div class="dash-mini-score" id="dash-mini-score"><span class="ms-val">--</span><small>/10</small></div>
+        </div>
+
+        <div class="xp-bar-card" id="xp-card">
+          <div class="xp-top"><span class="xp-level" id="xp-level">Lv 1</span><span class="xp-pts" id="xp-pts">0 XP</span></div>
+          <div class="xp-bar"><div class="xp-fill" id="xp-fill"></div></div>
+          <p class="xp-next" id="xp-next">50 XP per il prossimo livello</p>
+        </div>
+
+        <div class="tip-banner" id="tip-banner"><span class="tip-bulb">💡</span><p id="tip-text"></p></div>
+
+        <h3 class="sec-title">Analisi Facciale</h3>
+        <div class="mini-scores" id="mini-scores"></div>
+        <button class="btn-outline-full" id="btn-new-scan">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+          Nuova Scansione
+        </button>
+
+        <h3 class="sec-title">Routine di Oggi</h3>
+        <div class="routine-tabs" id="routine-tabs">
+          <button class="rtab active" data-lv="beginner">Base</button>
+          <button class="rtab" data-lv="intermediate">Medio</button>
+          <button class="rtab" data-lv="advanced">Pro</button>
+        </div>
+        <div id="routine-list"></div>
+
+        <h3 class="sec-title">Aree di Allenamento</h3>
+        <div class="cat-grid" id="cat-grid"></div>
+
+        <div class="notif-card" id="notif-card">
+          <div class="notif-info">
+            <span>🔔</span>
+            <div><b>Notifiche</b><p class="text-muted">Ricevi promemoria per esercizi e routine</p></div>
+          </div>
+          <button class="btn-pill btn-pill-sm" id="btn-enable-notif">Attiva</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ EXERCISES LIST ══════ -->
+    <div id="screen-exercises" class="screen">
+      <div class="topbar">
+        <button class="btn-icon" id="btn-ex-back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+        <div class="topbar-info"><span id="ex-cat-icon" class="topbar-emoji">🦴</span><h2 id="ex-cat-name">Jawline</h2></div>
+      </div>
+      <p class="screen-desc" id="ex-cat-desc"></p>
+      <div class="ex-list" id="ex-list"></div>
+    </div>
+
+    <!-- ══════ EXERCISE DETAIL ══════ -->
+    <div id="screen-detail" class="screen">
+      <div class="topbar">
+        <button class="btn-icon" id="btn-det-back"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+        <h2 id="det-name">Esercizio</h2>
+        <span class="badge badge-xp" id="det-xp">+15 XP</span>
+      </div>
+      <div class="det-scroll">
+        <div class="det-illust" id="det-illust"></div>
+        <div class="det-chips">
+          <div class="chip"><small>Difficoltà</small><b id="det-diff">--</b></div>
+          <div class="chip"><small>Target</small><b id="det-target">--</b></div>
+          <div class="chip"><small>Durata</small><b id="det-dur">--</b></div>
+        </div>
+        <div class="det-numbers">
+          <div class="dn"><b id="det-sets">3</b><small>Serie</small></div>
+          <div class="dn-div"></div>
+          <div class="dn"><b id="det-reps">15</b><small>Reps</small></div>
+          <div class="dn-div"></div>
+          <div class="dn"><b id="det-hold">5s</b><small>Hold</small></div>
+        </div>
+        <h4>Benefici</h4>
+        <div class="benefits" id="det-benefits"></div>
+        <h4>Come Eseguire</h4>
+        <div class="steps" id="det-steps"></div>
+        <div class="protip"><span>💡</span><p id="det-tip"></p></div>
+
+        <div class="timer-section" id="timer-section">
+          <div class="timer-ring-wrap">
+            <svg class="timer-svg" viewBox="0 0 180 180"><circle cx="90" cy="90" r="80" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="6"/><circle id="timer-ring" cx="90" cy="90" r="80" fill="none" stroke="url(#trg)" stroke-width="6" stroke-dasharray="503" stroke-dashoffset="0" stroke-linecap="round" transform="rotate(-90 90 90)"/><defs><linearGradient id="trg" x1="0%" y1="0%" x2="100%"><stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#10b981"/></linearGradient></defs></svg>
+            <div class="timer-val"><span id="timer-time">00:00</span><small id="timer-set">Serie 1/3</small></div>
+          </div>
+          <div class="timer-btns">
+            <button class="btn-timer-play" id="btn-play"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg></button>
+            <button class="btn-timer-reset" id="btn-reset"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></button>
+          </div>
+        </div>
+
+        <button class="btn-hero btn-block btn-complete" id="btn-complete">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <span>Completa Esercizio</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ══════ PROGRESS ══════ -->
+    <div id="screen-progress" class="screen">
+      <div class="prog-scroll">
+        <h2 class="screen-title">Progressi</h2>
+        <div class="stat-row">
+          <div class="stat-box"><b id="st-scans">0</b><small>Scansioni</small></div>
+          <div class="stat-box"><b id="st-exs">0</b><small>Esercizi</small></div>
+          <div class="stat-box"><b id="st-streak">0</b><small>Streak 🔥</small></div>
+        </div>
+        <h3 class="sec-title">Storico Punteggi</h3>
+        <div class="chart-box"><canvas id="chart-canvas"></canvas><p class="no-data" id="no-chart">Fai almeno 2 scansioni per il grafico</p></div>
+        <h3 class="sec-title">Scansioni</h3>
+        <div id="scan-history"><p class="no-data">Nessuna scansione</p></div>
+        <h3 class="sec-title">Esercizi Completati</h3>
+        <div id="ex-log"><p class="no-data">Nessun esercizio completato</p></div>
+      </div>
+    </div>
+
+    <!-- ══════ PROFILE ══════ -->
+    <div id="screen-profile" class="screen">
+      <div class="prof-scroll">
+        <h2 class="screen-title">Profilo</h2>
+        <div class="prof-avatar"><div class="avatar-ring" id="prof-avatar"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h3 id="prof-name">Utente</h3><p class="text-muted" id="prof-level-label">Livello 1</p></div>
+
+        <h4>Obiettivi</h4>
+        <div class="goal-chips">
+          <label class="gc"><input type="checkbox" class="gc-check" data-g="jawline"><span>Jawline definita</span></label>
+          <label class="gc"><input type="checkbox" class="gc-check" data-g="cheekbones"><span>Zigomi scolpiti</span></label>
+          <label class="gc"><input type="checkbox" class="gc-check" data-g="skin"><span>Pelle perfetta</span></label>
+          <label class="gc"><input type="checkbox" class="gc-check" data-g="symmetry"><span>Simmetria</span></label>
+          <label class="gc"><input type="checkbox" class="gc-check" data-g="posture"><span>Postura</span></label>
+          <label class="gc"><input type="checkbox" class="gc-check" data-g="overall"><span>Glow up totale</span></label>
+        </div>
+
+        <h4>Informazioni</h4>
+        <div class="form-grid">
+          <div class="form-field"><label>Nome</label><input type="text" id="inp-name" placeholder="Il tuo nome"></div>
+          <div class="form-field"><label>Età</label><input type="number" id="inp-age" placeholder="Età" min="13" max="99"></div>
+          <div class="form-field"><label>Genere</label><select id="inp-gender"><option value="male">Maschio</option><option value="female">Femmina</option></select></div>
+        </div>
+
+        <h4>Notifiche</h4>
+        <div class="notif-toggle-row">
+          <span>Promemoria esercizi</span>
+          <label class="toggle"><input type="checkbox" id="notif-toggle"><span class="slider"></span></label>
+        </div>
+
+        <button class="btn-outline-full btn-danger" id="btn-reset-all">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          Reset Tutti i Dati
+        </button>
+        <p class="app-ver">LooksMax Pro v2.0<br><small>I risultati possono variare. Consulta un professionista.</small></p>
+      </div>
+    </div>
+
+    <!-- ══════ BOTTOM NAV ══════ -->
+    <nav class="bnav hidden" id="bnav">
+      <button class="bnav-item active" data-s="dashboard"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></button>
+      <button class="bnav-item" data-s="scanner"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span>Scan</span></button>
+      <button class="bnav-item" data-s="progress"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span>Progressi</span></button>
+      <button class="bnav-item" data-s="profile"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profilo</span></button>
+    </nav>
+
+    <!-- ══════ TOAST ══════ -->
+    <div class="toast" id="toast"><span id="toast-icon">✅</span><span id="toast-msg"></span></div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
