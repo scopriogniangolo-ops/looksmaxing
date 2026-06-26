@@ -148,6 +148,15 @@
           <div class="wt-bar"><div class="wt-fill" id="wt-fill"></div></div>
         </div>
 
+        <div class="daily-checklist" id="daily-checklist">
+          <div class="dcl-top">
+            <span class="dcl-icon">✅</span>
+            <div class="dcl-info"><b>Checklist Giornaliera</b><p class="text-muted" id="dcl-progress">0/7 completati</p></div>
+          </div>
+          <div class="dcl-items" id="dcl-items"></div>
+          <div class="dcl-bar"><div class="dcl-fill" id="dcl-fill"></div></div>
+        </div>
+
         <h3 class="sec-title">Analisi Facciale</h3>
         <div class="mini-scores" id="mini-scores"></div>
         <button class="btn-outline-full" id="btn-new-scan">
@@ -272,6 +281,11 @@
         <h2 class="screen-title">Programmi</h2>
         <p class="text-muted" style="margin:-10px 0 16px">Guide approfondite per ogni area del looksmaxing</p>
         <div id="programs-grid"></div>
+
+        <h3 class="sec-title" style="margin-top:24px">🛒 Prodotti Consigliati</h3>
+        <p class="text-muted" style="margin:-6px 0 14px">I migliori prodotti per il tuo percorso</p>
+        <div class="products-tabs" id="products-tabs"></div>
+        <div class="products-list" id="products-list"></div>
       </div>
     </div>
 
@@ -313,6 +327,23 @@
           <div class="stat-box"><b id="st-exs">0</b><small>Esercizi</small></div>
           <div class="stat-box"><b id="st-streak">0</b><small>Streak 🔥</small></div>
         </div>
+        <h3 class="sec-title">Calendario Streak</h3>
+        <div class="streak-cal" id="streak-cal">
+          <div class="streak-header">
+            <span class="streak-fire">🔥</span>
+            <span class="streak-count" id="streak-count-val">0 giorni</span>
+          </div>
+          <div class="streak-grid" id="streak-grid"></div>
+          <div class="streak-legend"><span class="sl-dot sl-active"></span> Attivo <span class="sl-dot sl-inactive"></span> Nessuna attivita</div>
+        </div>
+
+        <h3 class="sec-title">Misure Corporee</h3>
+        <div class="body-measures" id="body-measures">
+          <div class="bm-inputs" id="bm-inputs"></div>
+          <button class="btn-pill bm-save-btn" id="bm-save">Salva Misure</button>
+          <div class="bm-history" id="bm-history"></div>
+        </div>
+
         <h3 class="sec-title">Storico Punteggi</h3>
         <div class="chart-box"><canvas id="chart-canvas"></canvas><p class="no-data" id="no-chart">Fai almeno 2 scansioni per il grafico</p></div>
         <h3 class="sec-title">Scansioni</h3>

@@ -1432,6 +1432,42 @@ const PROGRAMS = [
   }
 ];
 
+const RECOMMENDED_PRODUCTS = [
+  { name: 'CeraVe Detergente', price: '~€12', category: 'Skincare', icon: '🧴', bg: 'rgba(236,72,153,0.12)', note: 'Detergente delicato pH 5.5, non aggredisce la barriera cutanea' },
+  { name: 'La Roche-Posay SPF50', price: '~€15', category: 'Skincare', icon: '☀️', bg: 'rgba(236,72,153,0.12)', note: 'Protezione solare alta, anti-aging #1, uso quotidiano' },
+  { name: 'The Ordinary Retinol 0.5%', price: '~€8', category: 'Skincare', icon: '✨', bg: 'rgba(236,72,153,0.12)', note: 'Gold standard anti-aging, stimola collagene e turnover cellulare' },
+  { name: 'The Ordinary Niacinamide 10%', price: '~€7', category: 'Skincare', icon: '💧', bg: 'rgba(236,72,153,0.12)', note: 'Riduce pori, controlla sebo, migliora texture della pelle' },
+  { name: 'The Ordinary Vitamina C', price: '~€10', category: 'Skincare', icon: '🍊', bg: 'rgba(236,72,153,0.12)', note: 'Antiossidante potente, illumina la pelle, stimola collagene' },
+  { name: 'Vitamina D3 4000UI', price: '~€10', category: 'Integratori', icon: '☀️', bg: 'rgba(245,158,11,0.12)', note: 'Essenziale per ossa, testosterone e sistema immunitario' },
+  { name: 'Omega-3', price: '~€15', category: 'Integratori', icon: '🐟', bg: 'rgba(245,158,11,0.12)', note: 'Anti-infiammatorio, pelle luminosa, salute cardiovascolare' },
+  { name: 'Zinco 30mg', price: '~€8', category: 'Integratori', icon: '💪', bg: 'rgba(245,158,11,0.12)', note: 'Pelle chiara, testosterone, sistema immunitario' },
+  { name: 'Collagene Idrolizzato', price: '~€20', category: 'Integratori', icon: '✨', bg: 'rgba(245,158,11,0.12)', note: '10g/giorno per elasticita pelle, capelli e unghie' },
+  { name: 'Ashwagandha 600mg', price: '~€15', category: 'Integratori', icon: '🌿', bg: 'rgba(245,158,11,0.12)', note: 'Riduce cortisolo del 30%, migliora sonno e testosterone' },
+  { name: 'Falim Gum', price: '~€5', category: 'Jaw Training', icon: '🫧', bg: 'rgba(249,115,22,0.12)', note: 'Gomma dura turca per ipertrofia masseteri' },
+  { name: 'Mastic Gum', price: '~€15', category: 'Jaw Training', icon: '🫧', bg: 'rgba(249,115,22,0.12)', note: 'Resina naturale, la migliore per sviluppare la mascella' },
+  { name: 'Jawliner', price: '~€25', category: 'Jaw Training', icon: '🦴', bg: 'rgba(249,115,22,0.12)', note: 'Attrezzo in silicone per allenamento isometrico mascella' },
+  { name: 'Gua Sha in Giada', price: '~€10', category: 'Tools', icon: '🪨', bg: 'rgba(6,182,212,0.12)', note: 'Massaggio linfatico, sgonfia il viso, definisce jawline' },
+  { name: 'Dermaroller 0.5mm', price: '~€12', category: 'Tools', icon: '🔬', bg: 'rgba(6,182,212,0.12)', note: 'Microneedling domiciliare, stimola collagene +400%' },
+  { name: 'Mouth Tape', price: '~€8', category: 'Tools', icon: '🩹', bg: 'rgba(6,182,212,0.12)', note: 'Cerotto per respirazione nasale notturna, supporta il mewing' }
+];
+
+const DAILY_CHECKLIST_ITEMS = [
+  'Mewing praticato',
+  'Acqua 3L',
+  'Skincare mattina',
+  'Skincare sera',
+  'Esercizi facciali',
+  'Postura controllata',
+  'Niente zuccheri'
+];
+
+const BODY_MEASURE_FIELDS = [
+  { id: 'jaw', label: 'Mandibola', unit: 'cm', step: 0.5, min: 20, max: 50, default: 30 },
+  { id: 'neck', label: 'Collo', unit: 'cm', step: 0.5, min: 25, max: 55, default: 36 },
+  { id: 'bf', label: 'Grasso %', unit: '%', step: 0.5, min: 3, max: 40, default: 15 },
+  { id: 'weight', label: 'Peso', unit: 'kg', step: 0.5, min: 30, max: 200, default: 70 }
+];
+
 const ROUTINE_ALTERNATIVES = {
   mewing: [
     { id: 'basic-mewing', name: 'Basic Mewing', desc: 'Postura base — ideale per iniziare', default: true },

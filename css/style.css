@@ -494,6 +494,70 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .toast{position:fixed;top:calc(var(--safe-t) + 16px);left:50%;transform:translateX(-50%) translateY(-80px);padding:11px 22px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-full);display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;z-index:300;transition:transform .4s cubic-bezier(.175,.885,.32,1.275);box-shadow:0 8px 32px rgba(0,0,0,0.5)}
 .toast.show{transform:translateX(-50%) translateY(0)}
 
+/* ══════ DAILY CHECKLIST ══════ */
+.daily-checklist{padding:16px;background:linear-gradient(135deg,rgba(16,185,129,0.1),rgba(16,185,129,0.04));border:1px solid rgba(16,185,129,0.2);border-radius:var(--r);margin-bottom:16px}
+.dcl-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.dcl-icon{font-size:24px}
+.dcl-info b{font-size:14px;display:block}
+.dcl-items{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.dcl-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--card);border:1px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;font-size:13px;font-weight:500}
+.dcl-item:active{background:var(--card-h)}
+.dcl-item.checked{background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.25)}
+.dcl-item .dcl-check{width:22px;height:22px;border-radius:6px;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:11px;color:#fff}
+.dcl-item.checked .dcl-check{background:var(--green);border-color:var(--green)}
+.dcl-item.checked .dcl-check::after{content:'\2713'}
+.dcl-item .dcl-label{flex:1;color:var(--t2)}
+.dcl-item.checked .dcl-label{color:var(--green);text-decoration:line-through}
+.dcl-bar{width:100%;height:6px;background:var(--glass);border-radius:var(--r-full);overflow:hidden}
+.dcl-fill{height:100%;background:linear-gradient(90deg,#10b981,#34d399);border-radius:var(--r-full);transition:width .4s ease;width:0}
+
+/* ══════ STREAK CALENDAR ══════ */
+.streak-cal{padding:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:16px}
+.streak-header{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.streak-fire{font-size:28px}
+.streak-count{font-size:22px;font-weight:900;background:var(--grad-warm);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.streak-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin-bottom:10px}
+.streak-day{aspect-ratio:1;border-radius:4px;background:rgba(255,255,255,0.04);position:relative;display:flex;align-items:center;justify-content:center}
+.streak-day.active{background:var(--green);box-shadow:0 0 6px rgba(16,185,129,0.3)}
+.streak-day .sd-num{font-size:8px;color:var(--t3);font-weight:600}
+.streak-day.active .sd-num{color:#fff}
+.streak-day.today{border:1.5px solid var(--accent2)}
+.streak-legend{display:flex;align-items:center;gap:6px;font-size:10px;color:var(--t3)}
+.sl-dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+.sl-active{background:var(--green)}
+.sl-inactive{background:rgba(255,255,255,0.04)}
+
+/* ══════ BODY MEASUREMENTS ══════ */
+.body-measures{padding:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);margin-bottom:16px}
+.bm-inputs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.bm-field{padding:10px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:10px;text-align:center}
+.bm-field label{display:block;font-size:9px;color:var(--t3);font-weight:600;text-transform:uppercase;letter-spacing:.3px;margin-bottom:6px}
+.bm-field .bm-row{display:flex;align-items:center;justify-content:center;gap:8px}
+.bm-field .bm-btn{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);background:var(--glass);color:var(--t1);font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.bm-field .bm-btn:active{transform:scale(.9);background:var(--card-h)}
+.bm-field .bm-val{font-size:18px;font-weight:800;min-width:44px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.bm-field .bm-unit{font-size:10px;color:var(--t3);margin-top:2px}
+.bm-save-btn{width:100%;margin-bottom:12px}
+.bm-history{max-height:200px;overflow-y:auto;scrollbar-width:none}
+.bm-history::-webkit-scrollbar{display:none}
+.bm-entry{display:flex;align-items:center;gap:8px;padding:8px 10px;background:rgba(255,255,255,0.02);border-radius:8px;margin-bottom:4px;font-size:11px}
+.bm-entry .bm-date{color:var(--t3);font-weight:600;min-width:60px}
+.bm-entry .bm-vals{flex:1;color:var(--t2);display:flex;flex-wrap:wrap;gap:6px}
+.bm-entry .bm-tag{padding:2px 6px;background:var(--glass);border-radius:var(--r-full);font-size:9px;font-weight:600}
+
+/* ══════ PRODUCTS ══════ */
+.products-tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.products-tabs::-webkit-scrollbar{display:none}
+.prod-tab{padding:8px 14px;background:var(--card);border:1px solid var(--border);border-radius:var(--r-full);color:var(--t2);font-size:11px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0}
+.prod-tab.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.products-list{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.prod-card{display:flex;align-items:center;gap:12px;padding:14px;background:var(--card);border:1px solid var(--border);border-radius:var(--r);transition:all .2s}
+.prod-card .pc-emoji{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.prod-card .pc-info{flex:1;min-width:0}
+.prod-card .pc-pname{font-size:13px;font-weight:700;margin-bottom:2px}
+.prod-card .pc-note{font-size:11px;color:var(--t2);line-height:1.4}
+.prod-card .pc-price{font-size:14px;font-weight:800;color:var(--green);flex-shrink:0;white-space:nowrap}
+
 /* ══════ ANIMATIONS ══════ */
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 .anim{animation:fadeUp .4s ease both}

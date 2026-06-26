@@ -352,6 +352,7 @@ const App = {
 
     this.renderXP();
     this.renderWater();
+    this.renderChecklist();
     this.renderMiniScores();
     this.renderRoutine();
     this.renderCatGrid();
@@ -666,18 +667,42 @@ const App = {
 
   // ── TIMER ──
   timerToggle() { this.timerOn ? this.timerPause() : this.timerStart(); },
+  timerBeep(freq, dur) {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.frequency.value = freq || 880;
+      gain.gain.value = 0.3;
+      osc.start(); osc.stop(ctx.currentTime + (dur || 0.15));
+    } catch(e) {}
+  },
+  timerVibrate(pattern) {
+    try { if (navigator.vibrate) navigator.vibrate(pattern); } catch(e) {}
+  },
   timerStart() {
     if (this.timerSec <= 0) this.timerSec = this.timerTotal;
     this.timerOn = true;
     document.getElementById('btn-play').innerHTML = '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>';
     this.timerInt = setInterval(() => {
       this.timerSec--;
+      if (this.timerSec === 3 || this.timerSec === 2 || this.timerSec === 1) {
+        this.timerBeep(660, 0.1);
+        this.timerVibrate([100]);
+      }
       if (this.timerSec <= 0) {
+        this.timerBeep(1200, 0.3);
+        this.timerVibrate([200, 100, 200]);
         if (this.timerSet < this.timerSets) {
           this.timerSet++; this.timerSec = this.timerTotal;
           document.getElementById('timer-set').textContent = 'Serie ' + this.timerSet + '/' + this.timerSets;
           this.toast('🔔', 'Serie ' + this.timerSet + '!');
-        } else { this.timerPause(); this.toast('🎉', 'Completato!'); this.timerSec = 0; }
+        } else {
+          this.timerBeep(1400, 0.5);
+          this.timerVibrate([200, 100, 200, 100, 300]);
+          this.timerPause(); this.toast('🎉', 'Completato!'); this.timerSec = 0;
+        }
       }
       this.timerUpdate();
     }, 1000);
@@ -743,6 +768,9 @@ const App = {
     document.getElementById('st-scans').textContent = scans.length;
     document.getElementById('st-exs').textContent = log.length;
     document.getElementById('st-streak').textContent = streak;
+
+    this.renderStreakCalendar();
+    this.renderBodyMeasures();
 
     if (scans.length >= 2) {
       document.getElementById('no-chart').style.display = 'none';
@@ -990,6 +1018,7 @@ const App = {
       card.onclick = () => this.openProgram(p);
       g.appendChild(card);
     });
+    this.renderProducts();
   },
 
   openProgram(prog) {
@@ -1132,6 +1161,138 @@ const App = {
     }
     document.getElementById('wt-value').textContent = liters.toFixed(1);
     document.getElementById('wt-fill').style.width = Math.min(100, (liters / 3) * 100) + '%';
+  },
+
+  // ── DAILY CHECKLIST ──
+  renderChecklist() {
+    const container = document.getElementById('dcl-items');
+    if (!container) return;
+    container.innerHTML = '';
+    const today = new Date().toDateString();
+    let data; try { data = JSON.parse(localStorage.getItem('lm_checklist') || '{}'); } catch { data = {}; }
+    if (data.date !== today) { data = { date: today, checked: [] }; localStorage.setItem('lm_checklist', JSON.stringify(data)); }
+    DAILY_CHECKLIST_ITEMS.forEach((item, i) => {
+      const isChecked = data.checked.includes(i);
+      const el = document.createElement('div');
+      el.className = 'dcl-item' + (isChecked ? ' checked' : '');
+      el.innerHTML = '<div class="dcl-check"></div><span class="dcl-label">' + item + '</span>';
+      el.onclick = () => {
+        let d; try { d = JSON.parse(localStorage.getItem('lm_checklist') || '{}'); } catch { d = {}; }
+        if (d.date !== today) d = { date: today, checked: [] };
+        if (d.checked.includes(i)) { d.checked = d.checked.filter(x => x !== i); }
+        else { d.checked.push(i); }
+        localStorage.setItem('lm_checklist', JSON.stringify(d));
+        this.renderChecklist();
+      };
+      container.appendChild(el);
+    });
+    const count = data.checked.length;
+    const total = DAILY_CHECKLIST_ITEMS.length;
+    document.getElementById('dcl-progress').textContent = count + '/' + total + ' completati';
+    document.getElementById('dcl-fill').style.width = (count / total * 100) + '%';
+  },
+
+  // ── STREAK CALENDAR ──
+  renderStreakCalendar() {
+    const grid = document.getElementById('streak-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    const log = this.getLog();
+    const activeDates = new Set();
+    log.forEach(e => { activeDates.add(new Date(e.date).toDateString()); });
+    const today = new Date();
+    const todayStr = today.toDateString();
+    let streak = 0;
+    for (let i = 0; i < 365; i++) {
+      const d = new Date(); d.setDate(d.getDate() - i);
+      if (activeDates.has(d.toDateString())) streak++;
+      else break;
+    }
+    document.getElementById('streak-count-val').textContent = streak + ' giorn' + (streak === 1 ? 'o' : 'i');
+    for (let i = 29; i >= 0; i--) {
+      const d = new Date(); d.setDate(d.getDate() - i);
+      const dateStr = d.toDateString();
+      const isActive = activeDates.has(dateStr);
+      const isToday = dateStr === todayStr;
+      const cell = document.createElement('div');
+      cell.className = 'streak-day' + (isActive ? ' active' : '') + (isToday ? ' today' : '');
+      cell.innerHTML = '<span class="sd-num">' + d.getDate() + '</span>';
+      grid.appendChild(cell);
+    }
+  },
+
+  // ── BODY MEASUREMENTS ──
+  bmValues: {},
+  renderBodyMeasures() {
+    const inputs = document.getElementById('bm-inputs');
+    const history = document.getElementById('bm-history');
+    if (!inputs) return;
+    inputs.innerHTML = '';
+    BODY_MEASURE_FIELDS.forEach(f => {
+      if (this.bmValues[f.id] === undefined) this.bmValues[f.id] = f.default;
+      const div = document.createElement('div');
+      div.className = 'bm-field';
+      div.innerHTML = '<label>' + f.label + '</label><div class="bm-row"><button class="bm-btn" data-f="' + f.id + '" data-d="-1">&minus;</button><span class="bm-val" id="bm-v-' + f.id + '">' + this.bmValues[f.id] + '</span><button class="bm-btn" data-f="' + f.id + '" data-d="1">+</button></div><div class="bm-unit">' + f.unit + '</div>';
+      div.querySelectorAll('.bm-btn').forEach(btn => {
+        btn.onclick = () => {
+          const field = BODY_MEASURE_FIELDS.find(x => x.id === btn.dataset.f);
+          const delta = parseInt(btn.dataset.d) * field.step;
+          this.bmValues[field.id] = Math.round(Math.max(field.min, Math.min(field.max, this.bmValues[field.id] + delta)) * 10) / 10;
+          document.getElementById('bm-v-' + field.id).textContent = this.bmValues[field.id];
+        };
+      });
+      inputs.appendChild(div);
+    });
+    const saveBtn = document.getElementById('bm-save');
+    if (saveBtn) {
+      const newBtn = saveBtn.cloneNode(true);
+      saveBtn.parentNode.replaceChild(newBtn, saveBtn);
+      newBtn.onclick = () => {
+        let measures; try { measures = JSON.parse(localStorage.getItem('lm_measures') || '[]'); } catch { measures = []; }
+        const entry = { date: new Date().toISOString() };
+        BODY_MEASURE_FIELDS.forEach(f => { entry[f.id] = this.bmValues[f.id]; });
+        measures.push(entry);
+        localStorage.setItem('lm_measures', JSON.stringify(measures));
+        this.renderBodyMeasures();
+        this.toast('📏', 'Misure salvate!');
+      };
+    }
+    history.innerHTML = '';
+    let measures; try { measures = JSON.parse(localStorage.getItem('lm_measures') || '[]'); } catch { measures = []; }
+    if (!measures.length) { history.innerHTML = '<p class="no-data" style="padding:8px;font-size:11px">Nessuna misurazione salvata</p>'; return; }
+    measures.slice().reverse().slice(0, 10).forEach(m => {
+      const d = new Date(m.date);
+      const el = document.createElement('div'); el.className = 'bm-entry';
+      let tags = '';
+      BODY_MEASURE_FIELDS.forEach(f => { if (m[f.id] !== undefined) tags += '<span class="bm-tag">' + f.label + ': ' + m[f.id] + f.unit + '</span>'; });
+      el.innerHTML = '<span class="bm-date">' + d.toLocaleDateString('it-IT', { day: 'numeric', month: 'short' }) + '</span><div class="bm-vals">' + tags + '</div>';
+      history.appendChild(el);
+    });
+  },
+
+  // ── PRODUCTS ──
+  activeProductCat: 'Tutti',
+  renderProducts() {
+    const tabsContainer = document.getElementById('products-tabs');
+    const listContainer = document.getElementById('products-list');
+    if (!tabsContainer || !listContainer) return;
+    tabsContainer.innerHTML = '';
+    listContainer.innerHTML = '';
+    const categories = ['Tutti', ...new Set(RECOMMENDED_PRODUCTS.map(p => p.category))];
+    categories.forEach(cat => {
+      const btn = document.createElement('button');
+      btn.className = 'prod-tab' + (cat === this.activeProductCat ? ' active' : '');
+      btn.textContent = cat;
+      btn.onclick = () => { this.activeProductCat = cat; this.renderProducts(); };
+      tabsContainer.appendChild(btn);
+    });
+    const filtered = this.activeProductCat === 'Tutti' ? RECOMMENDED_PRODUCTS : RECOMMENDED_PRODUCTS.filter(p => p.category === this.activeProductCat);
+    filtered.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'prod-card';
+      card.innerHTML = '<div class="pc-emoji" style="background:' + p.bg + '">' + p.icon + '</div><div class="pc-info"><div class="pc-pname">' + p.name + '</div><div class="pc-note">' + p.note + '</div></div><span class="pc-price">' + p.price + '</span>';
+      listContainer.appendChild(card);
+    });
   },
 
   // ── UTIL ──
