@@ -769,9 +769,10 @@ const App = {
 
   renderPersonalRoutine(container) {
     const saved = this.getCustomRoutine();
+    const intensities = this.getIntensities();
     const hasExercises = Object.values(saved).some(arr => arr && arr.length > 0);
     if (!hasExercises) {
-      container.innerHTML = `<div style="text-align:center;padding:32px 16px"><p style="font-size:14px;color:var(--t2);margin-bottom:16px">La tua routine personale è vuota.</p><p style="font-size:12px;color:var(--t3);margin-bottom:20px">Fai una scansione facciale, tocca i punteggi e aggiungi esercizi con il pulsante "+ Routine", oppure personalizza dalla sezione qui sotto.</p></div>`;
+      container.innerHTML = `<div style="text-align:center;padding:32px 16px"><p style="font-size:14px;color:var(--t2);margin-bottom:16px">La tua routine personale è vuota.</p><p style="font-size:12px;color:var(--t3);margin-bottom:20px">Fai una scansione, tocca i punteggi e aggiungi esercizi, oppure usa "Personalizza Routine".</p></div>`;
       return;
     }
     Object.entries(saved).forEach(([catId, exIds]) => {
@@ -783,13 +784,37 @@ const App = {
         const ex = cat.exercises.find(e => e.id === exId); if (!ex) return;
         const key = 'personal_' + catId + '_' + exId;
         const done = this.doneRoutine.has(key);
+        const currentInt = intensities[exId] || 'base';
+        const multiplier = currentInt === 'pro' ? 2 : currentInt === 'medio' ? 1.5 : 1;
+        const adjSets = typeof ex.sets === 'number' ? Math.round(ex.sets * multiplier) : ex.sets;
+        const adjReps = typeof ex.reps === 'number' ? Math.round(ex.reps * multiplier) : ex.reps;
         const el = document.createElement('div'); el.className = 'r-item' + (done ? ' done' : '');
-        el.innerHTML = `<span class="ri-icon">${ex.icon}</span><div class="ri-info"><div class="ri-name">${ex.name}</div><div class="ri-note">${ex.sets}x${ex.reps} • ${ex.duration}</div></div><div class="ri-check"></div>`;
-        el.onclick = () => { if (!done) { this.doneRoutine.add(key); el.classList.add('done'); } this.openDetail(ex, catId); };
+        el.style.flexWrap = 'wrap';
+        el.innerHTML = `<span class="ri-icon">${ex.icon}</span><div class="ri-info"><div class="ri-name">${ex.name}</div><div class="ri-note">${adjSets}x${adjReps} • ${ex.duration}</div></div><div class="ri-check"></div>
+          <div class="intensity-btns" style="width:100%;display:flex;gap:4px;margin-top:6px">
+            <button class="int-btn ${currentInt==='base'?'int-active':''}" data-ex="${exId}" data-lv="base">Base</button>
+            <button class="int-btn ${currentInt==='medio'?'int-active':''}" data-ex="${exId}" data-lv="medio">Medio</button>
+            <button class="int-btn ${currentInt==='pro'?'int-active':''}" data-ex="${exId}" data-lv="pro">Pro</button>
+          </div>`;
+        el.querySelector('.ri-name').onclick = (e) => { e.stopPropagation(); if (!done) { this.doneRoutine.add(key); el.classList.add('done'); } this.openDetail(ex, catId); };
+        el.querySelectorAll('.int-btn').forEach(btn => {
+          btn.onclick = (e) => {
+            e.stopPropagation();
+            const lv = btn.dataset.lv;
+            intensities[exId] = lv;
+            localStorage.setItem('lm_intensities', JSON.stringify(intensities));
+            this.renderRoutine();
+            this.toast('⚡', ex.name + ' → ' + lv.charAt(0).toUpperCase() + lv.slice(1));
+          };
+        });
         pd.appendChild(el);
       });
       container.appendChild(pd);
     });
+  },
+
+  getIntensities() {
+    try { return JSON.parse(localStorage.getItem('lm_intensities') || '{}'); } catch { return {}; }
   },
 
   // ── SCORE DETAIL (clickable scores) ──

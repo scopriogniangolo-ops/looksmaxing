@@ -1460,6 +1460,10 @@ const ROUTINE_ALTERNATIVES = {
     { id: 'kegel-avanzato', name: 'Kegel Avanzato', desc: 'Contrazione intensa prolungata', default: false },
     { id: 'reverse-kegel', name: 'Reverse Kegel', desc: 'Rilassamento pavimento pelvico', default: true },
     { id: 'stamina-training', name: 'Stamina Training', desc: 'Tecniche per la resistenza', default: false },
-    { id: 'nutrizione-performance', name: 'Nutrizione Performance', desc: 'Alimentazione per la salute maschile', default: true }
+    { id: 'nutrizione-performance', name: 'Nutrizione Performance', desc: 'Alimentazione per la salute maschile', default: true },
+    { id: 'edging-protocol', name: 'Edging Protocol', desc: 'Allenamento con sleeve trainer', default: false },
+    { id: 'breathing-sync', name: 'Breathing Sync', desc: 'Ritmo sincronizzato al respiro', default: false },
+    { id: 'pc-engagement', name: 'PC Muscle Engagement', desc: 'Contrazione attiva durante uso', default: false },
+    { id: 'progressive-duration', name: 'Progressive Duration', desc: 'Aumento graduale della durata', default: false }
   ]
 };
