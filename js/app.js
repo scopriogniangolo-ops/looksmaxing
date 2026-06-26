@@ -483,14 +483,12 @@ const App = {
         const key = this.routineLevel + '_' + p.k + '_' + item.exercise;
         const done = this.doneRoutine.has(key);
         const el = document.createElement('div'); el.className = 'r-item' + (done ? ' done' : '');
-        el.innerHTML = `<span class="ri-icon">${ex.icon}</span><div class="ri-info"><div class="ri-name">${ex.name}</div><div class="ri-note">${item.note}</div></div><div class="ri-check"></div>`;
-        el.querySelector('.ri-check').onclick = (e) => {
-          e.stopPropagation();
+        el.innerHTML = `<div class="ri-open"><span class="ri-icon">${ex.icon}</span><div class="ri-info"><div class="ri-name">${ex.name}</div><div class="ri-note">${item.note}</div></div></div><div class="ri-check-area"><div class="ri-check"></div></div>`;
+        el.querySelector('.ri-open').addEventListener('click', () => this.openDetail(ex, item.category));
+        el.querySelector('.ri-check-area').addEventListener('click', () => {
           if (this.doneRoutine.has(key)) { this.doneRoutine.delete(key); el.classList.remove('done'); }
           else { this.doneRoutine.add(key); el.classList.add('done'); }
-        };
-        el.querySelector('.ri-name').onclick = (e) => { e.stopPropagation(); this.openDetail(ex, item.category); }
-        el.querySelector('.ri-icon').onclick = (e) => { e.stopPropagation(); this.openDetail(ex, item.category); };
+        });
         pd.appendChild(el);
       });
       c.appendChild(pd);

@@ -269,10 +269,11 @@ body{font-family:-apple-system,'SF Pro Display','SF Pro Text','Helvetica Neue',s
 .r-item .ri-info{flex:1}
 .r-item .ri-name{font-size:12px;font-weight:600}
 .r-item .ri-note{font-size:10px;color:var(--t3)}
-.r-item .ri-check{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:11px;cursor:pointer}
-.r-item .ri-check:active{transform:scale(.85)}
+.r-item .ri-check-area{width:44px;height:44px;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.r-item .ri-check{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all .15s;font-size:11px;pointer-events:none}
 .r-item.done .ri-check{background:var(--green);border-color:var(--green);color:#fff}
 .r-item.done .ri-check::after{content:'✓'}
+.r-item .ri-open{flex:1;display:flex;align-items:center;gap:12px;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .int-wrap{width:100%;margin-top:6px}
 .int-btns{display:flex;gap:4px;overflow:hidden;max-height:0;opacity:0;transition:max-height .25s ease,opacity .2s ease,margin .2s ease}
 .int-btns.open{max-height:40px;opacity:1;margin-top:2px}
@@ -3166,14 +3167,12 @@ const App = {
         const key = this.routineLevel + '_' + p.k + '_' + item.exercise;
         const done = this.doneRoutine.has(key);
         const el = document.createElement('div'); el.className = 'r-item' + (done ? ' done' : '');
-        el.innerHTML = `<span class="ri-icon">${ex.icon}</span><div class="ri-info"><div class="ri-name">${ex.name}</div><div class="ri-note">${item.note}</div></div><div class="ri-check"></div>`;
-        el.querySelector('.ri-check').onclick = (e) => {
-          e.stopPropagation();
+        el.innerHTML = `<div class="ri-open"><span class="ri-icon">${ex.icon}</span><div class="ri-info"><div class="ri-name">${ex.name}</div><div class="ri-note">${item.note}</div></div></div><div class="ri-check-area"><div class="ri-check"></div></div>`;
+        el.querySelector('.ri-open').addEventListener('click', () => this.openDetail(ex, item.category));
+        el.querySelector('.ri-check-area').addEventListener('click', () => {
           if (this.doneRoutine.has(key)) { this.doneRoutine.delete(key); el.classList.remove('done'); }
           else { this.doneRoutine.add(key); el.classList.add('done'); }
-        };
-        el.querySelector('.ri-name').onclick = (e) => { e.stopPropagation(); this.openDetail(ex, item.category); }
-        el.querySelector('.ri-icon').onclick = (e) => { e.stopPropagation(); this.openDetail(ex, item.category); };
+        });
         pd.appendChild(el);
       });
       c.appendChild(pd);
