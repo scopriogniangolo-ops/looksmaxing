@@ -527,7 +527,33 @@ const App = {
       document.getElementById('timer-section').style.display = 'block';
     } else document.getElementById('timer-section').style.display = 'none';
 
+    this.renderAdvice(ex);
+    document.getElementById('btn-close-advice').onclick = () => document.getElementById('advice-answer').classList.add('hidden');
+
     this.go('detail');
+  },
+
+  renderAdvice(ex) {
+    const questions = [
+      { q: 'Quanto tempo per vedere risultati?', a: 'Per ' + ex.name + ': i primi miglioramenti si notano dopo 2-4 settimane di pratica costante. Risultati significativi dopo 2-3 mesi. La chiave è la costanza quotidiana, non l\'intensità di una singola sessione.' },
+      { q: 'Posso farlo ogni giorno?', a: ex.difficultyLevel >= 3 ? 'Essendo un esercizio avanzato, è meglio farlo a giorni alterni per permettere il recupero. 3-4 volte a settimana è ideale.' : 'Sì! ' + ex.name + ' può essere fatto ogni giorno. I muscoli facciali recuperano velocemente. Fallo mattina e sera per risultati ottimali.' },
+      { q: 'Errori da evitare?', a: 'Per ' + ex.name + ': 1) Non forzare movimenti dolorosi. 2) Non compensare con muscoli sbagliati (es. collo se l\'esercizio è per la mascella). 3) Non fare troppe ripetizioni il primo giorno. 4) Mantieni una buona postura durante l\'esecuzione.' },
+      { q: 'Come combinarlo con altri?', a: 'Abbina ' + ex.name + ' con gli esercizi della stessa categoria per una sessione completa. Fai prima gli esercizi di riscaldamento (principiante), poi quelli intensi. Aggiungi skincare dopo gli esercizi facciali per massimizzare l\'assorbimento dei prodotti.' },
+      { q: 'Funziona davvero?', a: ex.name + ' è basato su principi di fisiologia muscolare. I muscoli facciali rispondono all\'allenamento come quelli del corpo. Studi mostrano che il face yoga può migliorare il tono facciale. La masticazione intensa aumenta i masseteri del 15-20% in 3 mesi. La costanza è tutto.' }
+    ];
+    const container = document.getElementById('advice-questions');
+    container.innerHTML = '';
+    questions.forEach(item => {
+      const btn = document.createElement('button');
+      btn.className = 'advice-q';
+      btn.textContent = item.q;
+      btn.onclick = () => {
+        document.getElementById('advice-text').textContent = item.a;
+        document.getElementById('advice-answer').classList.remove('hidden');
+      };
+      container.appendChild(btn);
+    });
+    document.getElementById('advice-answer').classList.add('hidden');
   },
 
   // ── TIMER ──

@@ -479,6 +479,54 @@ const EXERCISES = {
           'Ultima rep: mantieni in alto 15 secondi'
         ],
         tips: 'Esercizio compound: lavora più gruppi muscolari.'
+      },
+      {
+        id: 'nose-shaper', name: 'Nose Shaper', subtitle: 'Modellamento del naso',
+        icon: '👃', difficulty: 'Principiante', difficultyLevel: 1, xp: 10,
+        target: 'Muscoli nasali, Cartilagine', duration: '3 min', sets: 3, reps: 20, holdTime: 3,
+        unlockLevel: 1,
+        benefits: ['Naso più dritto', 'Punta definita', 'Muscoli nasali tonici'],
+        steps: [
+          'Posiziona indice e pollice ai lati del naso',
+          'Premi delicatamente verso il centro',
+          'Contemporaneamente arriccia il naso verso l\'alto',
+          'Mantieni 3 secondi sentendo la contrazione',
+          'Rilascia e ripeti',
+          '20 ripetizioni, 3 serie'
+        ],
+        tips: 'Movimenti delicati. Non aspettarti cambiamenti ossei, ma il tono muscolare migliora la forma.'
+      },
+      {
+        id: 'nose-breathing', name: 'Nose Breathing Drill', subtitle: 'Respirazione nasale forzata',
+        icon: '🌬️', difficulty: 'Principiante', difficultyLevel: 1, xp: 10,
+        target: 'Vie nasali, Respirazione', duration: '5 min', sets: 1, reps: 'Continuo', holdTime: 300,
+        unlockLevel: 1,
+        benefits: ['Vie nasali aperte', 'Respirazione migliorata', 'Supporto al mewing'],
+        steps: [
+          'Chiudi la bocca completamente',
+          'Inspira SOLO dal naso per 4 secondi',
+          'Trattieni per 4 secondi',
+          'Espira SOLO dal naso per 6 secondi',
+          'Ripeti per 5 minuti senza aprire la bocca',
+          'Se il naso è chiuso, fai prima lavaggi nasali con soluzione salina'
+        ],
+        tips: 'La respirazione nasale è il fondamento del mewing. Il naso si adatta: più lo usi, più si apre.'
+      },
+      {
+        id: 'under-eye-massage', name: 'Under Eye Massage', subtitle: 'Massaggio anti-occhiaie',
+        icon: '👁️', difficulty: 'Principiante', difficultyLevel: 1, xp: 10,
+        target: 'Zona perioculare, Circolazione', duration: '3 min', sets: 2, reps: 20,
+        unlockLevel: 1,
+        benefits: ['Meno occhiaie', 'Meno borse', 'Circolazione zona occhi'],
+        steps: [
+          'Applica una goccia di siero contorno occhi sugli anulari',
+          'Posiziona gli anulari nell\'angolo interno dell\'occhio',
+          'Picchietta delicatamente lungo l\'osso orbitale verso l\'esterno',
+          'Continua sotto l\'occhio fino all\'angolo esterno',
+          'Poi sopra l\'occhio tornando all\'angolo interno',
+          '20 giri completi, 2 serie — mattina e sera'
+        ],
+        tips: 'Usa SOLO l\'anulare, è il dito con meno forza. Mai tirare la pelle delicata degli occhi.'
       }
     ]
   },
@@ -721,6 +769,92 @@ const EXERCISES = {
           'Se usi retinolo la sera, SPF obbligatorio'
         ],
         tips: 'Il sole causa il 90% delle rughe. SPF ogni giorno.'
+      }
+    ]
+  },
+  manhood: {
+    id: 'manhood', name: 'Performance', icon: '🍌', color: '#e11d48',
+    description: 'Esercizi e consigli per migliorare la performance, la resistenza e la salute maschile',
+    exercises: [
+      {
+        id: 'kegel-base', name: 'Kegel Base', subtitle: 'Pavimento pelvico base',
+        icon: '🍌', difficulty: 'Principiante', difficultyLevel: 1, xp: 15,
+        target: 'Muscolo PC, Pavimento pelvico', duration: '5 min', sets: 3, reps: 15, holdTime: 5,
+        unlockLevel: 1,
+        benefits: ['Controllo maggiore', 'Pavimento pelvico forte', 'Circolazione migliorata'],
+        steps: [
+          'Individua il muscolo PC: prova a fermare il flusso di urina a metà',
+          'Quel muscolo che contrai è il PC — ora fallo SENZA urinare',
+          'Contrai il muscolo PC con forza per 5 secondi',
+          'Rilascia completamente per 5 secondi',
+          'Ripeti 15 volte per serie, 3 serie',
+          'Fai 2 volte al giorno (mattina e sera)'
+        ],
+        tips: 'Non contrarre addominali o glutei. Solo il muscolo PC. La costanza è fondamentale.'
+      },
+      {
+        id: 'kegel-avanzato', name: 'Kegel Avanzato', subtitle: 'Contrazione intensa e prolungata',
+        icon: '💪', difficulty: 'Avanzato', difficultyLevel: 3, xp: 25,
+        target: 'Muscolo PC, Ischiocavernoso', duration: '8 min', sets: 4, reps: 10, holdTime: 10,
+        unlockLevel: 1,
+        benefits: ['Resistenza prolungata', 'Controllo avanzato', 'Forza del pavimento pelvico'],
+        steps: [
+          'Contrai il muscolo PC al massimo della forza',
+          'Mantieni la contrazione per 10 secondi PIENI',
+          'Rilascia lentamente in 5 secondi (non di colpo)',
+          'Riposa 5 secondi',
+          'Ripeti 10 volte per 4 serie',
+          'Aggiungi 1 secondo di hold ogni settimana'
+        ],
+        tips: 'Dopo 4 settimane di kegel base. Non esagerare: overtrain del PC causa effetto opposto.'
+      },
+      {
+        id: 'reverse-kegel', name: 'Reverse Kegel', subtitle: 'Rilassamento pavimento pelvico',
+        icon: '🔄', difficulty: 'Intermedio', difficultyLevel: 2, xp: 20,
+        target: 'Pavimento pelvico, Rilassamento', duration: '5 min', sets: 3, reps: 12, holdTime: 8,
+        unlockLevel: 1,
+        benefits: ['Rilassamento muscolare', 'Equilibrio pelvico', 'Durata migliorata'],
+        steps: [
+          'Invece di CONTRARRE il PC, fai il contrario: SPINGI fuori delicatamente',
+          'Immagina di voler espellere aria — senza usare gli addominali',
+          'Senti il pavimento pelvico che si RILASSA e si abbassa',
+          'Mantieni il rilassamento per 8 secondi',
+          'Torna alla posizione neutra',
+          '12 ripetizioni per 3 serie — alterna con kegel normali'
+        ],
+        tips: 'I reverse kegel sono importanti quanto i kegel normali. L\'equilibrio tra contrazione e rilassamento è la chiave.'
+      },
+      {
+        id: 'nutrizione-performance', name: 'Nutrizione Performance', subtitle: 'Alimentazione per la salute maschile',
+        icon: '🥗', difficulty: 'Principiante', difficultyLevel: 1, xp: 15,
+        target: 'Circolazione, Testosterone, Energia', duration: 'Sempre', sets: 1, reps: 'Giornaliero',
+        unlockLevel: 1,
+        benefits: ['Circolazione migliorata', 'Energia aumentata', 'Testosterone ottimizzato'],
+        steps: [
+          'L-CITRULLINA: 3-6g/giorno — si converte in arginina, migliora circolazione',
+          'ZINCO: 30mg/giorno — essenziale per testosterone e salute riproduttiva',
+          'VITAMINA D: 4000 UI — carenza = testosterone basso',
+          'MELOGRANO: 1 bicchiere di succo/giorno — potente antiossidante per circolazione',
+          'OMEGA-3: 2-3g/giorno — migliora la salute cardiovascolare e la circolazione',
+          'EVITA: alcol in eccesso, fumo, cibi processati, zuccheri raffinati'
+        ],
+        tips: 'La circolazione è il fattore #1. Tutto ciò che migliora la salute cardiovascolare migliora anche la performance.'
+      },
+      {
+        id: 'stamina-training', name: 'Stamina Training', subtitle: 'Tecniche per la resistenza',
+        icon: '⏱️', difficulty: 'Intermedio', difficultyLevel: 2, xp: 20,
+        target: 'Resistenza, Controllo, Breathing', duration: '10 min', sets: 1, reps: 'Pratica',
+        unlockLevel: 1,
+        benefits: ['Durata aumentata', 'Controllo del respiro', 'Gestione dell\'eccitazione'],
+        steps: [
+          'RESPIRAZIONE 4-7-8: Inspira 4 sec, trattieni 7 sec, espira 8 sec — calma il sistema nervoso',
+          'START-STOP: Pratica portandoti vicino al limite, poi fermati completamente. Ripeti 5 volte.',
+          'SQUEEZE TECHNIQUE: Al momento giusto, premi con 2 dita tra la base e il perineo per 10 sec',
+          'KEGEL ATTIVO: Contrai il PC quando senti avvicinarti al limite — rallenta tutto',
+          'CARDIO REGOLARE: 30 min corsa o nuoto 3x/settimana migliora il controllo cardiovascolare',
+          'MINDFULNESS: Pratica la concentrazione sul respiro, non sulle sensazioni — 5 min meditazione/giorno'
+        ],
+        tips: 'La resistenza è 70% mentale. La respirazione è lo strumento più potente che hai. Pratica ogni giorno.'
       }
     ]
   }
