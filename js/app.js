@@ -273,10 +273,7 @@ const App = {
         <div class="sr-info"><span class="sr-name">${c.name}</span><span class="sr-desc">${desc}</span></div>
         <span class="sr-score ${cls}">${s}</span>
         <span class="sr-chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></span>`;
-      row.onclick = () => {
-        const cats = c.relatedCategories;
-        if (cats && cats[0] && EXERCISES[cats[0]]) this.openCat(cats[0]);
-      };
+      row.onclick = () => this.showScoreDetail(c, s, row);
       list.appendChild(row);
     });
 
@@ -488,8 +485,47 @@ const App = {
     document.getElementById('det-reps').textContent = ex.reps;
     document.getElementById('det-hold').textContent = ex.holdTime ? ex.holdTime + 's' : '--';
 
-    const illust = document.getElementById('det-illust');
-    illust.innerHTML = SVG_ILLUSTRATIONS[ex.id] || SVG_ILLUSTRATIONS['default'];
+    const EXERCISE_IMAGES = {
+      'basic-mewing':'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&crop=face',
+      'hard-mewing':'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=250&fit=crop&crop=face',
+      'tongue-suction':'https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?w=400&h=250&fit=crop&crop=face',
+      'tongue-chewing':'https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?w=400&h=250&fit=crop&crop=face',
+      'chin-tucks':'https://images.unsplash.com/photo-1612875735066-5bc37975d32a?w=400&h=250&fit=crop',
+      'jaw-clench':'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=250&fit=crop&crop=face',
+      'jaw-resistance':'https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?w=400&h=250&fit=crop&crop=face',
+      'neck-curls':'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=250&fit=crop',
+      'gum-chewing':'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=250&fit=crop&crop=face',
+      'jaw-side-to-side':'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&crop=face',
+      'cheek-lifts':'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=250&fit=crop&crop=face',
+      'cheekbone-sculptor':'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=250&fit=crop&crop=face',
+      'forehead-smoother':'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=250&fit=crop&crop=face',
+      'eye-lifts':'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=250&fit=crop&crop=face',
+      'lip-plumper':'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=250&fit=crop&crop=face',
+      'face-tightener':'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=250&fit=crop&crop=face',
+      'neck-extensions':'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=250&fit=crop',
+      'neck-side-stretch':'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=250&fit=crop',
+      'wall-angels':'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=250&fit=crop',
+      'scapular-squeeze':'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=250&fit=crop',
+      'platysma-exercise':'https://images.unsplash.com/photo-1612875735066-5bc37975d32a?w=400&h=250&fit=crop',
+      'morning-routine':'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&h=250&fit=crop',
+      'evening-routine':'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&h=250&fit=crop',
+      'weekly-treatment':'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&h=250&fit=crop',
+      'dermarolling':'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&h=250&fit=crop',
+      'sleep-optimization':'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=400&h=250&fit=crop',
+      'hydration':'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=400&h=250&fit=crop',
+      'nutrition':'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=250&fit=crop',
+      'body-training':'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=250&fit=crop',
+      'sun-protocol':'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=250&fit=crop'
+    };
+    const heroDiv = document.querySelector('.det-scroll');
+    let existingHero = heroDiv.querySelector('.ex-hero-card');
+    if (existingHero) existingHero.remove();
+    const hero = document.createElement('div');
+    hero.className = 'ex-hero-card';
+    hero.style.backgroundImage = 'url(' + (EXERCISE_IMAGES[ex.id] || '') + ')';
+    if (!EXERCISE_IMAGES[ex.id]) hero.style.background = this.catGradient(catId);
+    hero.innerHTML = `<span class="ehc-tag d${ex.difficultyLevel}">${ex.difficulty}</span><span class="ehc-icon">${ex.icon}</span><div class="ehc-name">${ex.name}</div><div class="ehc-sub">${ex.target} • ${ex.duration}</div>`;
+    heroDiv.insertBefore(hero, heroDiv.firstChild);
 
     const ben = document.getElementById('det-benefits'); ben.innerHTML = '';
     ex.benefits.forEach(b => { const t = document.createElement('span'); t.className = 'ben-tag'; t.textContent = b; ben.appendChild(t); });
@@ -710,6 +746,64 @@ const App = {
     localStorage.setItem('lm_streak', JSON.stringify(d));
   },
   findExInCat(id, cat) { return EXERCISES[cat]?.exercises.find(e => e.id === id); },
+
+  // ── SCORE DETAIL (clickable scores) ──
+  showScoreDetail(cat, score, rowEl) {
+    const existing = rowEl.parentElement.querySelector('.score-detail-panel');
+    if (existing) { existing.remove(); return; }
+    rowEl.parentElement.querySelectorAll('.score-detail-panel').forEach(p => p.remove());
+
+    const pe = PERSONALIZED_EXERCISES[cat.id];
+    if (!pe) return;
+    const exercises = score < 5.5 ? pe.low : pe.medium;
+    const panel = document.createElement('div');
+    panel.className = 'score-detail-panel anim';
+    let html = `<div class="sdp-header"><span class="sdp-icon">${cat.icon}</span><div class="sdp-info"><h3>${cat.name} — ${score}/10</h3><p>${pe.exercises}</p></div></div><div class="sdp-exercises">`;
+
+    (exercises || []).forEach(exId => {
+      const found = this.findEx(exId);
+      if (!found) return;
+      const ex = found.data;
+      html += `<div class="sdp-ex"><span class="sdp-ex-icon">${ex.icon}</span><div class="sdp-ex-info"><div class="sdp-ex-name">${ex.name}</div><div class="sdp-ex-meta">${ex.sets}x${ex.reps} • ${ex.duration}</div></div><button class="btn-add-routine" data-exid="${ex.id}" data-cat="${found.cat}">+ Routine</button></div>`;
+    });
+    html += '</div>';
+    panel.innerHTML = html;
+
+    panel.querySelectorAll('.btn-add-routine').forEach(btn => {
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        const exId = btn.dataset.exid;
+        const cat = btn.dataset.cat;
+        const saved = this.getCustomRoutine();
+        if (!saved[cat]) saved[cat] = [];
+        if (!saved[cat].includes(exId)) {
+          saved[cat].push(exId);
+          localStorage.setItem('lm_custom_routine', JSON.stringify(saved));
+          btn.textContent = '✓ Aggiunto';
+          btn.classList.add('added');
+          this.toast('✅', 'Aggiunto alla routine!');
+        } else {
+          btn.textContent = '✓ Già presente';
+          btn.classList.add('added');
+        }
+      };
+    });
+
+    panel.querySelectorAll('.sdp-ex').forEach(exEl => {
+      const nameEl = exEl.querySelector('.sdp-ex-name');
+      if (nameEl) {
+        exEl.style.cursor = 'pointer';
+        exEl.onclick = (e) => {
+          if (e.target.closest('.btn-add-routine')) return;
+          const exId = exEl.querySelector('.btn-add-routine')?.dataset.exid;
+          const found = this.findEx(exId);
+          if (found) this.openDetail(found.data, found.cat);
+        };
+      }
+    });
+
+    rowEl.after(panel);
+  },
 
   // ── PROGRAMS ──
   renderPrograms() {
