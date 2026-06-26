@@ -59,6 +59,8 @@ const App = {
     $('btn-routine-back').onclick = () => this.back();
     $('btn-save-routine').onclick = () => { this.saveCustomRoutine(); this.toast('✅','Routine salvata!'); this.back(); };
     $('btn-custom-routine').onclick = () => this.openRoutineCustom();
+    $('wt-plus').onclick = () => this.updateWater(0.25);
+    $('wt-minus').onclick = () => this.updateWater(-0.25);
     $('btn-reset-all').onclick = () => {
       if (confirm('Eliminare tutti i dati?')) { localStorage.clear(); location.reload(); }
     };
@@ -342,6 +344,7 @@ const App = {
     if (this.scores) document.getElementById('dash-mini-score').querySelector('.ms-val').textContent = this.scores.overall;
 
     this.renderXP();
+    this.renderWater();
     this.renderMiniScores();
     this.renderRoutine();
     this.renderCatGrid();
@@ -941,6 +944,26 @@ const App = {
 
   getCustomRoutine() {
     try { return JSON.parse(localStorage.getItem('lm_custom_routine') || '{}'); } catch { return {}; }
+  },
+
+  // ── WATER TRACKER ──
+  updateWater(delta) {
+    const today = new Date().toDateString();
+    let data; try { data = JSON.parse(localStorage.getItem('lm_water') || '{}'); } catch { data = {}; }
+    if (data.date !== today) { data = { date: today, liters: 0 }; }
+    data.liters = Math.max(0, Math.min(5, Math.round((data.liters + delta) * 100) / 100));
+    localStorage.setItem('lm_water', JSON.stringify(data));
+    this.renderWater(data.liters);
+    if (data.liters >= 3) this.toast('💧', 'Obiettivo 3L raggiunto!');
+  },
+  renderWater(liters) {
+    if (liters === undefined) {
+      try { const d = JSON.parse(localStorage.getItem('lm_water') || '{}');
+        liters = (d.date === new Date().toDateString()) ? d.liters : 0;
+      } catch { liters = 0; }
+    }
+    document.getElementById('wt-value').textContent = liters.toFixed(1);
+    document.getElementById('wt-fill').style.width = Math.min(100, (liters / 3) * 100) + '%';
   },
 
   // ── UTIL ──

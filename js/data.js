@@ -957,6 +957,70 @@ const EXERCISES = {
           'MINDFULNESS: Pratica la concentrazione sul respiro, non sulle sensazioni — 5 min meditazione/giorno'
         ],
         tips: 'La resistenza è 70% mentale. La respirazione è lo strumento più potente che hai. Pratica ogni giorno.'
+      },
+      {
+        id: 'edging-protocol', name: 'Edging Protocol', subtitle: 'Allenamento con sleeve trainer',
+        icon: '🔄', difficulty: 'Intermedio', difficultyLevel: 2, xp: 25,
+        target: 'Controllo, Resistenza, Muscolo PC', duration: '20-30 min', sets: 5, reps: 'Cicli',
+        unlockLevel: 1,
+        benefits: ['Durata raddoppiata', 'Controllo totale', 'Sensibilità gestita'],
+        steps: [
+          'Usa il trainer con lubrificante a base d\'acqua (mai a secco)',
+          'FASE 1: Ritmo lento per 3 minuti — concentrati sulla respirazione profonda (4 sec inspira, 6 sec espira)',
+          'FASE 2: Aumenta gradualmente il ritmo fino a raggiungere il 70% dell\'eccitazione',
+          'FASE 3: All\'80% FERMATI completamente. Contrai il muscolo PC per 10 secondi. Respira profondamente.',
+          'FASE 4: Aspetta che l\'eccitazione scenda al 50%, poi riparti dalla FASE 1',
+          'Ripeti il ciclo 5 volte. Ad ogni ciclo prova ad avvicinarti di più al limite prima di fermarti.'
+        ],
+        tips: 'La chiave è riconoscere il "punto di non ritorno" e fermarti PRIMA. Con la pratica impari a gestirlo. Obiettivo: 5 cicli in 20 min nella prima settimana, 8 cicli in 30 min dopo 1 mese.'
+      },
+      {
+        id: 'breathing-sync', name: 'Breathing Sync Training', subtitle: 'Ritmo sincronizzato al respiro',
+        icon: '🌬️', difficulty: 'Principiante', difficultyLevel: 1, xp: 20,
+        target: 'Sistema nervoso, Controllo, Breathing', duration: '15 min', sets: 3, reps: '5 min per fase',
+        unlockLevel: 1,
+        benefits: ['Calma il sistema nervoso', 'Ritardo naturale', 'Controllo del respiro'],
+        steps: [
+          'Usa il trainer con lubrificante',
+          'FASE LENTA (5 min): 1 movimento ogni 2 secondi. Inspira durante il movimento verso il basso, espira tornando su.',
+          'FASE MEDIA (5 min): 1 movimento al secondo. Mantieni la respirazione 4-6 profonda e costante.',
+          'FASE INTENSA (5 min): Ritmo naturale MA ogni volta che senti aumentare l\'eccitazione, RALLENTA e fai 3 respiri profondi 4-7-8.',
+          'Se arrivi troppo vicino: fermati, contrai PC 10 sec, 5 respiri profondi, poi riparti dalla fase lenta.',
+          'Obiettivo: completare tutte e 3 le fasi senza mai superare l\'80% di eccitazione.'
+        ],
+        tips: 'Il respiro controlla il sistema nervoso autonomo. Respirazione lenta e profonda = attivazione parasimpatica = più controllo. Pratica 3 volte a settimana.'
+      },
+      {
+        id: 'pc-engagement', name: 'PC Muscle Engagement', subtitle: 'Contrazione attiva durante l\'uso',
+        icon: '💪', difficulty: 'Avanzato', difficultyLevel: 3, xp: 30,
+        target: 'Muscolo PC, Controllo avanzato', duration: '15-20 min', sets: 4, reps: 'Cicli alternati',
+        unlockLevel: 1,
+        benefits: ['Controllo muscolare attivo', 'Resistenza estrema', 'Forza del pavimento pelvico'],
+        steps: [
+          'Prerequisito: almeno 4 settimane di kegel base completate',
+          'CICLO A (3 min): Usa il trainer normalmente. Ogni 10 secondi contrai il PC per 5 secondi, poi rilascia. Continua il movimento durante la contrazione.',
+          'CICLO B (3 min): Movimento continuo + REVERSE KEGEL costante (spingi fuori delicatamente). Questo rallenta tutto naturalmente.',
+          'CICLO C (3 min): Alterna 10 sec di contrazione PC + 10 sec di reverse kegel mentre usi il trainer. Senti la differenza tra i due.',
+          'RIPOSO (1 min): Fermati, respira profondamente, lascia scendere eccitazione al 40%.',
+          'Ripeti A-B-C-Riposo per 4 cicli totali. Obiettivo: gestire l\'eccitazione con il muscolo PC da solo.'
+        ],
+        tips: 'Questo è l\'esercizio più avanzato. La contrazione del PC al momento giusto può bloccare completamente l\'orgasmo. Serve molta pratica, ma i risultati sono permanenti.'
+      },
+      {
+        id: 'progressive-duration', name: 'Progressive Duration', subtitle: 'Aumento graduale della durata',
+        icon: '📈', difficulty: 'Intermedio', difficultyLevel: 2, xp: 25,
+        target: 'Resistenza progressiva', duration: 'Variabile', sets: 1, reps: 'Sessione',
+        unlockLevel: 1,
+        benefits: ['Durata che aumenta nel tempo', 'Desensibilizzazione controllata', 'Record personali'],
+        steps: [
+          'SETTIMANA 1-2: Obiettivo 10 minuti. Usa il trainer a ritmo lento/medio. Fermati e riparti quando serve.',
+          'SETTIMANA 3-4: Obiettivo 15 minuti. Integra la respirazione 4-7-8 quando ti avvicini al limite.',
+          'SETTIMANA 5-6: Obiettivo 20 minuti. Aggiungi contrazioni PC attive durante l\'uso.',
+          'SETTIMANA 7-8: Obiettivo 25 minuti. Alterna fasi lente (2 min) e veloci (1 min) senza mai superare l\'85%.',
+          'MESE 3+: Obiettivo 30+ minuti. Dovresti riuscire a gestire qualsiasi ritmo senza problemi.',
+          'TRACCIA I TEMPI: segna la durata di ogni sessione. Vedere i progressi è la motivazione più potente.'
+        ],
+        tips: 'Non forzare. Se un giorno non riesci a raggiungere l\'obiettivo, va bene. La progressione non è lineare. L\'importante è la tendenza generale nel tempo.'
       }
     ]
   }
