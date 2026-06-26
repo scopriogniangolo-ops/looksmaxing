@@ -59,7 +59,8 @@ const App = {
     $('btn-routine-back').onclick = () => this.back();
     $('btn-save-routine').onclick = () => { this.saveCustomRoutine(); this.toast('✅','Routine salvata!'); this.back(); };
     $('btn-custom-routine').onclick = () => this.openRoutineCustom();
-    $('wt-plus').onclick = () => this.updateWater(0.25);
+    $('wt-plus-glass').onclick = () => this.updateWater(0.25);
+    $('wt-plus-bottle').onclick = () => this.updateWater(0.5);
     $('wt-minus').onclick = () => this.updateWater(-0.25);
     $('btn-reset-all').onclick = () => {
       if (confirm('Eliminare tutti i dati?')) { localStorage.clear(); location.reload(); }
