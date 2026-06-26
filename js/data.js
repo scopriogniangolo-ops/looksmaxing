@@ -1429,6 +1429,71 @@ const PROGRAMS = [
       {title:'FWHR (Facial Width-to-Height Ratio)', text:'Il FWHR è il rapporto tra la larghezza bizigomatica e l\'altezza del volto superiore (sopracciglia → labbro superiore). Un FWHR alto (>2.0) è associato a percezione di dominanza e mascolinità. Si può migliorare sviluppando i masseteri (aumenta la larghezza) e con mewing (migliora le proporzioni del terzo medio).'}
     ],
     relatedExercises:['basic-mewing','jaw-clench','cheekbone-sculptor','gum-chewing']
+  },
+  {
+    id:'grooming', name:'Grooming Completo', icon:'✂️',
+    image:'linear-gradient(135deg,#1a1a2e,#2d2d4e)',
+    chapters:4, lessons:12,
+    description:'Guida completa alla cura personale maschile: barba, sopracciglia, capelli, unghie.',
+    content:[
+      {title:'Barba: Crescita e Styling', text:'Per far crescere la barba: Minoxidil 5% 2x/giorno sulle zone sparse (risultati in 3-6 mesi). Dermaroller 0.5mm 1x/settimana sulle zone dove vuoi più crescita. Biotina 5000mcg/giorno. Per lo styling: definisci i contorni al collo (linea immaginaria da orecchio a orecchio, 2 dita sopra il pomo d\'Adamo). Guance: segui la linea naturale o raditi pulito. Usa olio da barba per idratare e balsamo per ammorbidire.'},
+      {title:'Sopracciglia Maschili', text:'Le sopracciglia incorniciano gli occhi e definiscono lo sguardo. NON fare l\'arco femminile. Togli SOLO: i peli tra le sopracciglia (unibrow), i peli sotto l\'arco naturale che escono dalla forma, e quelli selvaggi troppo lunghi. Usa pinzetta, mai rasoio (ricrescita brutta). Pettina verso l\'alto con spazzolino, taglia quelli troppo lunghi con forbicine. Sopracciglia folte e naturali = look più mascolino.'},
+      {title:'Cura delle Unghie', text:'Unghie pulite e curate sono essenziali. Taglia ogni 7-10 giorni con tronchesina, non con le forbici. Lima i bordi per evitare angoli taglienti. Spingi indietro le cuticole dopo la doccia, mai tagliarle. Usa crema mani con cheratina. Niente unghie sporche MAI — è la prima cosa che le persone notano dopo il viso.'},
+      {title:'Igiene Quotidiana', text:'Doccia 1-2x al giorno. Lava il viso separatamente con detergente specifico (non il bagnoschiuma). Deodorante antitraspirante DOPO la doccia, non prima. Cambia biancheria intima ogni giorno. Lava i vestiti dopo ogni uso (soprattutto magliette). Cambia le federe del cuscino ogni 3-4 giorni — i batteri causano acne.'}
+    ],
+    relatedExercises:[]
+  },
+  {
+    id:'hairstyle', name:'Analisi Hairstyle', icon:'💇',
+    image:'linear-gradient(135deg,#1a0f2e,#2d1b4e)',
+    chapters:3, lessons:8,
+    description:'In base alla forma del viso, scopri i tagli di capelli che ti valorizzano di più.',
+    content:[
+      {title:'Viso Ovale (il più versatile)', text:'Il viso ovale è considerato la forma ideale — la maggior parte dei tagli funziona. MIGLIORI: Quiff, Pompadour, Slick Back, Buzz Cut. EVITA: frangia troppo lunga che accorcia il viso. Il segreto: mantieni volume proporzionato sopra e ai lati.'},
+      {title:'Viso Rotondo (crea angoli)', text:'Obiettivo: allungare il viso e creare l\'illusione di angoli. MIGLIORI: Fade alto ai lati + volume sopra (crea verticalità), Textured Crop, Pompadour. EVITA: capelli lunghi ai lati (allargano), bob cut, tutto troppo piatto sopra. Il fade 1-2 ai lati è il tuo migliore amico.'},
+      {title:'Viso Lungo/Rettangolare', text:'Obiettivo: accorciare visivamente e aggiungere larghezza. MIGLIORI: Side part classico, Fringe/Frangia (copre la fronte alta), Medium length con volume ai lati. EVITA: Pompadour alto (allunga), fade troppo corto ai lati (toglie larghezza), capelli dritti in su. Tieni un po\' di volume laterale.'},
+      {title:'Viso Quadrato', text:'Hai già angoli definiti — valorizzali. MIGLIORI: Buzz cut (mostra la struttura), Crew cut, Slick back, Short textured. EVITA: niente di troppo voluminoso che nasconda la struttura. Il tuo jawline è il punto forte — un taglio corto lo mette in evidenza.'},
+      {title:'Viso a Cuore/Triangolare', text:'Fronte larga, mento stretto. MIGLIORI: Side sweep, Medium length con volume ai lati del mento (crea equilibrio), Fringe per ridurre la fronte. EVITA: Pompadour (enfatizza la fronte), volume eccessivo sopra.'},
+      {title:'Come Scegliere', text:'1. Scatta una foto frontale con capelli tirati indietro. 2. Identifica la forma confrontando con le descrizioni sopra. 3. Porta la foto del taglio desiderato al barbiere — non descrivere a parole. 4. Chiedi al barbiere un consiglio — loro vedono la tua testa da tutti gli angoli. 5. Cambia taglio ogni 3-4 mesi per trovare il migliore.'}
+    ],
+    relatedExercises:[]
+  },
+  {
+    id:'social-confidence', name:'Social Confidence', icon:'🗣️',
+    image:'linear-gradient(135deg,#1a0a00,#3d1f00)',
+    chapters:4, lessons:10,
+    description:'Mindset, body language, voce e social skills per essere più attraente e carismatico.',
+    content:[
+      {title:'Body Language Attraente', text:'1. POSTURA: spalle indietro, petto aperto, mento leggermente alzato — comunica sicurezza. 2. SPAZIO: occupi spazio = dominanza percepita. Non incrociarti. 3. MOVIMENTI LENTI: chi si muove lentamente appare più sicuro. Niente gesti nervosi. 4. SORRISO ASIMMETRICO: un mezzo sorriso è percepito come più attraente e misterioso. 5. MANI VISIBILI: mani nascoste comunicano insicurezza.'},
+      {title:'Contatto Visivo', text:'Il contatto visivo è il singolo fattore più importante nel linguaggio non verbale. REGOLA DEL 70%: mantieni contatto visivo il 70% del tempo quando ASCOLTI, 50% quando PARLI. TRIANGOLO: alterna lo sguardo tra occhio sinistro, occhio destro, bocca. MAI: fissare senza pause (inquietante) o evitare lo sguardo (insicurezza). Quando incroci lo sguardo di qualcuno, non distogliere per primo — aspetta 2-3 secondi, poi sorridi leggermente e guarda altrove con calma.'},
+      {title:'Voce Profonda e Carismatica', text:'La voce si può allenare: 1. RESPIRA DAL DIAFRAMMA: la voce profonda viene dal petto, non dalla gola. Metti la mano sulla pancia e parla — deve muoversi. 2. PARLA LENTAMENTE: chi parla veloce sembra nervoso. Pause strategiche = potere. 3. ESERCIZIO QUOTIDIANO: ogni mattina, canticchia a bocca chiusa "hmmm" dal registro più basso per 2 minuti. 4. EVITA: uptalk (alzare la voce alla fine delle frasi come se fosse una domanda).'},
+      {title:'Come Approcciare', text:'1. Non pensare troppo — i primi 3 secondi dopo aver deciso di parlare, MUOVITI. Più aspetti, più ansia crei. 2. Apri con osservazione + domanda: "Ho notato [qualcosa su di lei/situazione], [domanda genuina]". 3. Sorridi PRIMA di parlare. 4. Voce calma e volume adeguato. 5. Se ti rifiuta: "Nessun problema, buona serata" con un sorriso. Il rifiuto non dice nulla su di te — lei non ti conosce. 6. L\'abilità sociale è un muscolo: più la usi, più diventa forte.'}
+    ],
+    relatedExercises:[]
+  },
+  {
+    id:'igiene-odore', name:'Igiene & Profumo', icon:'🧼',
+    image:'linear-gradient(135deg,#0a1a2e,#1a2d4e)',
+    chapters:3, lessons:8,
+    description:'Come profumare bene tutto il giorno, layering fragranze, e igiene avanzata.',
+    content:[
+      {title:'Routine Igiene Completa', text:'MATTINA: Doccia con sapone neutro, deodorante antitraspirante, profumo sui punti caldi. Denti: spazzola 2 min + filo interdentale + collutorio. SERA: Doccia o lavaggio rapido, cambio biancheria. SETTIMANALE: pulizia orecchie (no cotton fioc dentro), taglio unghie, esfoliazione corpo. OGNI 3 GIORNI: cambio federe cuscino, lavaggio asciugamani.'},
+      {title:'Layering Fragranze', text:'Il layering crea una fragranza unica e duratura: LIVELLO 1 — Bagnoschiuma profumato (base, dura poco). LIVELLO 2 — Lozione/crema corpo profumata (stessa famiglia olfattiva). LIVELLO 3 — Deodorante (neutro o stesso profumo). LIVELLO 4 — Eau de Parfum (2-3 spruzzi max). DOVE APPLICARE: polsi, collo (lati), dietro le orecchie, petto. Mai strofinare i polsi — rompe le molecole del profumo.'},
+      {title:'Alito Fresco Tutto il Giorno', text:'L\'alito è un dealbreaker assoluto. ROUTINE: spazzola denti 2x/giorno (mattina + sera), usa FILO INTERDENTALE ogni sera (il 90% dell\'alito cattivo viene dal cibo tra i denti), raschia la lingua con raschietto apposito (la lingua ospita il 50% dei batteri), collutorio senza alcol dopo il filo. EMERGENZA: gomme alla menta, spray orale. CAUSE NASCOSTE: tonsilloliths (sassolini bianchi sulle tonsille), reflusso gastrico, disidratazione. Bevi acqua costantemente.'}
+    ],
+    relatedExercises:['morning-routine','evening-routine','hydration']
+  },
+  {
+    id:'guided-training', name:'Allenamento Guidato', icon:'▶️',
+    image:'linear-gradient(135deg,#0a2e1a,#1a4e2d)',
+    chapters:3, lessons:6,
+    description:'Sessioni guidate step-by-step: segui il protocollo e l\'app ti dice cosa fare.',
+    content:[
+      {title:'Sessione Mattutina (15 min)', text:'Esegui in ordine: 1. Cold Water Face — 3 immersioni (2 min). 2. Gua Sha Massage — tutte le zone (5 min). 3. Basic Mewing — posizione e hold (3 min). 4. Chin Tucks — 3x15 (3 min). 5. Skincare Mattutina — tutti gli step (5 min). TOTALE: 18 min. Fallo OGNI mattina per 30 giorni e vedrai la trasformazione.'},
+      {title:'Sessione Face Training (20 min)', text:'Esegui in ordine: 1. Jaw Clench isometrico — 4x10 (4 min). 2. Cheekbone Sculptor — 3x10 (4 min). 3. Eye Area Lift — 3x15 (4 min). 4. Cheek Lifts — 3x15 (3 min). 5. Gomma Dura masticazione — 10 min continui. TOTALE: 25 min. Fallo 3-4 volte a settimana per risultati massimi.'},
+      {title:'Sessione Serale (10 min)', text:'Esegui in ordine: 1. Drenaggio Linfatico — tutte le zone (3 min). 2. Platysma Toner — 3x15 (3 min). 3. Hard Mewing — 3x60s (3 min). 4. Skincare Serale — tutti gli step (5 min). 5. Mouth Tape per la notte. TOTALE: 14 min. La costanza serale è fondamentale per il recupero notturno.'}
+    ],
+    relatedExercises:['cold-water-face','gua-sha','basic-mewing','chin-tucks','morning-routine','jaw-clench','cheekbone-sculptor','evening-routine']
   }
 ];
 
