@@ -40,7 +40,7 @@ const App = {
     if (s === 'profile') this.renderProfile();
     if (s === 'programs') this.renderPrograms();
   },
-  back() { this.history.length ? this.go(this.history.pop(), false) : this.go('dashboard', false); },
+  back() { this.stopVoice(); this.history.length ? this.go(this.history.pop(), false) : this.go('dashboard', false); },
 
   // ── EVENTS ──
   bindAll() {
@@ -70,6 +70,7 @@ const App = {
     $('rc-plus').onclick = () => this.updateReps(1);
     $('rc-minus').onclick = () => this.updateReps(-1);
     $('rc-reset-btn').onclick = () => { this.repCount = 0; this.updateRepDisplay(); };
+    $('rc-voice-btn').onclick = () => this.toggleVoice();
     $('btn-sidebar').onclick = () => this.openSidebar();
     $('sb-close').onclick = () => this.closeSidebar();
     $('sidebar-overlay').onclick = () => this.closeSidebar();
@@ -1179,6 +1180,53 @@ const App = {
 
   getCustomRoutine() {
     try { return JSON.parse(localStorage.getItem('lm_custom_routine') || '{}'); } catch { return {}; }
+  },
+
+  // ── VOICE CONTROL ──
+  voiceRecognition: null, voiceActive: false,
+  toggleVoice() {
+    if (this.voiceActive) { this.stopVoice(); return; }
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { this.toast('❌', 'Voce non supportata su questo browser'); return; }
+    this.voiceRecognition = new SR();
+    this.voiceRecognition.lang = 'it-IT';
+    this.voiceRecognition.continuous = true;
+    this.voiceRecognition.interimResults = false;
+    this.voiceRecognition.onresult = (e) => {
+      const last = e.results[e.results.length - 1];
+      if (!last.isFinal) return;
+      const text = last[0].transcript.toLowerCase().trim();
+      const addWords = ['su', 'fatto', 'rep', 'vai', 'uno', 'next', 'ok', 'si', 'sì', 'top', 'go', 'up', 'yes'];
+      const resetWords = ['reset', 'ricomincia', 'zero', 'azzerà'];
+      if (addWords.some(w => text.includes(w))) {
+        this.updateReps(1);
+        if (navigator.vibrate) navigator.vibrate(50);
+      } else if (resetWords.some(w => text.includes(w))) {
+        this.repCount = 0; this.updateRepDisplay();
+        this.toast('🔄', 'Counter resettato');
+      }
+    };
+    this.voiceRecognition.onerror = (e) => {
+      if (e.error !== 'no-speech') { this.stopVoice(); this.toast('❌', 'Errore microfono'); }
+    };
+    this.voiceRecognition.onend = () => {
+      if (this.voiceActive) this.voiceRecognition.start();
+    };
+    try {
+      this.voiceRecognition.start();
+      this.voiceActive = true;
+      document.getElementById('rc-voice-btn').classList.add('listening');
+      document.getElementById('voice-label').textContent = 'Stop';
+      document.getElementById('rc-voice-hint').classList.remove('hidden');
+      this.toast('🎙️', 'Ascolto attivo — dì "su" o "fatto"');
+    } catch { this.toast('❌', 'Errore avvio microfono'); }
+  },
+  stopVoice() {
+    this.voiceActive = false;
+    if (this.voiceRecognition) { try { this.voiceRecognition.stop(); } catch {} this.voiceRecognition = null; }
+    document.getElementById('rc-voice-btn').classList.remove('listening');
+    document.getElementById('voice-label').textContent = 'Voce';
+    document.getElementById('rc-voice-hint').classList.add('hidden');
   },
 
   // ── REP COUNTER ──
