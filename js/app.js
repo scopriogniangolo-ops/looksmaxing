@@ -70,7 +70,9 @@ const App = {
     $('rc-plus').onclick = () => this.updateReps(1);
     $('rc-minus').onclick = () => this.updateReps(-1);
     $('rc-reset-btn').onclick = () => { this.repCount = 0; this.updateRepDisplay(); };
-    $('rc-voice-btn').onclick = () => this.toggleVoice();
+    $('rc-tap-mode-btn').onclick = () => this.openTapMode();
+    $('tap-overlay').onclick = (e) => { if (e.target.id !== 'tap-close') this.tapRep(); };
+    $('tap-close').onclick = (e) => { e.stopPropagation(); this.closeTapMode(); };
     $('btn-sidebar').onclick = () => this.openSidebar();
     $('sb-close').onclick = () => this.closeSidebar();
     $('sidebar-overlay').onclick = () => this.closeSidebar();
@@ -1188,52 +1190,38 @@ const App = {
     try { return JSON.parse(localStorage.getItem('lm_custom_routine') || '{}'); } catch { return {}; }
   },
 
-  // ── VOICE CONTROL ──
-  voiceRecognition: null, voiceActive: false,
-  toggleVoice() {
-    if (this.voiceActive) { this.stopVoice(); return; }
-    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR) { this.toast('❌', 'Voce non supportata su questo browser'); return; }
-    this.voiceRecognition = new SR();
-    this.voiceRecognition.lang = 'it-IT';
-    this.voiceRecognition.continuous = true;
-    this.voiceRecognition.interimResults = false;
-    this.voiceRecognition.onresult = (e) => {
-      const last = e.results[e.results.length - 1];
-      if (!last.isFinal) return;
-      const text = last[0].transcript.toLowerCase().trim();
-      const addWords = ['su', 'fatto', 'rep', 'vai', 'uno', 'next', 'ok', 'si', 'sì', 'top', 'go', 'up', 'yes'];
-      const resetWords = ['reset', 'ricomincia', 'zero', 'azzerà'];
-      if (addWords.some(w => text.includes(w))) {
-        this.updateReps(1);
-        if (navigator.vibrate) navigator.vibrate(50);
-      } else if (resetWords.some(w => text.includes(w))) {
-        this.repCount = 0; this.updateRepDisplay();
-        this.toast('🔄', 'Counter resettato');
-      }
-    };
-    this.voiceRecognition.onerror = (e) => {
-      if (e.error !== 'no-speech') { this.stopVoice(); this.toast('❌', 'Errore microfono'); }
-    };
-    this.voiceRecognition.onend = () => {
-      if (this.voiceActive) this.voiceRecognition.start();
-    };
-    try {
-      this.voiceRecognition.start();
-      this.voiceActive = true;
-      document.getElementById('rc-voice-btn').classList.add('listening');
-      document.getElementById('voice-label').textContent = 'Stop';
-      document.getElementById('rc-voice-hint').classList.remove('hidden');
-      this.toast('🎙️', 'Ascolto attivo — dì "su" o "fatto"');
-    } catch { this.toast('❌', 'Errore avvio microfono'); }
+  // ── TAP MODE (hands-free rep counting) ──
+  tapModeActive: false,
+  openTapMode() {
+    this.tapModeActive = true;
+    document.getElementById('tap-overlay').classList.remove('hidden');
+    document.getElementById('tap-count').textContent = this.repCount;
+    document.getElementById('tap-target-label').textContent = '/ ' + this.repTarget;
+    document.getElementById('tap-fill').style.width = Math.min(100, (this.repCount / this.repTarget) * 100) + '%';
+    document.getElementById('rc-tap-mode-btn').classList.add('active');
+    document.getElementById('tap-mode-label').textContent = 'Attivo';
   },
-  stopVoice() {
-    this.voiceActive = false;
-    if (this.voiceRecognition) { try { this.voiceRecognition.stop(); } catch {} this.voiceRecognition = null; }
-    document.getElementById('rc-voice-btn').classList.remove('listening');
-    document.getElementById('voice-label').textContent = 'Voce';
-    document.getElementById('rc-voice-hint').classList.add('hidden');
+  closeTapMode() {
+    this.tapModeActive = false;
+    document.getElementById('tap-overlay').classList.add('hidden');
+    document.getElementById('rc-tap-mode-btn').classList.remove('active');
+    document.getElementById('tap-mode-label').textContent = 'Hands-Free';
   },
+  tapRep() {
+    this.updateReps(1);
+    if (navigator.vibrate) navigator.vibrate(30);
+    const el = document.getElementById('tap-count');
+    el.textContent = this.repCount;
+    document.getElementById('tap-fill').style.width = Math.min(100, (this.repCount / this.repTarget) * 100) + '%';
+    el.classList.remove('tap-flash');
+    void el.offsetWidth;
+    el.classList.add('tap-flash');
+    if (this.repCount >= this.repTarget) {
+      if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+      this.toast('🎉', 'Serie completata!');
+    }
+  },
+  stopVoice() { this.closeTapMode(); },
 
   // ── REP COUNTER ──
   repCount: 0, repTarget: 15,

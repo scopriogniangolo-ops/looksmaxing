@@ -479,9 +479,20 @@ body{font-family:-apple-system,'SF Pro Display','SF Pro Text','Helvetica Neue',s
 .rc-bottom-row{display:flex;gap:8px;justify-content:center;align-items:center}
 .rc-reset-btn{padding:7px 18px;background:0;border:1px solid var(--border);border-radius:var(--r-full);color:var(--t3);font-size:11px;font-weight:600;cursor:pointer;font-family:inherit}
 .rc-voice-btn{display:flex;align-items:center;gap:6px;padding:7px 16px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r-full);color:var(--t2);font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .2s}
-.rc-voice-btn.listening{background:rgba(239,68,68,0.15);border-color:rgba(239,68,68,0.4);color:var(--red);animation:voicePulse 1.5s ease-in-out infinite}
-@keyframes voicePulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.2)}50%{box-shadow:0 0 0 8px rgba(239,68,68,0)}}
-.rc-voice-hint{font-size:11px;color:var(--accent2);text-align:center;margin-top:8px;animation:fadeUp .3s ease}
+.rc-voice-btn.active{background:rgba(37,99,235,0.15);border-color:rgba(37,99,235,0.4);color:var(--accent2)}
+
+/* Tap overlay */
+.tap-overlay{position:fixed;inset:0;background:rgba(5,8,15,0.95);z-index:250;display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-user-select:none;user-select:none}
+.tap-overlay.hidden{display:none}
+.tap-content{text-align:center;pointer-events:none}
+.tap-count{font-size:96px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;display:block;line-height:1}
+.tap-content small{font-size:20px;color:var(--t3);font-weight:600}
+.tap-content p{font-size:14px;color:var(--t2);margin:16px 0}
+.tap-bar{width:200px;height:6px;background:var(--glass);border-radius:var(--r-full);overflow:hidden;margin:0 auto 20px}
+.tap-fill{height:100%;background:var(--grad);border-radius:var(--r-full);transition:width .2s}
+.tap-close{pointer-events:auto;padding:10px 28px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r-full);color:var(--t2);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.tap-flash{animation:tapFlash .15s ease}
+@keyframes tapFlash{0%{opacity:1}50%{opacity:.6}100%{opacity:1}}
 
 /* ══════ SIDEBAR ══════ */
 .sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:200;transition:opacity .3s}
@@ -867,12 +878,11 @@ body{font-family:-apple-system,'SF Pro Display','SF Pro Text','Helvetica Neue',s
           <div class="rc-bar"><div class="rc-fill" id="rc-fill"></div></div>
           <div class="rc-bottom-row">
             <button class="rc-reset-btn" id="rc-reset-btn">Reset</button>
-            <button class="rc-voice-btn" id="rc-voice-btn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-              <span id="voice-label">Voce</span>
+            <button class="rc-voice-btn" id="rc-tap-mode-btn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              <span id="tap-mode-label">Hands-Free</span>
             </button>
           </div>
-          <p class="rc-voice-hint hidden" id="rc-voice-hint">🎙️ Ascolto... Dì "su" o "fatto" per contare</p>
         </div>
 
         <div class="timer-section" id="timer-section">
@@ -893,6 +903,16 @@ body{font-family:-apple-system,'SF Pro Display','SF Pro Text','Helvetica Neue',s
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><polygon points="10 8 16 12 10 16"/><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
           <span>Apri su YouTube</span>
         </a>
+
+        <div class="tap-overlay hidden" id="tap-overlay">
+          <div class="tap-content">
+            <span class="tap-count" id="tap-count">0</span>
+            <small id="tap-target-label">/ 15</small>
+            <p>Tocca ovunque per contare</p>
+            <div class="tap-bar"><div class="tap-fill" id="tap-fill"></div></div>
+            <button class="tap-close" id="tap-close">✕ Chiudi</button>
+          </div>
+        </div>
 
         <button class="btn-hero btn-block btn-complete" id="btn-complete">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -2733,7 +2753,9 @@ const App = {
     $('rc-plus').onclick = () => this.updateReps(1);
     $('rc-minus').onclick = () => this.updateReps(-1);
     $('rc-reset-btn').onclick = () => { this.repCount = 0; this.updateRepDisplay(); };
-    $('rc-voice-btn').onclick = () => this.toggleVoice();
+    $('rc-tap-mode-btn').onclick = () => this.openTapMode();
+    $('tap-overlay').onclick = (e) => { if (e.target.id !== 'tap-close') this.tapRep(); };
+    $('tap-close').onclick = (e) => { e.stopPropagation(); this.closeTapMode(); };
     $('btn-sidebar').onclick = () => this.openSidebar();
     $('sb-close').onclick = () => this.closeSidebar();
     $('sidebar-overlay').onclick = () => this.closeSidebar();
@@ -3851,52 +3873,38 @@ const App = {
     try { return JSON.parse(localStorage.getItem('lm_custom_routine') || '{}'); } catch { return {}; }
   },
 
-  // ── VOICE CONTROL ──
-  voiceRecognition: null, voiceActive: false,
-  toggleVoice() {
-    if (this.voiceActive) { this.stopVoice(); return; }
-    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR) { this.toast('❌', 'Voce non supportata su questo browser'); return; }
-    this.voiceRecognition = new SR();
-    this.voiceRecognition.lang = 'it-IT';
-    this.voiceRecognition.continuous = true;
-    this.voiceRecognition.interimResults = false;
-    this.voiceRecognition.onresult = (e) => {
-      const last = e.results[e.results.length - 1];
-      if (!last.isFinal) return;
-      const text = last[0].transcript.toLowerCase().trim();
-      const addWords = ['su', 'fatto', 'rep', 'vai', 'uno', 'next', 'ok', 'si', 'sì', 'top', 'go', 'up', 'yes'];
-      const resetWords = ['reset', 'ricomincia', 'zero', 'azzerà'];
-      if (addWords.some(w => text.includes(w))) {
-        this.updateReps(1);
-        if (navigator.vibrate) navigator.vibrate(50);
-      } else if (resetWords.some(w => text.includes(w))) {
-        this.repCount = 0; this.updateRepDisplay();
-        this.toast('🔄', 'Counter resettato');
-      }
-    };
-    this.voiceRecognition.onerror = (e) => {
-      if (e.error !== 'no-speech') { this.stopVoice(); this.toast('❌', 'Errore microfono'); }
-    };
-    this.voiceRecognition.onend = () => {
-      if (this.voiceActive) this.voiceRecognition.start();
-    };
-    try {
-      this.voiceRecognition.start();
-      this.voiceActive = true;
-      document.getElementById('rc-voice-btn').classList.add('listening');
-      document.getElementById('voice-label').textContent = 'Stop';
-      document.getElementById('rc-voice-hint').classList.remove('hidden');
-      this.toast('🎙️', 'Ascolto attivo — dì "su" o "fatto"');
-    } catch { this.toast('❌', 'Errore avvio microfono'); }
+  // ── TAP MODE (hands-free rep counting) ──
+  tapModeActive: false,
+  openTapMode() {
+    this.tapModeActive = true;
+    document.getElementById('tap-overlay').classList.remove('hidden');
+    document.getElementById('tap-count').textContent = this.repCount;
+    document.getElementById('tap-target-label').textContent = '/ ' + this.repTarget;
+    document.getElementById('tap-fill').style.width = Math.min(100, (this.repCount / this.repTarget) * 100) + '%';
+    document.getElementById('rc-tap-mode-btn').classList.add('active');
+    document.getElementById('tap-mode-label').textContent = 'Attivo';
   },
-  stopVoice() {
-    this.voiceActive = false;
-    if (this.voiceRecognition) { try { this.voiceRecognition.stop(); } catch {} this.voiceRecognition = null; }
-    document.getElementById('rc-voice-btn').classList.remove('listening');
-    document.getElementById('voice-label').textContent = 'Voce';
-    document.getElementById('rc-voice-hint').classList.add('hidden');
+  closeTapMode() {
+    this.tapModeActive = false;
+    document.getElementById('tap-overlay').classList.add('hidden');
+    document.getElementById('rc-tap-mode-btn').classList.remove('active');
+    document.getElementById('tap-mode-label').textContent = 'Hands-Free';
   },
+  tapRep() {
+    this.updateReps(1);
+    if (navigator.vibrate) navigator.vibrate(30);
+    const el = document.getElementById('tap-count');
+    el.textContent = this.repCount;
+    document.getElementById('tap-fill').style.width = Math.min(100, (this.repCount / this.repTarget) * 100) + '%';
+    el.classList.remove('tap-flash');
+    void el.offsetWidth;
+    el.classList.add('tap-flash');
+    if (this.repCount >= this.repTarget) {
+      if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
+      this.toast('🎉', 'Serie completata!');
+    }
+  },
+  stopVoice() { this.closeTapMode(); },
 
   // ── REP COUNTER ──
   repCount: 0, repTarget: 15,
