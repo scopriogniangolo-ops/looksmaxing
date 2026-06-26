@@ -599,6 +599,22 @@ const EXERCISES = {
         tips: 'Fai ogni ora se lavori al computer.'
       },
       {
+        id: 'hanging-bar', name: 'Hanging on Bar', subtitle: 'Sospensione alla sbarra',
+        icon: '🏗️', difficulty: 'Intermedio', difficultyLevel: 2, xp: 25,
+        target: 'Spina dorsale, Spalle, Grip, Altezza', duration: '5 min', sets: 3, reps: '30-60s hold', holdTime: 45,
+        unlockLevel: 1,
+        benefits: ['Decompressione spinale', 'Postura migliorata', 'Altezza massimizzata', 'Spalle larghe'],
+        steps: [
+          'Afferra la sbarra con presa prona larghezza spalle',
+          'Lasciati appendere — gambe rilassate, non toccare terra',
+          'Rilassa le spalle, il peso decomprime la spina dorsale',
+          'Respira: inspira 4 sec dal naso, espira 6 sec dalla bocca',
+          'Mantieni 30-60 sec (BASE:30s / MEDIO:45s / PRO:60s)',
+          'Riposa 30 sec tra le serie. 3 serie totali.'
+        ],
+        tips: 'Fallo ogni mattina appena sveglio. Puoi guadagnare 1-3 cm temporanei. Con costanza la postura migliora permanentemente.'
+      },
+      {
         id: 'platysma-exercise', name: 'Platysma Toner', subtitle: 'Tono muscolo platisma',
         icon: '💪', difficulty: 'Intermedio', difficultyLevel: 2, xp: 20,
         target: 'Platisma, Collo anteriore', duration: '3 min', sets: 3, reps: 15, holdTime: 5,
@@ -753,22 +769,6 @@ const EXERCISES = {
           'Deficit calorico se BF% > 15%'
         ],
         tips: 'Collo 14-16" e trapezi sviluppati cambiano tutto il look.'
-      },
-      {
-        id: 'hanging-bar', name: 'Hanging on Bar', subtitle: 'Sospensione alla sbarra',
-        icon: '🏗️', difficulty: 'Intermedio', difficultyLevel: 2, xp: 25,
-        target: 'Spina dorsale, Spalle, Grip, Altezza', duration: '5 min', sets: 3, reps: '30-60s hold', holdTime: 45,
-        unlockLevel: 1,
-        benefits: ['Decompressione spinale', 'Postura migliorata', 'Altezza massimizzata', 'Spalle larghe', 'Grip forte'],
-        steps: [
-          'Afferra la sbarra con presa prona (palmi in avanti) larghezza spalle',
-          'Lasciati appendere completamente — gambe rilassate, non toccare terra',
-          'Rilassa le spalle e lascia che il peso del corpo decomprime la spina dorsale',
-          'Respira profondamente: inspira 4 sec dal naso, espira 6 sec dalla bocca',
-          'Mantieni per 30-60 secondi per serie (BASE: 30s / MEDIO: 45s / PRO: 60s)',
-          'Riposa 30 secondi tra le serie. 3 serie totali.'
-        ],
-        tips: 'Fallo ogni mattina appena sveglio per massimizzare la decompressione notturna. Puoi guadagnare 1-3 cm di altezza temporanea. Con costanza, la postura migliora permanentemente e appari più alto.'
       },
       {
         id: 'sun-protocol', name: 'Protocollo Sole', subtitle: 'Esposizione intelligente',

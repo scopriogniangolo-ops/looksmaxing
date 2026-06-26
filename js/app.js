@@ -62,6 +62,12 @@ const App = {
     $('wt-plus-glass').onclick = () => this.updateWater(0.25);
     $('wt-plus-bottle').onclick = () => this.updateWater(0.5);
     $('wt-minus').onclick = () => this.updateWater(-0.25);
+    $('rc-plus').onclick = () => this.updateReps(1);
+    $('rc-minus').onclick = () => this.updateReps(-1);
+    $('rc-reset-btn').onclick = () => { this.repCount = 0; this.updateRepDisplay(); };
+    $('btn-sidebar').onclick = () => this.openSidebar();
+    $('sb-close').onclick = () => this.closeSidebar();
+    $('sidebar-overlay').onclick = () => this.closeSidebar();
     $('btn-reset-all').onclick = () => {
       if (confirm('Eliminare tutti i dati?')) { localStorage.clear(); location.reload(); }
     };
@@ -532,10 +538,19 @@ const App = {
       if (vidEmbed) { vidEmbed.innerHTML = ''; vidEmbed.classList.add('hidden'); }
     }
 
+    const repCounter = document.getElementById('rep-counter');
+    if (typeof adjReps === 'number' && adjReps > 0) {
+      this.repCount = 0; this.repTarget = adjReps;
+      document.getElementById('rc-current').textContent = '0';
+      document.getElementById('rc-target').textContent = '/ ' + adjReps;
+      document.getElementById('rc-fill').style.width = '0';
+      repCounter.style.display = 'block';
+    } else { repCounter.style.display = 'none'; }
+
     this.timerReset();
     if (ex.holdTime) {
       this.timerTotal = adjHold; this.timerSets = adjSets || 1; this.timerSet = 1;
-      document.getElementById('timer-time').textContent = this.fmtTime(ex.holdTime);
+      document.getElementById('timer-time').textContent = this.fmtTime(adjHold);
       document.getElementById('timer-set').textContent = 'Serie 1/' + this.timerSets;
       document.getElementById('timer-section').style.display = 'block';
     } else document.getElementById('timer-section').style.display = 'none';
@@ -837,11 +852,22 @@ const App = {
       container.innerHTML = `<div style="text-align:center;padding:32px 16px"><p style="font-size:14px;color:var(--t2);margin-bottom:16px">La tua routine personale è vuota.</p><p style="font-size:12px;color:var(--t3);margin-bottom:20px">Fai una scansione, tocca i punteggi e aggiungi esercizi, oppure usa "Personalizza Routine".</p></div>`;
       return;
     }
+    const TIME_BANDS = {
+      mewing: { time: '🌅 Mattina + 🌙 Sera', note: 'Pratica appena sveglio e prima di dormire' },
+      jawline: { time: '☀️ Pomeriggio', note: 'Dopo pranzo, muscoli caldi' },
+      faceYoga: { time: '🌅 Mattina', note: 'Appena sveglio per attivare la circolazione' },
+      neck: { time: '🌅 Mattina', note: 'Prima di iniziare la giornata' },
+      skincare: { time: '🌅 Mattina + 🌙 Sera', note: 'Routine AM e PM' },
+      debloat: { time: '🌅 Mattina presto', note: 'Appena sveglio per sgonfiare' },
+      manhood: { time: '🌙 Sera', note: 'In privato, rilassato' },
+      lifestyle: { time: '⏰ Tutto il giorno', note: 'Abitudini costanti' }
+    };
     Object.entries(saved).forEach(([catId, exIds]) => {
       if (!exIds || !exIds.length) return;
       const cat = EXERCISES[catId]; if (!cat) return;
+      const tb = TIME_BANDS[catId] || { time: '⏰ Qualsiasi', note: '' };
       const pd = document.createElement('div'); pd.className = 'r-period';
-      pd.innerHTML = `<div class="r-period-title">${cat.icon} ${cat.name}</div>`;
+      pd.innerHTML = `<div class="r-period-title">${cat.icon} ${cat.name}</div><div style="font-size:10px;color:var(--t3);margin:-4px 0 8px;padding-left:4px">${tb.time} — ${tb.note}</div>`;
       exIds.forEach(exId => {
         const ex = cat.exercises.find(e => e.id === exId); if (!ex) return;
         const key = 'personal_' + catId + '_' + exId;
@@ -1032,6 +1058,60 @@ const App = {
 
   getCustomRoutine() {
     try { return JSON.parse(localStorage.getItem('lm_custom_routine') || '{}'); } catch { return {}; }
+  },
+
+  // ── REP COUNTER ──
+  repCount: 0, repTarget: 15,
+  updateReps(delta) {
+    this.repCount = Math.max(0, this.repCount + delta);
+    this.updateRepDisplay();
+    if (this.repCount >= this.repTarget) this.toast('🎉', 'Serie completata!');
+  },
+  updateRepDisplay() {
+    document.getElementById('rc-current').textContent = this.repCount;
+    document.getElementById('rc-fill').style.width = Math.min(100, (this.repCount / this.repTarget) * 100) + '%';
+  },
+
+  // ── SIDEBAR ──
+  openSidebar() {
+    document.getElementById('sidebar').classList.remove('hidden');
+    document.getElementById('sidebar-overlay').classList.remove('hidden');
+    this.renderSidebar();
+  },
+  closeSidebar() {
+    document.getElementById('sidebar').classList.add('hidden');
+    document.getElementById('sidebar-overlay').classList.add('hidden');
+  },
+  renderSidebar() {
+    const list = document.getElementById('sb-list');
+    list.innerHTML = '';
+    const sections = [
+      { title: 'Navigazione', items: [
+        { icon: '🏠', label: 'Dashboard', action: () => { this.closeSidebar(); this.history=[]; this.go('dashboard'); }},
+        { icon: '📸', label: 'Face Scanner', action: () => { this.closeSidebar(); this.scanStep=1; this.photos={}; this.go('scanner'); }},
+        { icon: '📊', label: 'Progressi', action: () => { this.closeSidebar(); this.history=[]; this.go('progress'); }},
+        { icon: '👤', label: 'Profilo', action: () => { this.closeSidebar(); this.history=[]; this.go('profile'); }}
+      ]},
+      { title: 'Allenamento', items: Object.values(EXERCISES).map(cat => ({
+        icon: cat.icon, label: cat.name, sub: cat.exercises.length + ' esercizi',
+        action: () => { this.closeSidebar(); this.openCat(cat.id); }
+      }))},
+      { title: 'Guide', items: PROGRAMS.slice(0, 8).map(p => ({
+        icon: p.icon, label: p.name, sub: p.chapters + ' capitoli',
+        action: () => { this.closeSidebar(); this.openProgram(p); }
+      }))}
+    ];
+    sections.forEach(sec => {
+      const s = document.createElement('div'); s.className = 'sb-section';
+      s.innerHTML = '<div class="sb-section-title">' + sec.title + '</div>';
+      sec.items.forEach(item => {
+        const el = document.createElement('div'); el.className = 'sb-item';
+        el.innerHTML = '<span class="sb-icon">' + item.icon + '</span><div class="sb-label">' + item.label + (item.sub ? '<small>' + item.sub + '</small>' : '') + '</div>';
+        el.onclick = item.action;
+        s.appendChild(el);
+      });
+      list.appendChild(s);
+    });
   },
 
   // ── WATER TRACKER ──
