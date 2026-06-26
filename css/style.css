@@ -264,7 +264,8 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 
 /* ══════ EXERCISE DETAIL ══════ */
 .det-scroll{padding:8px 16px calc(var(--nav-h) + 20px)}
-.det-illust{display:none}
+.det-illust{display:flex;justify-content:center;padding:12px 0 8px}
+.det-illust svg{width:200px;height:auto;max-height:160px}
 .ex-hero-card{border-radius:var(--r-lg);overflow:hidden;margin-bottom:16px;position:relative;min-height:200px;display:flex;flex-direction:column;justify-content:flex-end;padding:20px;background-size:cover;background-position:center}
 .ex-hero-card::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.3) 50%,rgba(0,0,0,0.1) 100%)}
 .ex-hero-card .ehc-icon{font-size:48px;position:relative;z-index:1;margin-bottom:8px}

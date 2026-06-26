@@ -377,6 +377,7 @@ const App = {
 
   renderRoutine() {
     const c = document.getElementById('routine-list'); c.innerHTML = '';
+    if (this.routineLevel === 'personal') { this.renderPersonalRoutine(c); return; }
     const r = DAILY_ROUTINES[this.routineLevel]; if (!r) return;
     [{ k: 'morning', l: 'Mattina', i: '🌅' }, { k: 'afternoon', l: 'Pomeriggio', i: '☀️' }, { k: 'evening', l: 'Sera', i: '🌙' }].forEach(p => {
       if (!r[p.k] || !r[p.k].length) return;
@@ -485,47 +486,9 @@ const App = {
     document.getElementById('det-reps').textContent = ex.reps;
     document.getElementById('det-hold').textContent = ex.holdTime ? ex.holdTime + 's' : '--';
 
-    const EXERCISE_IMAGES = {
-      'basic-mewing':'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&crop=face',
-      'hard-mewing':'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=250&fit=crop&crop=face',
-      'tongue-suction':'https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?w=400&h=250&fit=crop&crop=face',
-      'tongue-chewing':'https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?w=400&h=250&fit=crop&crop=face',
-      'chin-tucks':'https://images.unsplash.com/photo-1612875735066-5bc37975d32a?w=400&h=250&fit=crop',
-      'jaw-clench':'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=250&fit=crop&crop=face',
-      'jaw-resistance':'https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?w=400&h=250&fit=crop&crop=face',
-      'neck-curls':'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=250&fit=crop',
-      'gum-chewing':'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=250&fit=crop&crop=face',
-      'jaw-side-to-side':'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=250&fit=crop&crop=face',
-      'cheek-lifts':'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=250&fit=crop&crop=face',
-      'cheekbone-sculptor':'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=250&fit=crop&crop=face',
-      'forehead-smoother':'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=250&fit=crop&crop=face',
-      'eye-lifts':'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=250&fit=crop&crop=face',
-      'lip-plumper':'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=250&fit=crop&crop=face',
-      'face-tightener':'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=250&fit=crop&crop=face',
-      'neck-extensions':'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=250&fit=crop',
-      'neck-side-stretch':'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=250&fit=crop',
-      'wall-angels':'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=250&fit=crop',
-      'scapular-squeeze':'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=250&fit=crop',
-      'platysma-exercise':'https://images.unsplash.com/photo-1612875735066-5bc37975d32a?w=400&h=250&fit=crop',
-      'morning-routine':'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&h=250&fit=crop',
-      'evening-routine':'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400&h=250&fit=crop',
-      'weekly-treatment':'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&h=250&fit=crop',
-      'dermarolling':'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&h=250&fit=crop',
-      'sleep-optimization':'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=400&h=250&fit=crop',
-      'hydration':'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=400&h=250&fit=crop',
-      'nutrition':'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&h=250&fit=crop',
-      'body-training':'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=250&fit=crop',
-      'sun-protocol':'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=400&h=250&fit=crop'
-    };
-    const heroDiv = document.querySelector('.det-scroll');
-    let existingHero = heroDiv.querySelector('.ex-hero-card');
-    if (existingHero) existingHero.remove();
-    const hero = document.createElement('div');
-    hero.className = 'ex-hero-card';
-    hero.style.backgroundImage = 'url(' + (EXERCISE_IMAGES[ex.id] || '') + ')';
-    if (!EXERCISE_IMAGES[ex.id]) hero.style.background = this.catGradient(catId);
-    hero.innerHTML = `<span class="ehc-tag d${ex.difficultyLevel}">${ex.difficulty}</span><span class="ehc-icon">${ex.icon}</span><div class="ehc-name">${ex.name}</div><div class="ehc-sub">${ex.target} • ${ex.duration}</div>`;
-    heroDiv.insertBefore(hero, heroDiv.firstChild);
+    const illust = document.getElementById('det-illust');
+    illust.style.display = 'flex';
+    illust.innerHTML = SVG_ILLUSTRATIONS[ex.id] || SVG_ILLUSTRATIONS['default'];
 
     const ben = document.getElementById('det-benefits'); ben.innerHTML = '';
     ex.benefits.forEach(b => { const t = document.createElement('span'); t.className = 'ben-tag'; t.textContent = b; ben.appendChild(t); });
@@ -747,7 +710,47 @@ const App = {
   },
   findExInCat(id, cat) { return EXERCISES[cat]?.exercises.find(e => e.id === id); },
 
+  renderPersonalRoutine(container) {
+    const saved = this.getCustomRoutine();
+    const hasExercises = Object.values(saved).some(arr => arr && arr.length > 0);
+    if (!hasExercises) {
+      container.innerHTML = `<div style="text-align:center;padding:32px 16px"><p style="font-size:14px;color:var(--t2);margin-bottom:16px">La tua routine personale è vuota.</p><p style="font-size:12px;color:var(--t3);margin-bottom:20px">Fai una scansione facciale, tocca i punteggi e aggiungi esercizi con il pulsante "+ Routine", oppure personalizza dalla sezione qui sotto.</p></div>`;
+      return;
+    }
+    Object.entries(saved).forEach(([catId, exIds]) => {
+      if (!exIds || !exIds.length) return;
+      const cat = EXERCISES[catId]; if (!cat) return;
+      const pd = document.createElement('div'); pd.className = 'r-period';
+      pd.innerHTML = `<div class="r-period-title">${cat.icon} ${cat.name}</div>`;
+      exIds.forEach(exId => {
+        const ex = cat.exercises.find(e => e.id === exId); if (!ex) return;
+        const key = 'personal_' + catId + '_' + exId;
+        const done = this.doneRoutine.has(key);
+        const el = document.createElement('div'); el.className = 'r-item' + (done ? ' done' : '');
+        el.innerHTML = `<span class="ri-icon">${ex.icon}</span><div class="ri-info"><div class="ri-name">${ex.name}</div><div class="ri-note">${ex.sets}x${ex.reps} • ${ex.duration}</div></div><div class="ri-check"></div>`;
+        el.onclick = () => { if (!done) { this.doneRoutine.add(key); el.classList.add('done'); } this.openDetail(ex, catId); };
+        pd.appendChild(el);
+      });
+      container.appendChild(pd);
+    });
+  },
+
   // ── SCORE DETAIL (clickable scores) ──
+  getSpecificAdvice(catId, score) {
+    const advice = {
+      symmetry: { lo: 'Il tuo viso mostra asimmetria significativa. Il mewing costante e dormire sulla schiena possono correggere gradualmente questo squilibrio.', mid: 'Simmetria discreta. Mantieni il mewing 24/7 e evita di dormire su un lato per non peggiorare.', hi: 'Ottima simmetria! Continua con le buone abitudini posturali.' },
+      jawline: { lo: 'La tua mascella appare repressa o poco definita. Serve lavoro intenso sui masseteri con gomma dura e jaw clenches, combinato con riduzione del grasso corporeo.', mid: 'Jawline presente ma migliorabile. Aggiungi chin tucks giornalieri e masticazione con mastic gum per definirla di più.', hi: 'Jawline ben definita! Mantienila con esercizi di mantenimento.' },
+      eyes: { lo: 'La zona occhi necessita attenzione. Eye lifts e un buon contorno occhi con caffeina e vitamina K possono migliorare significativamente borse e palpebre.', mid: 'Zona occhi nella media. Cura il contorno occhi con sieri specifici e riduci il gonfiore con impacchi freddi.', hi: 'Zona occhi eccellente! Proteggi con SPF e contorno occhi.' },
+      cheekbones: { lo: 'I tuoi zigomi appaiono piatti. Cheekbone sculpting, riduzione body fat sotto il 15%, e face yoga possono farli emergere.', mid: 'Zigomi presenti. Per renderli più prominenti, combina face yoga con deficit calorico moderato.', hi: 'Zigomi prominenti! Mantieni con face yoga regolare.' },
+      nose: { lo: 'Le proporzioni del naso sono migliorabili. Concentrati sulla skincare della zona T per minimizzare i pori e migliorare la texture.', mid: 'Naso proporzionato. Una buona skincare zona T manterrà i pori puliti.', hi: 'Ottime proporzioni nasali!' },
+      lips: { lo: 'Le labbra appaiono sottili. Lip exercises e idratazione costante con balsami a base di acido ialuronico possono migliorare il volume naturale.', mid: 'Labbra nella norma. Lip volumizer exercises e idratazione costante per mantenerle piene.', hi: 'Labbra ben proporzionate!' },
+      proportions: { lo: 'I terzi facciali non sono bilanciati. Il mewing può migliorare la proiezione del terzo medio, mentre la postura del collo influenza il profilo.', mid: 'Proporzioni discrete. Mewing e postura corretta possono ottimizzare i rapporti facciali.', hi: 'Proporzioni vicine al golden ratio!' },
+      skin: { lo: 'La tua pelle ha bisogno di una routine completa. Inizia SUBITO con detergente + vitamina C + SPF al mattino, e retinolo + idratante la sera.', mid: 'Pelle discreta. Aggiungi retinolo la sera e non dimenticare MAI il SPF per prevenire invecchiamento.', hi: 'Pelle eccellente! Mantieni la routine.' }
+    };
+    const a = advice[catId] || { lo: 'Da migliorare', mid: 'Nella media', hi: 'Ottimo' };
+    return score < 5.5 ? a.lo : score < 7.5 ? a.mid : a.hi;
+  },
+
   showScoreDetail(cat, score, rowEl) {
     const existing = rowEl.parentElement.querySelector('.score-detail-panel');
     if (existing) { existing.remove(); return; }
@@ -756,9 +759,10 @@ const App = {
     const pe = PERSONALIZED_EXERCISES[cat.id];
     if (!pe) return;
     const exercises = score < 5.5 ? pe.low : pe.medium;
+    const specificAdvice = this.getSpecificAdvice(cat.id, score);
     const panel = document.createElement('div');
     panel.className = 'score-detail-panel anim';
-    let html = `<div class="sdp-header"><span class="sdp-icon">${cat.icon}</span><div class="sdp-info"><h3>${cat.name} — ${score}/10</h3><p>${pe.exercises}</p></div></div><div class="sdp-exercises">`;
+    let html = `<div class="sdp-header"><span class="sdp-icon">${cat.icon}</span><div class="sdp-info"><h3>${cat.name} — ${score}/10</h3><p>${specificAdvice}</p></div></div><h4 style="font-size:13px;margin:12px 0 8px;color:var(--accent2)">Esercizi consigliati per te:</h4><div class="sdp-exercises">`;
 
     (exercises || []).forEach(exId => {
       const found = this.findEx(exId);

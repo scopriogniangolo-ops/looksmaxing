@@ -889,7 +889,99 @@ const EXERCISE_VIDEOS = {
 
 const PROGRAMS = [
   {
-    id:'jaw-guide', name:'Jaw Guide', icon:'🦴',
+    id:'struttura-ossea', name:'Struttura Ossea del Viso', icon:'💀',
+    image:'linear-gradient(135deg,#1a1a1a,#2d2d2d)',
+    chapters:3, lessons:8,
+    description:'Protocollo avanzato su IGF-1 Signaling e osteoblasti per migliorare le ossa del viso.',
+    content:[
+      {title:'Come Funziona la Crescita Ossea', text:'Le ossa del viso rispondono a stimoli meccanici secondo la Legge di Wolff: la pressione costante stimola gli osteoblasti (cellule che costruiscono osso). Il mewing applica forza sul palato e mascellare superiore, stimolando rimodellamento osseo. L\'IGF-1 (Insulin-like Growth Factor 1) è il principale mediatore della crescita ossea. Si aumenta con: sonno profondo, esercizio intenso, proteine adeguate, e vitamina D.'},
+      {title:'Massimizzare IGF-1 Naturalmente', text:'1. Dormi 8+ ore (il GH si rilascia nelle fasi profonde del sonno). 2. Allenamento con pesi pesanti (squat, stacco stimolano il GH). 3. Proteine 1.6-2g/kg/giorno. 4. Vitamina D 4000 UI/giorno. 5. Zinco 25-50mg/giorno. 6. Evita zuccheri raffinati (abbassano GH e IGF-1). Nei giovani sotto i 25 anni questi protocolli possono ancora influenzare la struttura facciale.'},
+      {title:'Bonesmashing: Fatto vs Fiction', text:'Il bonesmashing (colpire le ossa facciali per stimolare crescita) è basato su una interpretazione estrema della Legge di Wolff. I rischi superano i benefici: micro-fratture, danni ai nervi, gonfiore cronico. Metodi più sicuri: mewing costante, masticazione intensa con gomma dura, chin tucks per lo sviluppo mandibolare. Questi applicano forze fisiologiche che il corpo può gestire.'}
+    ],
+    relatedExercises:['basic-mewing','hard-mewing','jaw-clench','gum-chewing']
+  },
+  {
+    id:'esercizi-viso', name:'Esercizi per il Viso', icon:'🏋️',
+    image:'linear-gradient(135deg,#0d2818,#1a4d2e)',
+    chapters:3, lessons:10,
+    description:'Tutti gli esercizi attivi e video tutorial per migliorare ogni area del tuo viso.',
+    content:[
+      {title:'Mappa Muscolare del Viso', text:'Il viso ha oltre 40 muscoli. I principali per il looksmaxing: MASSETERI (lati della mascella, danno larghezza), ZIGOMATICI (sollevano le guance), ORBICOLARE DEGLI OCCHI (tonicità zona occhi), PLATISMA (collo anteriore, influenza la jawline), FRONTALE (fronte). Ogni muscolo risponde all\'allenamento come quelli del corpo: serve resistenza progressiva e costanza.'},
+      {title:'Programma Settimanale Completo', text:'LUNEDÌ: Mewing 5min + Chin Tucks 3x15 + Cheek Lifts 3x15. MARTEDÌ: Gomma Dura 20min + Jaw Clench 4x10 + Eye Lifts 3x15. MERCOLEDÌ: Riposo attivo (solo mewing). GIOVEDÌ: Hard Mewing 3x60s + Neck Curls 3x15 + Face Tightener 3x10. VENERDÌ: Gomma Dura 20min + Jaw Resistance 3x12 + Cheekbone Sculptor 3x10. SABATO: Tongue Suction 4x45s + Platysma 3x15 + Wall Angels 3x12. DOMENICA: Riposo completo.'},
+      {title:'Errori da Evitare', text:'1. Allenarsi troppo (i muscoli facciali sono piccoli, si affaticano). 2. Movimenti bruschi con il collo. 3. Stringere i denti troppo forte (rischio ATM). 4. Aspettarsi risultati in 1 settimana (servono 2-3 mesi minimo). 5. Non combinare con skincare (la pelle migliorata amplifica i risultati strutturali).'}
+    ],
+    relatedExercises:['basic-mewing','chin-tucks','cheek-lifts','jaw-clench','gum-chewing','neck-curls']
+  },
+  {
+    id:'sgonfiare-viso', name:'Sgonfiare e Definire il Viso', icon:'💧',
+    image:'linear-gradient(135deg,#0c2461,#1e3799)',
+    chapters:2, lessons:6,
+    description:'Protocollo avanzato per sgonfiare il viso e ottenere quel look scolpito da modello.',
+    content:[
+      {title:'Cause del Gonfiore Facciale', text:'Il viso gonfio è causato da: 1. RITENZIONE IDRICA — troppo sodio, poco potassio, disidratazione. 2. GRASSO SOTTOCUTANEO — body fat sopra il 15%. 3. INFIAMMAZIONE — alcol, zuccheri, glutine in eccesso, sonno scarso. 4. CORTISOLO ALTO — stress cronico causa accumulo di grasso facciale. La soluzione è un approccio multi-angolo che affronta tutte le cause.'},
+      {title:'Protocollo Sgonfiamento 30 Giorni', text:'SETTIMANA 1-2: Elimina alcol, riduci sodio sotto 2g/giorno, bevi 3L acqua/giorno, dormi 8 ore. SETTIMANA 2-3: Aggiungi 20 min cardio LISS al giorno, riduci carboidrati raffinati, aggiungi potassio (banane, avocado). SETTIMANA 3-4: Deficit calorico 400kcal se BF>15%, massaggio linfatico viso ogni mattina con gua sha, impacchi freddi 2 min ogni mattina. RISULTATO: viso visibilmente più scolpito con jawline emergente.'}
+    ],
+    relatedExercises:['hydration','nutrition','body-training','chin-tucks','cheekbone-sculptor']
+  },
+  {
+    id:'testosterone', name:'Testosterone Maxxing', icon:'⚡',
+    image:'linear-gradient(135deg,#1a0000,#4a0000)',
+    chapters:3, lessons:9,
+    description:'Tutto per portare il testosterone ai massimi livelli naturali per mascolinità e definizione facciale.',
+    content:[
+      {title:'Testosterone e Aspetto Fisico', text:'Il testosterone influenza direttamente: crescita della barba, prominenza del browridge, mascolinità dei lineamenti, distribuzione del grasso corporeo, massa muscolare. Livelli ottimali: 600-900 ng/dL. Sotto i 400 si notano effetti negativi sull\'aspetto. La buona notizia: puoi aumentarlo del 20-40% naturalmente con lifestyle.'},
+      {title:'Protocollo Aumento Naturale', text:'SONNO: 8+ ore, andare a letto prima delle 23 (il testosterone si produce durante il sonno profondo). ALLENAMENTO: Pesi pesanti, esercizi compound (squat, stacco, panca) 3-4x/settimana. NUTRIZIONE: Grassi sani 30% delle calorie (uova intere, olio oliva, noci), zinco 30mg/giorno, vitamina D 4000 UI, magnesio 400mg. EVITA: Alcol (abbassa T del 25%), soia in eccesso, BPA nelle plastiche, stress cronico.'},
+      {title:'Integratori Evidence-Based', text:'I soli integratori con evidenza scientifica per il testosterone: 1. VITAMINA D (4000 UI/giorno) — se sei carente, può aumentare T del 25%. 2. ZINCO (30mg/giorno) — essenziale per la sintesi del testosterone. 3. MAGNESIO (400mg/giorno) — migliora il sonno e il testosterone libero. 4. ASHWAGANDHA (600mg/giorno) — riduce cortisolo e può aumentare T del 15%. 5. TONGKAT ALI (200mg/giorno) — studi mostrano aumento del T del 10-15%.'}
+    ],
+    relatedExercises:['body-training','sleep-optimization','nutrition']
+  },
+  {
+    id:'altezza', name:'Altezza', icon:'📏',
+    image:'linear-gradient(135deg,#1a1a2e,#16213e)',
+    chapters:2, lessons:5,
+    description:'Come massimizzare la crescita e l\'altezza durante e dopo lo sviluppo.',
+    content:[
+      {title:'Massimizzare la Crescita (Under 21)', text:'Se le piastre di crescita sono ancora aperte (verificabile con radiografia al polso), puoi influenzare l\'altezza finale: 1. SONNO 9+ ore (il GH si rilascia durante il sonno profondo). 2. NUTRIZIONE: proteine 2g/kg, calcio 1000mg/giorno, vitamina D 4000 UI. 3. ESERCIZIO: basket, nuoto, stretching quotidiano — NON ostacolano la crescita, la stimolano. 4. POSTURA: correggere cifosi e lordosi può "recuperare" 2-4 cm di altezza.'},
+      {title:'Apparire Più Alti (Qualsiasi Età)', text:'Anche dopo lo sviluppo puoi apparire più alto: 1. POSTURA perfetta (chin tucks, wall angels) = +2-4 cm visivi. 2. SCARPE con rialzo interno 3-5 cm (insoles). 3. ABBIGLIAMENTO: colori scuri monocromatici, pantaloni che arrivano alla caviglia, evita vestiti larghi. 4. PROPORZIONI: spalle larghe e vita stretta creano l\'illusione di altezza. 5. TAGLIO CAPELLI: volume sopra aggiunge cm visivi.'}
+    ],
+    relatedExercises:['wall-angels','neck-extensions','scapular-squeeze','body-training']
+  },
+  {
+    id:'myo-therapy', name:'Myo Functional Therapy', icon:'👅',
+    image:'linear-gradient(135deg,#2d1b4e,#4a1942)',
+    chapters:2, lessons:6,
+    description:'6 pilastri fondamentali della terapia miofunzionale per costruire un viso attraente.',
+    content:[
+      {title:'I 6 Pilastri', text:'La terapia miofunzionale si basa su 6 principi: 1. POSTURA LINGUALE — lingua contro il palato 24/7 (mewing). 2. RESPIRAZIONE NASALE — mai dalla bocca, neanche di notte. 3. SEAL LABIALE — labbra chiuse a riposo, senza tensione. 4. MASTICAZIONE CORRETTA — usare entrambi i lati, masticare bene. 5. DEGLUTIZIONE CORRETTA — la lingua spinge contro il palato, non contro i denti. 6. POSTURA CERVICALE — testa sopra le spalle, non in avanti.'},
+      {title:'Implementazione Pratica', text:'FASE 1 (Settimana 1-2): Focus solo sulla respirazione nasale. Tappa la bocca con tape durante il sonno (mouth taping). FASE 2 (Settimana 3-4): Aggiungi il mewing base, pratica consapevole 10 min ogni ora. FASE 3 (Settimana 5-8): Deglutizione corretta — quando ingoii, la lingua deve premere contro il palato, non spingere i denti. FASE 4 (Settimana 8+): Tutto diventa automatico. Aggiungi hard mewing e gomma dura per accelerare.'}
+    ],
+    relatedExercises:['basic-mewing','hard-mewing','tongue-suction','tongue-chewing','chin-tucks']
+  },
+  {
+    id:'denti-labbra', name:'Denti e Labbra', icon:'🦷',
+    image:'linear-gradient(135deg,#1a1a2e,#2d2d4e)',
+    chapters:2, lessons:5,
+    description:'Tutto su come migliorare l\'aspetto dei tuoi denti e delle tue labbra.',
+    content:[
+      {title:'Denti Perfetti', text:'I denti influenzano enormemente l\'attrattività del sorriso e la struttura facciale. SBIANCAMENTO: strisce sbiancanti professionali (Crest 3D White) o gel con perossido 10% con mascherine dal dentista. ALLINEAMENTO: Invisalign per correzioni moderate senza apparecchio visibile. IGIENE: spazzola 2x al giorno, filo interdentale, collutorio. Il sorriso è la prima cosa che le persone notano.'},
+      {title:'Labbra e Contorno', text:'IDRATAZIONE: balsamo labbra con acido ialuronico e burro di karité, applicare 4-5 volte al giorno. ESFOLIAZIONE: scrub labbra delicato 2x settimana con zucchero e miele. VOLUME NATURALE: lip plumper exercises aumentano la circolazione. CONTORNO: evitare di leccarsi le labbra (le disidrata). Protezione SPF anche sulle labbra. Il colore naturale migliora con idratazione e circolazione.'}
+    ],
+    relatedExercises:['lip-plumper','hydration','morning-routine']
+  },
+  {
+    id:'dieta-integratori', name:'Dieta e Integratori', icon:'🥗',
+    image:'linear-gradient(135deg,#1a3a1a,#2d5a2d)',
+    chapters:3, lessons:8,
+    description:'Cibi e integratori consigliati per migliorare il tuo aspetto dalla base.',
+    content:[
+      {title:'Alimentazione per il Viso', text:'I cibi che migliorano il viso: COLLAGENE — brodo di ossa, salmone con pelle, uova (5-10g collagene idrolizzato/giorno). ANTIOSSIDANTI — bacche, melograno, tè verde (combattono invecchiamento). OMEGA-3 — salmone, sardine, noci (riducono infiammazione e migliorano la pelle). VITAMINA A — patate dolci, carote (essenziale per turnover cellulare). CIBI DA EVITARE: latticini in eccesso (pro-infiammatori, causano acne), zuccheri raffinati (glicazione del collagene), alcol (disidratazione).'},
+      {title:'Stack Integratori Base', text:'Lo stack minimo evidence-based: 1. VITAMINA D3 (4000 UI) + K2 (100mcg) — pelle, ossa, testosterone. 2. OMEGA-3 (2-3g EPA+DHA) — anti-infiammatorio, pelle luminosa. 3. ZINCO (25-30mg) — pelle chiara, testosterone, sistema immunitario. 4. COLLAGENE IDROLIZZATO (10g) — elasticità pelle, capelli, unghie. 5. VITAMINA C (1000mg) — sintesi collagene, antiossidante.'},
+      {title:'Stack Avanzato', text:'Per chi vuole il massimo: tutto lo stack base + 6. ASHWAGANDHA (600mg) — riduce cortisolo del 30%, migliora sonno e testosterone. 7. BIOTINA (5000mcg) — crescita capelli e unghie. 8. ACIDO IALURONICO ORALE (120mg) — idratazione pelle dall\'interno. 9. MAGNESIO GLICINATO (400mg) — sonno profondo, riduzione stress. 10. ASTAXANTINA (12mg) — il più potente antiossidante, protezione UV dall\'interno.'}
+    ],
+    relatedExercises:['nutrition','hydration','sleep-optimization']
+  },
+  {
+    id:'jaw-guide', name:'Mascella & Mandibola', icon:'🦴',
     image:'linear-gradient(135deg,#1a1a2e,#16213e)',
     chapters:3, lessons:10,
     description:'Guida completa alla mascella: anatomia, esercizi, masseteri, gonial angle, e come massimizzare la jawline.',
