@@ -772,6 +772,108 @@ const EXERCISES = {
       }
     ]
   },
+  debloat: {
+    id: 'debloat', name: 'Debloat', icon: '💧', color: '#0ea5e9',
+    description: 'Sgonfia il viso, elimina la ritenzione idrica e fai emergere la struttura ossea',
+    exercises: [
+      {
+        id: 'cold-water-face', name: 'Cold Water Shock', subtitle: 'Acqua fredda sul viso',
+        icon: '🧊', difficulty: 'Principiante', difficultyLevel: 1, xp: 10,
+        target: 'Viso intero, Circolazione', duration: '2 min', sets: 1, reps: '3 cicli',
+        unlockLevel: 1,
+        benefits: ['Sgonfiamento immediato', 'Pelle tonica', 'Circolazione attivata'],
+        steps: [
+          'Riempi il lavandino con acqua molto fredda + cubetti di ghiaccio',
+          'Immergi il viso per 15 secondi',
+          'Tira fuori e respira per 10 secondi',
+          'Ripeti 3 volte',
+          'Alternativa: impacco con asciugamano bagnato freddo',
+          'Fai OGNI MATTINA appena sveglio per risultati migliori'
+        ],
+        tips: 'L\'acqua fredda causa vasocostrizione che riduce il gonfiore. Dopo 3 immersioni il viso appare subito più scolpito.'
+      },
+      {
+        id: 'gua-sha', name: 'Gua Sha Massage', subtitle: 'Massaggio linfatico con gua sha',
+        icon: '🪨', difficulty: 'Principiante', difficultyLevel: 1, xp: 15,
+        target: 'Drenaggio linfatico, Zigomi', duration: '5 min', sets: 1, reps: '10 passaggi per zona',
+        unlockLevel: 1,
+        benefits: ['Drenaggio linfatico', 'Zigomi definiti', 'Jawline scolpita'],
+        steps: [
+          'Applica olio per il viso o siero',
+          'Parti dal centro del mento → scorri verso l\'orecchio (10 volte)',
+          'Parti dal lato del naso → scorri verso l\'orecchio (10 volte)',
+          'Parti dal centro della fronte → scorri verso le tempie (10 volte)',
+          'Sotto gli occhi: dall\'angolo interno → verso l\'esterno DELICATAMENTE',
+          'Sempre movimenti dal CENTRO verso l\'ESTERNO, mai il contrario'
+        ],
+        tips: 'Il gua sha drena i liquidi in eccesso dal viso. Fallo ogni mattina per 5 minuti. Dopo 1 settimana vedrai la differenza.'
+      },
+      {
+        id: 'lymph-drainage', name: 'Drenaggio Linfatico', subtitle: 'Massaggio manuale linfatico',
+        icon: '🤲', difficulty: 'Principiante', difficultyLevel: 1, xp: 15,
+        target: 'Sistema linfatico, Riduzione gonfiore', duration: '4 min', sets: 1, reps: '15 per zona',
+        unlockLevel: 1,
+        benefits: ['Eliminazione tossine', 'Viso sgonfio', 'Pelle luminosa'],
+        steps: [
+          'Con le dita, premi delicatamente sotto le orecchie (linfonodi) 10 volte',
+          'Scorri con pressione leggera dalla mascella → giù verso il collo',
+          'Dalla fronte → giù lungo le tempie → dietro le orecchie → collo',
+          'Sotto gli occhi → verso le tempie → dietro le orecchie',
+          'Termina sempre massaggiando il collo verso il basso',
+          'La pressione deve essere LEGGERA, non forte'
+        ],
+        tips: 'Il sistema linfatico non ha pompa propria — serve il massaggio manuale per drenare i liquidi dal viso.'
+      },
+      {
+        id: 'debloat-diet', name: 'Protocollo Anti-Gonfiore', subtitle: 'Alimentazione per sgonfiare',
+        icon: '🥬', difficulty: 'Principiante', difficultyLevel: 1, xp: 20,
+        target: 'Ritenzione idrica, Infiammazione', duration: 'Tutto il giorno', sets: 1, reps: 'Giornaliero',
+        unlockLevel: 1,
+        benefits: ['Meno ritenzione', 'Viso asciutto', 'Meno infiammazione'],
+        steps: [
+          'RIDUCI SODIO: max 1.5g/giorno (evita cibi confezionati, salumi, formaggi stagionati)',
+          'AUMENTA POTASSIO: banane, avocado, spinaci, patate dolci (bilancia il sodio)',
+          'BEVI 3L ACQUA: paradossalmente, più bevi meno trattieni',
+          'ELIMINA ALCOL: anche 1 bicchiere causa gonfiore facciale il giorno dopo',
+          'RIDUCI CARBOIDRATI RAFFINATI: pane bianco, pasta, dolci trattengono acqua',
+          'AGGIUNGI: tè verde (drenante), cetriolo, sedano, prezzemolo, zenzero'
+        ],
+        tips: 'Il viso si sgonfia visibilmente in 3-5 giorni seguendo questo protocollo. Il sodio è il nemico #1.'
+      },
+      {
+        id: 'face-yoga-debloat', name: 'Face Yoga Sgonfiante', subtitle: 'Esercizi per sgonfiare il viso',
+        icon: '🧘', difficulty: 'Principiante', difficultyLevel: 1, xp: 15,
+        target: 'Muscoli facciali, Circolazione', duration: '5 min', sets: 3, reps: 10,
+        unlockLevel: 1,
+        benefits: ['Circolazione attivata', 'Tono muscolare', 'Look scolpito'],
+        steps: [
+          'FISH FACE: aspira le guance e mantieni 10 secondi, ripeti 10 volte',
+          'LION FACE: apri bocca al massimo, tira fuori la lingua, spalanca gli occhi — 5 secondi, 10 volte',
+          'CHEEK PUFFS: gonfia le guance con aria, sposta da destra a sinistra 20 volte',
+          'JAW RELEASE: apri la bocca, muovi la mandibola come se masticassi, 20 volte',
+          'NECK STRETCH: inclina testa indietro, spingi le labbra in avanti, 10 secondi x 5',
+          'Fai tutta la sequenza 3 volte ogni mattina'
+        ],
+        tips: 'Combinato con acqua fredda e gua sha, questo protocollo sgonfia il viso in 15 minuti ogni mattina.'
+      },
+      {
+        id: 'sleep-debloat', name: 'Sleep Debloat Protocol', subtitle: 'Dormire per sgonfiare',
+        icon: '😴', difficulty: 'Principiante', difficultyLevel: 1, xp: 10,
+        target: 'Gonfiore mattutino, Postura', duration: 'Tutta la notte', sets: 1, reps: 'Ogni notte',
+        unlockLevel: 1,
+        benefits: ['Meno gonfiore mattutino', 'Simmetria facciale', 'Drenaggio notturno'],
+        steps: [
+          'Dormi con 2 cuscini o rialza la testata del letto di 10-15cm',
+          'La gravità aiuta a drenare i liquidi dal viso durante la notte',
+          'Dormi SULLA SCHIENA — dormire su un lato causa gonfiore asimmetrico',
+          'Niente cibo salato dopo le 20:00',
+          'Ultimo bicchiere d\'acqua alle 21:00 max',
+          'Mouth tape: tappa la bocca con cerotto chirurgico per respirare dal naso'
+        ],
+        tips: 'Il 70% del gonfiore mattutino dipende dalla posizione del sonno e dall\'ultimo pasto.'
+      }
+    ]
+  },
   manhood: {
     id: 'manhood', name: 'Performance', icon: '🍌', color: '#e11d48',
     description: 'Esercizi e consigli per migliorare la performance, la resistenza e la salute maschile',
@@ -989,7 +1091,7 @@ const TIPS_DATABASE = [
 ];
 
 const EXERCISE_VIDEOS = {
-  'basic-mewing':'kXAZRSt3Yc4',
+  'basic-mewing':'bhBYs1OBm3E',
   'hard-mewing':'lc0EB7f4SxY',
   'tongue-suction':'WphZD3Mr2RU',
   'tongue-chewing':'lc0EB7f4SxY',
@@ -1280,5 +1382,20 @@ const ROUTINE_ALTERNATIVES = {
     { id: 'evening-routine', name: 'Routine Serale', desc: 'Skincare completa della sera', default: true },
     { id: 'weekly-treatment', name: 'Trattamento Settimanale', desc: 'Maschera + esfoliazione', default: false },
     { id: 'dermarolling', name: 'Dermarolling', desc: 'Microneedling domiciliare', default: false }
+  ],
+  debloat: [
+    { id: 'cold-water-face', name: 'Cold Water Shock', desc: 'Acqua fredda per sgonfiare subito', default: true },
+    { id: 'gua-sha', name: 'Gua Sha Massage', desc: 'Massaggio linfatico con gua sha', default: true },
+    { id: 'lymph-drainage', name: 'Drenaggio Linfatico', desc: 'Massaggio manuale linfatico', default: false },
+    { id: 'debloat-diet', name: 'Protocollo Anti-Gonfiore', desc: 'Alimentazione anti-ritenzione', default: true },
+    { id: 'face-yoga-debloat', name: 'Face Yoga Sgonfiante', desc: 'Esercizi per sgonfiare', default: false },
+    { id: 'sleep-debloat', name: 'Sleep Debloat', desc: 'Posizione sonno anti-gonfiore', default: false }
+  ],
+  manhood: [
+    { id: 'kegel-base', name: 'Kegel Base', desc: 'Pavimento pelvico base', default: true },
+    { id: 'kegel-avanzato', name: 'Kegel Avanzato', desc: 'Contrazione intensa prolungata', default: false },
+    { id: 'reverse-kegel', name: 'Reverse Kegel', desc: 'Rilassamento pavimento pelvico', default: true },
+    { id: 'stamina-training', name: 'Stamina Training', desc: 'Tecniche per la resistenza', default: false },
+    { id: 'nutrizione-performance', name: 'Nutrizione Performance', desc: 'Alimentazione per la salute maschile', default: true }
   ]
 };

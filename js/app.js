@@ -527,33 +527,60 @@ const App = {
       document.getElementById('timer-section').style.display = 'block';
     } else document.getElementById('timer-section').style.display = 'none';
 
-    this.renderAdvice(ex);
-    document.getElementById('btn-close-advice').onclick = () => document.getElementById('advice-answer').classList.add('hidden');
+    document.getElementById('ai-messages').innerHTML = '';
+    document.getElementById('ai-input').value = '';
+    const sendBtn = document.getElementById('ai-send');
+    const inp = document.getElementById('ai-input');
+    const newSend = sendBtn.cloneNode(true);
+    sendBtn.parentNode.replaceChild(newSend, sendBtn);
+    const newInp = inp.cloneNode(true);
+    inp.parentNode.replaceChild(newInp, inp);
+    newSend.onclick = () => this.aiSend(ex);
+    newInp.addEventListener('keydown', e => { if (e.key === 'Enter') this.aiSend(ex); });
 
     this.go('detail');
   },
 
-  renderAdvice(ex) {
-    const questions = [
-      { q: 'Quanto tempo per vedere risultati?', a: 'Per ' + ex.name + ': i primi miglioramenti si notano dopo 2-4 settimane di pratica costante. Risultati significativi dopo 2-3 mesi. La chiave è la costanza quotidiana, non l\'intensità di una singola sessione.' },
-      { q: 'Posso farlo ogni giorno?', a: ex.difficultyLevel >= 3 ? 'Essendo un esercizio avanzato, è meglio farlo a giorni alterni per permettere il recupero. 3-4 volte a settimana è ideale.' : 'Sì! ' + ex.name + ' può essere fatto ogni giorno. I muscoli facciali recuperano velocemente. Fallo mattina e sera per risultati ottimali.' },
-      { q: 'Errori da evitare?', a: 'Per ' + ex.name + ': 1) Non forzare movimenti dolorosi. 2) Non compensare con muscoli sbagliati (es. collo se l\'esercizio è per la mascella). 3) Non fare troppe ripetizioni il primo giorno. 4) Mantieni una buona postura durante l\'esecuzione.' },
-      { q: 'Come combinarlo con altri?', a: 'Abbina ' + ex.name + ' con gli esercizi della stessa categoria per una sessione completa. Fai prima gli esercizi di riscaldamento (principiante), poi quelli intensi. Aggiungi skincare dopo gli esercizi facciali per massimizzare l\'assorbimento dei prodotti.' },
-      { q: 'Funziona davvero?', a: ex.name + ' è basato su principi di fisiologia muscolare. I muscoli facciali rispondono all\'allenamento come quelli del corpo. Studi mostrano che il face yoga può migliorare il tono facciale. La masticazione intensa aumenta i masseteri del 15-20% in 3 mesi. La costanza è tutto.' }
+  aiSend(ex) {
+    const inp = document.getElementById('ai-input');
+    const q = inp.value.trim();
+    if (!q) return;
+    inp.value = '';
+    const msgs = document.getElementById('ai-messages');
+    msgs.innerHTML += '<div class="ai-msg user">' + q + '</div>';
+    const answer = this.aiAnswer(q, ex);
+    setTimeout(() => {
+      msgs.innerHTML += '<div class="ai-msg bot">' + answer + '</div>';
+      msgs.scrollTop = msgs.scrollHeight;
+    }, 400);
+  },
+
+  aiAnswer(q, ex) {
+    const ql = q.toLowerCase();
+    const name = ex.name;
+    const kb = [
+      { keys: ['risultat', 'tempo', 'quanto', 'quando', 'vedro', 'funzion', 'serve'], answer: 'Per <b>' + name + '</b>, i primi miglioramenti si notano dopo <b>2-4 settimane</b> di pratica costante. Risultati significativi dopo <b>2-3 mesi</b>. La chiave è la costanza quotidiana — anche 5 minuti ogni giorno sono meglio di 30 minuti una volta a settimana.' },
+      { keys: ['ogni giorno', 'tutti i giorni', 'frequenz', 'quante volte', 'spesso'], answer: ex.difficultyLevel >= 3 ? '<b>' + name + '</b> è avanzato — fallo <b>3-4 volte a settimana</b> a giorni alterni per il recupero.' : 'Sì, <b>' + name + '</b> si può fare <b>ogni giorno</b>! I muscoli facciali recuperano velocemente. Ideale mattina e sera.' },
+      { keys: ['errori', 'sbaglia', 'non fare', 'evitar', 'pericol', 'rischi'], answer: 'Errori comuni con <b>' + name + '</b>: 1) Non forzare movimenti dolorosi. 2) Non compensare con muscoli sbagliati. 3) Non esagerare il primo giorno. 4) Mantieni postura corretta. 5) Se senti dolore alla ATM, fermati subito.' },
+      { keys: ['combin', 'insieme', 'abbina', 'dopo', 'prima', 'sequenz'], answer: 'Abbina <b>' + name + '</b> con esercizi della stessa categoria. Ordine: riscaldamento (principiante) → esercizi intensi → stretching. Dopo gli esercizi facciali, applica skincare — l\'assorbimento è massimo.' },
+      { keys: ['mewing', 'lingua', 'palato'], answer: 'Il <b>mewing</b> è la base di tutto: lingua INTERA contro il palato, 24/7. La punta dietro gli incisivi, ma soprattutto la PARTE POSTERIORE deve premere. Respira dal naso. Dopo 2 settimane diventa automatico. Serve pazienza: 6-12 mesi per risultati strutturali.' },
+      { keys: ['jawline', 'mascella', 'mandibola', 'masseter'], answer: 'Per la <b>jawline</b>: 1) Gomma dura (Falim/Mastic) 20-30 min/giorno. 2) Chin tucks 3x15 ogni giorno. 3) Body fat sotto il 15% per far emergere la struttura. I masseteri possono crescere del 15-20% in 3 mesi con masticazione intensa.' },
+      { keys: ['pelle', 'skin', 'acne', 'brufol', 'skincare'], answer: 'Routine minima: <b>Detergente + Vitamina C + SPF</b> al mattino. <b>Detergente + Retinolo + Idratante</b> la sera. Il retinolo è il #1 anti-aging. SPF OGNI giorno, anche in inverno. Risultati visibili in 2-4 settimane.' },
+      { keys: ['gonfi', 'bloat', 'sgonfi', 'ritenzione', 'acqua'], answer: 'Per <b>sgonfiare il viso</b>: 1) Riduci sodio sotto 1.5g/giorno. 2) Bevi 3L acqua. 3) Acqua fredda sul viso ogni mattina. 4) Gua sha 5 min/giorno. 5) Dormi con testa rialzata. 6) Elimina alcol. Risultati in 3-5 giorni.' },
+      { keys: ['zigom', 'cheek', 'guanc', 'hollow'], answer: 'Per <b>zigomi prominenti</b>: 1) Cheekbone sculptor (aspira guance + sorridi) 3x10. 2) Riduci body fat sotto 12% per hollow cheeks. 3) Mewing sviluppa il terzo medio. 4) Face yoga per tonificare. Il BF% è il fattore principale.' },
+      { keys: ['occhi', 'eye', 'occhiai', 'bors', 'palpebre'], answer: 'Per la <b>zona occhi</b>: 1) Contorno occhi con caffeina per le borse. 2) Vitamina K per le occhiaie. 3) Eye lifts 3x15 per tonificare. 4) Dormire 8+ ore. 5) Impacchi freddi al mattino. 6) SPF per prevenire rughe.' },
+      { keys: ['naso', 'nose'], answer: 'Il <b>naso</b> è largamente genetico, ma puoi: 1) Nose shaper exercise per tonificare i muscoli nasali. 2) Skincare zona T per pori minimizzati. 3) Respirazione nasale 24/7 (allarga le vie nasali nel tempo). 4) Contorno con makeup se vuoi effetto immediato.' },
+      { keys: ['kegel', 'pelvic', 'pavimento'], answer: 'I <b>kegel</b> rafforzano il muscolo PC: contrai (come per fermare la pipì) per 5 sec, rilascia 5 sec, 15 reps x 3 serie. Dopo 4 settimane passa a 10 sec hold. I <b>reverse kegel</b> (spingi fuori) sono altrettanto importanti per l\'equilibrio.' },
+      { keys: ['durata', 'stamina', 'resistenz', 'durare'], answer: 'Per la <b>resistenza</b>: 1) Kegel + reverse kegel ogni giorno. 2) Respirazione 4-7-8 (calma il sistema nervoso). 3) Start-stop technique durante la pratica. 4) Cardio 30 min 3x/settimana. 5) È 70% mentale — pratica mindfulness.' },
+      { keys: ['dieta', 'mangia', 'cibo', 'alimentaz', 'nutrizione'], answer: '<b>Alimentazione looksmaxing</b>: Proteine 2g/kg, Omega-3 (salmone, noci), Vitamina D 4000UI, Zinco 30mg, Collagene 10g. EVITA: zuccheri, alcol, latticini in eccesso, cibi processati. BF ideale: 10-15% per jawline, sotto 12% per zigomi.' },
+      { keys: ['integrator', 'supplement', 'vitam'], answer: '<b>Stack integratori base</b>: Vitamina D3 4000UI + K2 100mcg, Omega-3 2-3g, Zinco 30mg, Collagene 10g, Vitamina C 1000mg. <b>Avanzato</b>: + Ashwagandha 600mg, Biotina 5000mcg, Magnesio 400mg.' },
+      { keys: ['testosterone', 'testo', 'ormoni'], answer: 'Aumenta il <b>testosterone naturalmente</b>: 1) Dormi 8+ ore. 2) Pesi pesanti (squat, stacco). 3) Grassi sani 30% calorie. 4) Vitamina D + Zinco + Magnesio. 5) Ashwagandha 600mg. 6) Evita alcol e stress. Aumento possibile: 20-40%.' },
+      { keys: ['postura', 'schiena', 'collo', 'spalle'], answer: 'La <b>postura</b> cambia tutto il look: 1) Chin tucks ogni ora. 2) Wall angels 3x12. 3) Scapular squeeze 4x15. 4) Allunga i pettorali. Una postura corretta può aggiungere 2-4 cm di altezza percepita e migliora drasticamente la jawline di profilo.' }
     ];
-    const container = document.getElementById('advice-questions');
-    container.innerHTML = '';
-    questions.forEach(item => {
-      const btn = document.createElement('button');
-      btn.className = 'advice-q';
-      btn.textContent = item.q;
-      btn.onclick = () => {
-        document.getElementById('advice-text').textContent = item.a;
-        document.getElementById('advice-answer').classList.remove('hidden');
-      };
-      container.appendChild(btn);
-    });
-    document.getElementById('advice-answer').classList.add('hidden');
+    for (const item of kb) {
+      if (item.keys.some(k => ql.includes(k))) return item.answer;
+    }
+    return 'Per <b>' + name + '</b>: esegui ' + ex.sets + 'x' + ex.reps + ', durata ' + ex.duration + '. ' + ex.tips + ' Prova a chiedermi di: risultati, frequenza, errori, combinazioni, o qualsiasi area specifica (jawline, mewing, pelle, zigomi, occhi, dieta, integratori, postura).';
   },
 
   // ── TIMER ──
