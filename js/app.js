@@ -479,16 +479,22 @@ const App = {
     this.go('exercises');
   },
 
-  openDetail(ex, catId) {
+  openDetail(ex, catId, intensity) {
     this.curEx = ex; this.curCat = catId;
+    const int = intensity || this.getIntensities()[ex.id] || 'base';
+    const mult = int === 'pro' ? 2 : int === 'medio' ? 1.5 : 1;
+    const adjSets = typeof ex.sets === 'number' ? Math.round(ex.sets * mult) : ex.sets;
+    const adjReps = typeof ex.reps === 'number' ? Math.round(ex.reps * mult) : ex.reps;
+    const adjHold = ex.holdTime ? Math.round(ex.holdTime * mult) : 0;
+
     document.getElementById('det-name').textContent = ex.name;
-    document.getElementById('det-xp').textContent = '+' + ex.xp + ' XP';
-    document.getElementById('det-diff').textContent = ex.difficulty;
+    document.getElementById('det-xp').textContent = '+' + Math.round(ex.xp * mult) + ' XP';
+    document.getElementById('det-diff').textContent = int === 'pro' ? 'Pro ⚡' : int === 'medio' ? 'Medio' : ex.difficulty;
     document.getElementById('det-target').textContent = ex.target;
     document.getElementById('det-dur').textContent = ex.duration;
-    document.getElementById('det-sets').textContent = ex.sets;
-    document.getElementById('det-reps').textContent = ex.reps;
-    document.getElementById('det-hold').textContent = ex.holdTime ? ex.holdTime + 's' : '--';
+    document.getElementById('det-sets').textContent = adjSets;
+    document.getElementById('det-reps').textContent = adjReps;
+    document.getElementById('det-hold').textContent = adjHold ? adjHold + 's' : '--';
 
     const illust = document.getElementById('det-illust');
     illust.style.display = 'flex';
@@ -498,9 +504,12 @@ const App = {
     ex.benefits.forEach(b => { const t = document.createElement('span'); t.className = 'ben-tag'; t.textContent = b; ben.appendChild(t); });
 
     const steps = document.getElementById('det-steps'); steps.innerHTML = '';
+    const stepSvgs = this.getStepIllustrations(ex.id);
     ex.steps.forEach((s, i) => {
-      const d = document.createElement('div'); d.className = 'step';
-      d.innerHTML = `<span class="step-n">${i + 1}</span><span class="step-t">${s}</span>`;
+      const d = document.createElement('div'); d.className = 'step step-with-img';
+      const svg = stepSvgs[i] || '';
+      d.innerHTML = (svg ? '<div class="step-svg">' + svg + '</div>' : '') +
+        `<div class="step-content"><span class="step-n">${i + 1}</span><span class="step-t">${s}</span></div>`;
       steps.appendChild(d);
     });
     document.getElementById('det-tip').textContent = ex.tips;
@@ -525,7 +534,7 @@ const App = {
 
     this.timerReset();
     if (ex.holdTime) {
-      this.timerTotal = ex.holdTime; this.timerSets = ex.sets || 1; this.timerSet = 1;
+      this.timerTotal = adjHold; this.timerSets = adjSets || 1; this.timerSet = 1;
       document.getElementById('timer-time').textContent = this.fmtTime(ex.holdTime);
       document.getElementById('timer-set').textContent = 'Serie 1/' + this.timerSets;
       document.getElementById('timer-section').style.display = 'block';
@@ -543,6 +552,59 @@ const App = {
     newInp.addEventListener('keydown', e => { if (e.key === 'Enter') this.aiSend(ex); });
 
     this.go('detail');
+  },
+
+  getStepIllustrations(exId) {
+    const face = (extras) => `<svg viewBox="0 0 160 100" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="80" cy="45" rx="35" ry="42" stroke="#7c3aed" stroke-width="1.5" fill="rgba(124,58,237,0.05)"/><circle cx="68" cy="38" r="3" fill="#7c3aed" opacity="0.5"/><circle cx="92" cy="38" r="3" fill="#7c3aed" opacity="0.5"/><path d="M75 52 L80 58 L85 52" stroke="#7c3aed" stroke-width="1" fill="none"/><path d="M68 65 Q80 74 92 65" stroke="#7c3aed" stroke-width="1.5"/>${extras}</svg>`;
+    const db = {
+      'gua-sha': [
+        face('<rect x="60" y="62" width="40" height="6" rx="3" fill="#22d3ee" opacity="0.4"/><path d="M80 68 L100 62" stroke="#22d3ee" stroke-width="2" marker-end="url(#a1)"/><text x="80" y="95" text-anchor="middle" fill="#22d3ee" font-size="8">Applica olio/siero</text><defs><marker id="a1" viewBox="0 0 6 6" refX="6" refY="3" markerWidth="5" markerHeight="5"><path d="M0 0L6 3L0 6" fill="#22d3ee"/></marker></defs>'),
+        face('<path d="M80 68 L108 58" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#a2)"/><path d="M78 70 L106 60" stroke="#22d3ee" stroke-width="1.5" opacity="0.5"/><text x="80" y="95" text-anchor="middle" fill="#22d3ee" font-size="8">Mento → Orecchio</text><defs><marker id="a2" viewBox="0 0 6 6" refX="6" refY="3" markerWidth="5" markerHeight="5"><path d="M0 0L6 3L0 6" fill="#22d3ee"/></marker></defs>'),
+        face('<path d="M80 52 L110 42" stroke="#10b981" stroke-width="2.5" marker-end="url(#a3)"/><path d="M78 54 L108 44" stroke="#10b981" stroke-width="1.5" opacity="0.5"/><text x="80" y="95" text-anchor="middle" fill="#10b981" font-size="8">Naso → Orecchio</text><defs><marker id="a3" viewBox="0 0 6 6" refX="6" refY="3" markerWidth="5" markerHeight="5"><path d="M0 0L6 3L0 6" fill="#10b981"/></marker></defs>'),
+        face('<path d="M80 18 L110 18" stroke="#f59e0b" stroke-width="2.5" marker-end="url(#a4)"/><path d="M78 20 L108 20" stroke="#f59e0b" stroke-width="1.5" opacity="0.5"/><text x="80" y="95" text-anchor="middle" fill="#f59e0b" font-size="8">Fronte → Tempie</text><defs><marker id="a4" viewBox="0 0 6 6" refX="6" refY="3" markerWidth="5" markerHeight="5"><path d="M0 0L6 3L0 6" fill="#f59e0b"/></marker></defs>'),
+        face('<ellipse cx="68" cy="42" rx="10" ry="6" fill="none" stroke="#ec4899" stroke-width="1.5" stroke-dasharray="3,2"/><path d="M68 48 L68 55" stroke="#ec4899" stroke-width="1.5" opacity="0.6"/><text x="80" y="95" text-anchor="middle" fill="#ec4899" font-size="8">Sotto occhi: DELICATO</text>'),
+        face('<path d="M60 55 L110 40" stroke="#7c3aed" stroke-width="2"/><path d="M60 65 L110 50" stroke="#7c3aed" stroke-width="2"/><path d="M60 75 L110 60" stroke="#7c3aed" stroke-width="2"/><text x="80" y="95" text-anchor="middle" fill="#7c3aed" font-size="8">Centro → Esterno SEMPRE</text>')
+      ],
+      'lymph-drainage': [
+        face('<circle cx="108" cy="58" r="6" fill="#22d3ee" opacity="0.3" stroke="#22d3ee" stroke-width="1"/><circle cx="52" cy="58" r="6" fill="#22d3ee" opacity="0.3" stroke="#22d3ee" stroke-width="1"/><text x="80" y="95" text-anchor="middle" fill="#22d3ee" font-size="8">Premi sotto le orecchie</text>'),
+        face('<path d="M80 68 L80 88" stroke="#10b981" stroke-width="2" marker-end="url(#ld2)"/><path d="M68 65 L68 85" stroke="#10b981" stroke-width="1.5" opacity="0.5"/><path d="M92 65 L92 85" stroke="#10b981" stroke-width="1.5" opacity="0.5"/><text x="80" y="95" text-anchor="middle" fill="#10b981" font-size="8">Mascella → giù verso collo</text><defs><marker id="ld2" viewBox="0 0 6 6" refX="3" refY="6" markerWidth="5" markerHeight="5"><path d="M0 0L3 6L6 0" fill="#10b981"/></marker></defs>'),
+        face('<path d="M80 18 L105 25 L108 55" stroke="#f59e0b" stroke-width="2" fill="none" marker-end="url(#ld3)"/><text x="80" y="95" text-anchor="middle" fill="#f59e0b" font-size="8">Fronte → tempie → orecchie</text><defs><marker id="ld3" viewBox="0 0 6 6" refX="3" refY="6" markerWidth="5" markerHeight="5"><path d="M0 0L3 6L6 0" fill="#f59e0b"/></marker></defs>'),
+        face('<path d="M72 42 L105 35 L108 55" stroke="#ec4899" stroke-width="2" fill="none"/><text x="80" y="95" text-anchor="middle" fill="#ec4899" font-size="8">Sotto occhi → tempie</text>'),
+        face('<path d="M80 55 L80 90" stroke="#7c3aed" stroke-width="2.5" marker-end="url(#ld5)"/><text x="80" y="95" text-anchor="middle" fill="#7c3aed" font-size="8">Collo verso il basso</text><defs><marker id="ld5" viewBox="0 0 6 6" refX="3" refY="6" markerWidth="5" markerHeight="5"><path d="M0 0L3 6L6 0" fill="#7c3aed"/></marker></defs>'),
+        face('<path d="M60 50 L50 42" stroke="#ef4444" stroke-width="1.5" opacity="0.6"/><path d="M100 50 L110 42" stroke="#ef4444" stroke-width="1.5" opacity="0.6"/><circle cx="50" cy="42" r="4" fill="none" stroke="#ef4444" stroke-width="1"/><circle cx="110" cy="42" r="4" fill="none" stroke="#ef4444" stroke-width="1"/><text x="80" y="95" text-anchor="middle" fill="#ef4444" font-size="8">Pressione LEGGERA</text>')
+      ],
+      'cheekbone-sculptor': [
+        face('<path d="M65 60 Q80 50 95 60" stroke="#10b981" stroke-width="2" fill="none" stroke-dasharray="3,2"/><path d="M72 62 L72 56" stroke="#10b981" stroke-width="1.5"/><path d="M88 62 L88 56" stroke="#10b981" stroke-width="1.5"/><text x="80" y="95" text-anchor="middle" fill="#10b981" font-size="8">Aspira guance verso dentro</text>'),
+        face('<path d="M68 65 Q80 58 92 65" stroke="#10b981" stroke-width="2"/><path d="M64 52 L56 46" stroke="#22d3ee" stroke-width="1.5"/><path d="M96 52 L104 46" stroke="#22d3ee" stroke-width="1.5"/><text x="80" y="95" text-anchor="middle" fill="#22d3ee" font-size="8">Sorridi con guance aspirate</text>'),
+        face('<ellipse cx="56" cy="48" rx="10" ry="6" fill="#f59e0b" opacity="0.15" stroke="#f59e0b" stroke-width="1.5"/><ellipse cx="104" cy="48" rx="10" ry="6" fill="#f59e0b" opacity="0.15" stroke="#f59e0b" stroke-width="1.5"/><text x="80" y="95" text-anchor="middle" fill="#f59e0b" font-size="8">Senti tensione sugli zigomi</text>'),
+        null, null,
+        face('<ellipse cx="56" cy="48" rx="12" ry="7" fill="#7c3aed" opacity="0.2" stroke="#a78bfa" stroke-width="1.5"/><ellipse cx="104" cy="48" rx="12" ry="7" fill="#7c3aed" opacity="0.2" stroke="#a78bfa" stroke-width="1.5"/><text x="80" y="95" text-anchor="middle" fill="#a78bfa" font-size="8">10 reps, 3 serie</text>')
+      ],
+      'chin-tucks': [
+        null,null,
+        face('<path d="M80 72 L65 72" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#ct3)"/><text x="80" y="95" text-anchor="middle" fill="#22d3ee" font-size="8">Mento INDIETRO ←</text><defs><marker id="ct3" viewBox="0 0 6 6" refX="0" refY="3" markerWidth="5" markerHeight="5"><path d="M6 0L0 3L6 6" fill="#22d3ee"/></marker></defs>'),
+        face('<path d="M80 72 L65 72" stroke="#10b981" stroke-width="2"/><text x="80" y="95" text-anchor="middle" fill="#10b981" font-size="8">Mantieni 5 secondi</text><circle cx="65" cy="72" r="8" fill="none" stroke="#10b981" stroke-width="1" stroke-dasharray="2,2"><animate attributeName="r" values="6;10;6" dur="1.5s" repeatCount="indefinite"/></circle>')
+      ],
+      'basic-mewing': [
+        face('<path d="M68 65 Q80 72 92 65" stroke="#7c3aed" stroke-width="2"/><text x="80" y="95" text-anchor="middle" fill="#7c3aed" font-size="8">Chiudi bocca, denti a contatto</text>'),
+        face('<rect x="72" y="14" rx="6" ry="4" width="16" height="8" fill="#22d3ee" opacity="0.3"/><path d="M80 30 L80 20" stroke="#22d3ee" stroke-width="2" marker-end="url(#mw2)"/><text x="80" y="95" text-anchor="middle" fill="#22d3ee" font-size="8">Punta lingua dietro incisivi</text><defs><marker id="mw2" viewBox="0 0 6 6" refX="3" refY="6" markerWidth="5" markerHeight="5"><path d="M0 6L3 0L6 6" fill="#22d3ee"/></marker></defs>'),
+        face('<rect x="62" y="12" rx="10" ry="6" width="36" height="14" fill="#10b981" opacity="0.25" stroke="#34d399" stroke-width="1.5"/><path d="M72 28 L72 18" stroke="#34d399" stroke-width="1.5"/><path d="M80 30 L80 16" stroke="#34d399" stroke-width="2"/><path d="M88 28 L88 18" stroke="#34d399" stroke-width="1.5"/><text x="80" y="95" text-anchor="middle" fill="#34d399" font-size="8">TUTTA la lingua sul palato</text>'),
+        face('<rect x="62" y="12" rx="10" ry="6" width="36" height="14" fill="#f59e0b" opacity="0.25" stroke="#fbbf24" stroke-width="1.5"/><path d="M90 28 L90 16" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#mw4)"/><text x="80" y="95" text-anchor="middle" fill="#fbbf24" font-size="8">Parte POSTERIORE deve premere</text><defs><marker id="mw4" viewBox="0 0 6 6" refX="3" refY="6" markerWidth="5" markerHeight="5"><path d="M0 6L3 0L6 6" fill="#fbbf24"/></marker></defs>'),
+        face('<path d="M75 52 L80 58 L85 52" stroke="#7c3aed" stroke-width="1"/><path d="M70 42 L80 36" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="3,2"/><path d="M90 42 L80 36" stroke="#06b6d4" stroke-width="1.5" stroke-dasharray="3,2"/><text x="80" y="95" text-anchor="middle" fill="#06b6d4" font-size="8">Respira dal NASO</text>')
+      ],
+      'cold-water-face': [
+        face('<rect x="45" y="20" rx="20" ry="15" width="70" height="55" fill="#06b6d4" opacity="0.15" stroke="#22d3ee" stroke-width="1.5" stroke-dasharray="4,3"/><text x="80" y="95" text-anchor="middle" fill="#22d3ee" font-size="8">Acqua fredda + ghiaccio</text>'),
+        face('<rect x="45" y="20" rx="20" ry="15" width="70" height="55" fill="#06b6d4" opacity="0.3"/><text x="80" y="48" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold">15s</text><text x="80" y="95" text-anchor="middle" fill="#06b6d4" font-size="8">Immergi viso 15 secondi</text>'),
+        null,
+        face('<text x="80" y="48" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">×3</text><text x="80" y="95" text-anchor="middle" fill="#10b981" font-size="8">Ripeti 3 volte</text>')
+      ],
+      'face-yoga-debloat': [
+        face('<path d="M65 60 Q80 50 95 60" stroke="#f97316" stroke-width="2"/><path d="M72 58 L72 52" stroke="#f97316" stroke-width="1.5"/><path d="M88 58 L88 52" stroke="#f97316" stroke-width="1.5"/><text x="80" y="95" text-anchor="middle" fill="#f97316" font-size="8">FISH FACE: aspira guance</text>'),
+        face('<path d="M62 72 Q80 88 98 72" stroke="#ef4444" stroke-width="2.5"/><circle cx="68" cy="35" r="5" fill="none" stroke="#ef4444" stroke-width="1.5"/><circle cx="92" cy="35" r="5" fill="none" stroke="#ef4444" stroke-width="1.5"/><text x="80" y="95" text-anchor="middle" fill="#ef4444" font-size="8">LION FACE: bocca + occhi aperti</text>'),
+        face('<ellipse cx="68" cy="55" rx="8" ry="6" fill="#22d3ee" opacity="0.3"/><path d="M68 55 L92 55" stroke="#22d3ee" stroke-width="2" marker-end="url(#fy3)"/><text x="80" y="95" text-anchor="middle" fill="#22d3ee" font-size="8">CHEEK PUFFS: aria dx ↔ sx</text><defs><marker id="fy3" viewBox="0 0 6 6" refX="6" refY="3" markerWidth="5" markerHeight="5"><path d="M0 0L6 3L0 6" fill="#22d3ee"/></marker></defs>')
+      ]
+    };
+    return db[exId] || [];
   },
 
   aiSend(ex) {
@@ -796,7 +858,7 @@ const App = {
             <button class="int-btn ${currentInt==='medio'?'int-active':''}" data-ex="${exId}" data-lv="medio">Medio</button>
             <button class="int-btn ${currentInt==='pro'?'int-active':''}" data-ex="${exId}" data-lv="pro">Pro</button>
           </div>`;
-        el.querySelector('.ri-name').onclick = (e) => { e.stopPropagation(); if (!done) { this.doneRoutine.add(key); el.classList.add('done'); } this.openDetail(ex, catId); };
+        el.querySelector('.ri-name').onclick = (e) => { e.stopPropagation(); if (!done) { this.doneRoutine.add(key); el.classList.add('done'); } this.openDetail(ex, catId, currentInt); };
         el.querySelectorAll('.int-btn').forEach(btn => {
           btn.onclick = (e) => {
             e.stopPropagation();
