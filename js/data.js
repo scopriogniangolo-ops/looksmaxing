@@ -1558,33 +1558,48 @@ const ROUTINE_ALTERNATIVES = {
   mewing: [
     { id: 'basic-mewing', name: 'Basic Mewing', desc: 'Postura base — ideale per iniziare', default: true },
     { id: 'hard-mewing', name: 'Hard Mewing', desc: 'Pressione intensa — per avanzati', default: false },
-    { id: 'tongue-suction', name: 'Suction Hold', desc: 'Aspirazione al palato — intermedio', default: false }
+    { id: 'tongue-suction', name: 'Suction Hold', desc: 'Aspirazione al palato — intermedio', default: false },
+    { id: 'tongue-chewing', name: 'Tongue Chewing', desc: 'Masticazione linguale sul palato', default: false }
   ],
   jawline: [
     { id: 'chin-tucks', name: 'Chin Tucks', desc: 'Retrazione mento — fondamentale', default: true },
     { id: 'jaw-clench', name: 'Jaw Clench', desc: 'Contrazione isometrica masseteri', default: true },
     { id: 'jaw-resistance', name: 'Jaw Resistance', desc: 'Resistenza con pugno', default: false },
     { id: 'gum-chewing', name: 'Gomma Dura', desc: 'Masticazione intensa con mastic gum', default: true },
-    { id: 'neck-curls', name: 'Neck Curls', desc: 'Curl del collo per mento definito', default: false }
+    { id: 'neck-curls', name: 'Neck Curls', desc: 'Curl del collo per mento definito', default: false },
+    { id: 'jaw-side-to-side', name: 'Jaw Side-to-Side', desc: 'Movimenti laterali mandibola', default: false }
   ],
   faceYoga: [
     { id: 'cheek-lifts', name: 'Cheek Lifts', desc: 'Sollevamento zigomi — base', default: true },
     { id: 'cheekbone-sculptor', name: 'Cheekbone Sculptor', desc: 'Scolpire zigomi — hollow cheeks', default: true },
     { id: 'eye-lifts', name: 'Eye Area Lift', desc: 'Sollevamento zona occhi', default: false },
-    { id: 'face-tightener', name: 'Face Tightener', desc: 'Tonificazione completa', default: false }
+    { id: 'face-tightener', name: 'Face Tightener', desc: 'Tonificazione completa', default: false },
+    { id: 'forehead-smoother', name: 'Forehead Smoother', desc: 'Liscia la fronte, anti-rughe', default: false },
+    { id: 'lip-plumper', name: 'Lip Volumizer', desc: 'Volume naturale alle labbra', default: false },
+    { id: 'nose-shaper', name: 'Nose Shaper', desc: 'Modellamento muscoli nasali', default: false },
+    { id: 'nose-breathing', name: 'Nose Breathing Drill', desc: 'Respirazione nasale forzata', default: false },
+    { id: 'under-eye-massage', name: 'Under Eye Massage', desc: 'Massaggio anti-occhiaie', default: false }
   ],
   neck: [
     { id: 'neck-extensions', name: 'Neck Extensions', desc: 'Estensioni base del collo', default: true },
     { id: 'wall-angels', name: 'Wall Angels', desc: 'Postura spalle e schiena', default: true },
     { id: 'scapular-squeeze', name: 'Scapular Squeeze', desc: 'Retrazione scapole', default: true },
     { id: 'hanging-bar', name: 'Hanging on Bar', desc: 'Decompressione spinale, postura, altezza', default: false },
-    { id: 'platysma-exercise', name: 'Platysma Toner', desc: 'Tono del collo anteriore', default: false }
+    { id: 'platysma-exercise', name: 'Platysma Toner', desc: 'Tono del collo anteriore', default: false },
+    { id: 'neck-side-stretch', name: 'Neck Side Stretch', desc: 'Stretching laterale collo', default: false }
   ],
   skincare: [
     { id: 'morning-routine', name: 'Routine Mattutina', desc: 'Skincare completa del mattino', default: true },
     { id: 'evening-routine', name: 'Routine Serale', desc: 'Skincare completa della sera', default: true },
     { id: 'weekly-treatment', name: 'Trattamento Settimanale', desc: 'Maschera + esfoliazione', default: false },
     { id: 'dermarolling', name: 'Dermarolling', desc: 'Microneedling domiciliare', default: false }
+  ],
+  lifestyle: [
+    { id: 'sleep-optimization', name: 'Sleep Protocol', desc: 'Ottimizzazione sonno per recovery', default: true },
+    { id: 'hydration', name: 'Protocollo Idratazione', desc: 'Idratazione quotidiana 2-3L', default: true },
+    { id: 'nutrition', name: 'Nutrizione Anti-Aging', desc: 'Alimentazione per viso e corpo', default: false },
+    { id: 'body-training', name: 'Body Training', desc: 'Allenamento fisico PPL', default: false },
+    { id: 'sun-protocol', name: 'Protocollo Sole', desc: 'Esposizione solare intelligente', default: false }
   ],
   debloat: [
     { id: 'cold-water-face', name: 'Cold Water Shock', desc: 'Acqua fredda per sgonfiare subito', default: true },
