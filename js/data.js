@@ -1494,7 +1494,28 @@ const PROGRAMS = [
       {title:'Sessione Serale (10 min)', text:'Esegui in ordine: 1. Drenaggio Linfatico — tutte le zone (3 min). 2. Platysma Toner — 3x15 (3 min). 3. Hard Mewing — 3x60s (3 min). 4. Skincare Serale — tutti gli step (5 min). 5. Mouth Tape per la notte. TOTALE: 14 min. La costanza serale è fondamentale per il recupero notturno.'}
     ],
     relatedExercises:['cold-water-face','gua-sha','basic-mewing','chin-tucks','morning-routine','jaw-clench','cheekbone-sculptor','evening-routine']
+  },
+  {
+    id:'eye-area-deep', name:'Sguardo & Eye Area', icon:'👁️',
+    image:'linear-gradient(135deg,#0a0a2e,#1a1a4e)',
+    chapters:4, lessons:10,
+    description:'Guida completa alla zona occhi: occhiaie, borse, canthal tilt, e come avere uno sguardo attraente.',
+    content:[
+      {title:'Occhiaie: Cause e Soluzioni', text:'Le occhiaie hanno 3 cause principali: 1. PIGMENTAZIONE — colore scuro genetico. Soluzione: siero con Vitamina C + Vitamina K + Arbutina. 2. VASCOLARE — vene visibili sotto pelle sottile. Soluzione: caffeina topica + impacchi freddi. 3. STRUTTURALE — incavo sotto l\'occhio (tear trough). Soluzione: filler acido ialuronico dal medico, o trucco correttore. PER TUTTE: dormire 8+ ore, bere 3L acqua, ridurre sale, SPF anche sotto gli occhi.'},
+      {title:'Borse: Come Eliminarle', text:'Le borse sono grasso orbitale che protrude o liquido accumulato. ROUTINE ANTI-BORSE: 1. Dormi con testa rialzata (2 cuscini). 2. Impacco freddo 5 min ogni mattina (cucchiai congelati funzionano). 3. Siero contorno occhi con caffeina 2x/giorno. 4. Massaggio linfatico delicato con anulare: dall\'angolo interno verso l\'esterno, poi giù verso l\'orecchio. 5. Riduci alcol e sodio. Le borse mattutine spariscono in 1-2 ore; se persistono tutto il giorno, potrebbe servire un consulto medico.'},
+      {title:'Canthal Tilt & Eye Shape', text:'Il canthal tilt è l\'angolo tra canto interno e esterno dell\'occhio. POSITIVE canthal tilt (angolo esterno più alto) = considerato più attraente e mascolino. Non puoi cambiare la struttura ossea, ma puoi: 1. Ridurre upper eyelid exposure dormendo bene e riducendo gonfiore. 2. Eye lifts exercise per tonificare i muscoli orbicolari. 3. Sopracciglia ben curate che seguono l\'angolo naturale. 4. Lenti a contatto colorate per cambiare colore (effetto drammatico).'},
+      {title:'Eye Drops & Occhi Luminosi', text:'Occhi bianchi e luminosi = attraenti. PROTOCOLLO: 1. Lumify eye drops (brimonidina) — riduce rossore per 8 ore, sicuro per uso occasionale. 2. Dormi 8+ ore (il rossore peggiora con poco sonno). 3. Regola 20-20-20 per schermi: ogni 20 min guarda qualcosa a 20 piedi per 20 secondi. 4. Omega-3 (2g/giorno) riduce secchezza oculare. 5. Occhiali anti luce blu la sera. 6. Mangia carote e bacche per la salute oculare.'}
+    ],
+    relatedExercises:['eye-lifts','under-eye-massage','forehead-smoother','morning-routine']
   }
+];
+
+const CELEBRITY_MATCHES = [
+  { minScore: 8.5, names: ['Henry Cavill', 'Chris Hemsworth', 'Brad Pitt giovane'], traits: ['Struttura eccezionale', 'Simmetria alta', 'Jawline definita'] },
+  { minScore: 7.5, names: ['Ryan Gosling', 'Timothee Chalamet', 'Zayn Malik'], traits: ['Proporzioni armoniose', 'Lineamenti fini', 'Buona simmetria'] },
+  { minScore: 6.5, names: ['Tom Holland', 'Shawn Mendes', 'Harry Styles'], traits: ['Look accessibile', 'Tratti equilibrati', 'Potenziale alto'] },
+  { minScore: 5.5, names: ['Ed Sheeran', 'Pete Davidson', 'Adam Driver'], traits: ['Carisma compensa', 'Tratti unici', 'Migliorabile'] },
+  { minScore: 0, names: ['Nessun match specifico'], traits: ['Grande potenziale', 'Lavoro da fare', 'Trasformazione possibile'] }
 ];
 
 const RECOMMENDED_PRODUCTS = [

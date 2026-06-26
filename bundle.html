@@ -54,9 +54,28 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 #app{height:100%;width:100%;max-width:430px;margin:0 auto;position:relative;overflow:hidden}
 
 /* ══════ SCREENS ══════ */
-.screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;opacity:0;pointer-events:none;transform:translateX(20px);transition:opacity .3s,transform .3s;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;opacity:0;pointer-events:none;transform:translateX(40px) scale(.97);transition:opacity .35s cubic-bezier(.4,0,.2,1),transform .35s cubic-bezier(.4,0,.2,1);scrollbar-width:none;-webkit-overflow-scrolling:touch;will-change:transform,opacity}
 .screen::-webkit-scrollbar{display:none}
 .screen.active{opacity:1;pointer-events:auto;transform:none;z-index:2}
+.screen.slide-left{transform:translateX(-40px) scale(.97);opacity:0}
+
+/* Symmetry overlay */
+.symmetry-card{margin:20px 0;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);text-align:center}
+.symmetry-card h4{font-size:14px;font-weight:700;margin-bottom:10px}
+.sym-canvas-wrap{position:relative;width:200px;height:260px;margin:0 auto 10px;border-radius:var(--r);overflow:hidden;background:#000}
+.sym-canvas-wrap canvas{width:100%;height:100%}
+.sym-label{font-size:11px;color:var(--t3);margin-top:6px}
+.sym-btns{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.sym-btn{padding:7px 16px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r-full);color:var(--t2);font-size:11px;font-weight:600;cursor:pointer;font-family:inherit}
+.sym-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* Celebrity match */
+.celeb-card{margin:16px 0;padding:18px;background:linear-gradient(135deg,rgba(124,58,237,0.1),rgba(6,182,212,0.06));border:1px solid rgba(124,58,237,0.2);border-radius:var(--r-lg);text-align:center}
+.celeb-card h4{font-size:14px;font-weight:700;margin-bottom:4px}
+.celeb-name{font-size:22px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px}
+.celeb-match{font-size:12px;color:var(--accent2);font-weight:600}
+.celeb-traits{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:10px}
+.celeb-trait{padding:5px 10px;background:var(--glass);border-radius:var(--r-full);font-size:10px;color:var(--t2);font-weight:600}
 
 /* ══════ SPLASH ══════ */
 #screen-splash{display:flex;align-items:center;justify-content:center;text-align:center}
@@ -673,6 +692,25 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
           <p id="res-percentile">Analisi in corso...</p>
         </div>
         <div class="res-list" id="res-list"></div>
+
+        <div class="celeb-card" id="celeb-card">
+          <h4>⭐ Celebrity Match</h4>
+          <div class="celeb-name" id="celeb-name">--</div>
+          <div class="celeb-match" id="celeb-match">Calcolando...</div>
+          <div class="celeb-traits" id="celeb-traits"></div>
+        </div>
+
+        <div class="symmetry-card" id="symmetry-card">
+          <h4>⚖️ Analisi Simmetria</h4>
+          <div class="sym-canvas-wrap"><canvas id="sym-canvas" width="200" height="260"></canvas></div>
+          <p class="sym-label" id="sym-label">Tocca per alternare metà destra/sinistra</p>
+          <div class="sym-btns">
+            <button class="sym-btn active" id="sym-left">← Sinistra</button>
+            <button class="sym-btn" id="sym-right">Destra →</button>
+            <button class="sym-btn" id="sym-normal">Originale</button>
+          </div>
+        </div>
+
         <h3 class="sec-title" style="margin-top:28px">🎯 Piano Personalizzato</h3>
         <p class="sec-sub">Esercizi per migliorare i tuoi punti deboli</p>
         <div id="personal-recs"></div>
@@ -2474,7 +2512,28 @@ const PROGRAMS = [
       {title:'Sessione Serale (10 min)', text:'Esegui in ordine: 1. Drenaggio Linfatico — tutte le zone (3 min). 2. Platysma Toner — 3x15 (3 min). 3. Hard Mewing — 3x60s (3 min). 4. Skincare Serale — tutti gli step (5 min). 5. Mouth Tape per la notte. TOTALE: 14 min. La costanza serale è fondamentale per il recupero notturno.'}
     ],
     relatedExercises:['cold-water-face','gua-sha','basic-mewing','chin-tucks','morning-routine','jaw-clench','cheekbone-sculptor','evening-routine']
+  },
+  {
+    id:'eye-area-deep', name:'Sguardo & Eye Area', icon:'👁️',
+    image:'linear-gradient(135deg,#0a0a2e,#1a1a4e)',
+    chapters:4, lessons:10,
+    description:'Guida completa alla zona occhi: occhiaie, borse, canthal tilt, e come avere uno sguardo attraente.',
+    content:[
+      {title:'Occhiaie: Cause e Soluzioni', text:'Le occhiaie hanno 3 cause principali: 1. PIGMENTAZIONE — colore scuro genetico. Soluzione: siero con Vitamina C + Vitamina K + Arbutina. 2. VASCOLARE — vene visibili sotto pelle sottile. Soluzione: caffeina topica + impacchi freddi. 3. STRUTTURALE — incavo sotto l\'occhio (tear trough). Soluzione: filler acido ialuronico dal medico, o trucco correttore. PER TUTTE: dormire 8+ ore, bere 3L acqua, ridurre sale, SPF anche sotto gli occhi.'},
+      {title:'Borse: Come Eliminarle', text:'Le borse sono grasso orbitale che protrude o liquido accumulato. ROUTINE ANTI-BORSE: 1. Dormi con testa rialzata (2 cuscini). 2. Impacco freddo 5 min ogni mattina (cucchiai congelati funzionano). 3. Siero contorno occhi con caffeina 2x/giorno. 4. Massaggio linfatico delicato con anulare: dall\'angolo interno verso l\'esterno, poi giù verso l\'orecchio. 5. Riduci alcol e sodio. Le borse mattutine spariscono in 1-2 ore; se persistono tutto il giorno, potrebbe servire un consulto medico.'},
+      {title:'Canthal Tilt & Eye Shape', text:'Il canthal tilt è l\'angolo tra canto interno e esterno dell\'occhio. POSITIVE canthal tilt (angolo esterno più alto) = considerato più attraente e mascolino. Non puoi cambiare la struttura ossea, ma puoi: 1. Ridurre upper eyelid exposure dormendo bene e riducendo gonfiore. 2. Eye lifts exercise per tonificare i muscoli orbicolari. 3. Sopracciglia ben curate che seguono l\'angolo naturale. 4. Lenti a contatto colorate per cambiare colore (effetto drammatico).'},
+      {title:'Eye Drops & Occhi Luminosi', text:'Occhi bianchi e luminosi = attraenti. PROTOCOLLO: 1. Lumify eye drops (brimonidina) — riduce rossore per 8 ore, sicuro per uso occasionale. 2. Dormi 8+ ore (il rossore peggiora con poco sonno). 3. Regola 20-20-20 per schermi: ogni 20 min guarda qualcosa a 20 piedi per 20 secondi. 4. Omega-3 (2g/giorno) riduce secchezza oculare. 5. Occhiali anti luce blu la sera. 6. Mangia carote e bacche per la salute oculare.'}
+    ],
+    relatedExercises:['eye-lifts','under-eye-massage','forehead-smoother','morning-routine']
   }
+];
+
+const CELEBRITY_MATCHES = [
+  { minScore: 8.5, names: ['Henry Cavill', 'Chris Hemsworth', 'Brad Pitt giovane'], traits: ['Struttura eccezionale', 'Simmetria alta', 'Jawline definita'] },
+  { minScore: 7.5, names: ['Ryan Gosling', 'Timothee Chalamet', 'Zayn Malik'], traits: ['Proporzioni armoniose', 'Lineamenti fini', 'Buona simmetria'] },
+  { minScore: 6.5, names: ['Tom Holland', 'Shawn Mendes', 'Harry Styles'], traits: ['Look accessibile', 'Tratti equilibrati', 'Potenziale alto'] },
+  { minScore: 5.5, names: ['Ed Sheeran', 'Pete Davidson', 'Adam Driver'], traits: ['Carisma compensa', 'Tratti unici', 'Migliorabile'] },
+  { minScore: 0, names: ['Nessun match specifico'], traits: ['Grande potenziale', 'Lavoro da fare', 'Trasformazione possibile'] }
 ];
 
 const RECOMMENDED_PRODUCTS = [
@@ -2587,7 +2646,12 @@ const App = {
     const next = document.getElementById('screen-' + s);
     if (!next || s === this.screen) return;
     if (hist && this.screen !== 'splash') this.history.push(this.screen);
-    document.querySelectorAll('.screen.active').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.screen.active').forEach(el => {
+      el.classList.add('slide-left');
+      el.classList.remove('active');
+      setTimeout(() => el.classList.remove('slide-left'), 350);
+    });
+    next.scrollTop = 0;
     next.classList.add('active');
     const nav = document.getElementById('bnav');
     const withNav = ['dashboard', 'progress', 'profile', 'programs'];
@@ -2636,6 +2700,9 @@ const App = {
     $('btn-sidebar').onclick = () => this.openSidebar();
     $('sb-close').onclick = () => this.closeSidebar();
     $('sidebar-overlay').onclick = () => this.closeSidebar();
+    $('sym-left').onclick = () => this.drawSymmetry('left');
+    $('sym-right').onclick = () => this.drawSymmetry('right');
+    $('sym-normal').onclick = () => this.drawSymmetry('normal');
     $('btn-reset-all').onclick = () => {
       if (confirm('Eliminare tutti i dati?')) { localStorage.clear(); location.reload(); }
     };
@@ -2854,7 +2921,80 @@ const App = {
       list.appendChild(row);
     });
 
+    this.renderCelebMatch(sc);
+    this.drawSymmetry('left');
     this.renderPersonalPlan(sc);
+  },
+
+  renderCelebMatch(sc) {
+    const match = CELEBRITY_MATCHES.find(m => sc.overall >= m.minScore) || CELEBRITY_MATCHES[CELEBRITY_MATCHES.length - 1];
+    const celeb = match.names[Math.floor(Math.random() * match.names.length)];
+    document.getElementById('celeb-name').textContent = celeb;
+    document.getElementById('celeb-match').textContent = 'Somiglianza strutturale — Score ' + sc.overall + '/10';
+    const traits = document.getElementById('celeb-traits');
+    traits.innerHTML = '';
+    match.traits.forEach(t => {
+      const s = document.createElement('span'); s.className = 'celeb-trait'; s.textContent = t;
+      traits.appendChild(s);
+    });
+  },
+
+  drawSymmetry(mode) {
+    document.querySelectorAll('.sym-btn').forEach(b => b.classList.remove('active'));
+    const activeBtn = mode === 'left' ? 'sym-left' : mode === 'right' ? 'sym-right' : 'sym-normal';
+    document.getElementById(activeBtn).classList.add('active');
+
+    const canvas = document.getElementById('sym-canvas');
+    const ctx = canvas.getContext('2d');
+    const src = document.getElementById('cam-canvas');
+
+    if (src.width === 0 || !this.photos.front) {
+      ctx.fillStyle = '#1a1a2e';
+      ctx.fillRect(0, 0, 200, 260);
+      ctx.fillStyle = '#a78bfa';
+      ctx.font = '12px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Fai una scansione', 100, 125);
+      ctx.fillText('per vedere la simmetria', 100, 145);
+      return;
+    }
+
+    const img = new Image();
+    img.onload = () => {
+      const w = 200, h = 260;
+      canvas.width = w; canvas.height = h;
+      ctx.clearRect(0, 0, w, h);
+
+      if (mode === 'normal') {
+        ctx.drawImage(img, 0, 0, w, h);
+      } else if (mode === 'left') {
+        ctx.drawImage(img, 0, 0, img.width / 2, img.height, 0, 0, w / 2, h);
+        ctx.save();
+        ctx.translate(w, 0);
+        ctx.scale(-1, 1);
+        ctx.drawImage(img, 0, 0, img.width / 2, img.height, 0, 0, w / 2, h);
+        ctx.restore();
+      } else {
+        ctx.save();
+        ctx.translate(w, 0);
+        ctx.scale(-1, 1);
+        ctx.drawImage(img, img.width / 2, 0, img.width / 2, img.height, 0, 0, w / 2, h);
+        ctx.restore();
+        ctx.drawImage(img, img.width / 2, 0, img.width / 2, img.height, w / 2, 0, w / 2, h);
+      }
+
+      ctx.strokeStyle = 'rgba(124,58,237,0.5)';
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(w / 2, 0);
+      ctx.lineTo(w / 2, h);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    };
+    img.src = this.photos.front;
+
+    const labels = { left: 'Metà sinistra specchiata', right: 'Metà destra specchiata', normal: 'Foto originale' };
+    document.getElementById('sym-label').textContent = labels[mode];
   },
 
   renderPersonalPlan(sc) {

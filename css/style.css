@@ -38,9 +38,28 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 #app{height:100%;width:100%;max-width:430px;margin:0 auto;position:relative;overflow:hidden}
 
 /* ══════ SCREENS ══════ */
-.screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;opacity:0;pointer-events:none;transform:translateX(20px);transition:opacity .3s,transform .3s;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.screen{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;opacity:0;pointer-events:none;transform:translateX(40px) scale(.97);transition:opacity .35s cubic-bezier(.4,0,.2,1),transform .35s cubic-bezier(.4,0,.2,1);scrollbar-width:none;-webkit-overflow-scrolling:touch;will-change:transform,opacity}
 .screen::-webkit-scrollbar{display:none}
 .screen.active{opacity:1;pointer-events:auto;transform:none;z-index:2}
+.screen.slide-left{transform:translateX(-40px) scale(.97);opacity:0}
+
+/* Symmetry overlay */
+.symmetry-card{margin:20px 0;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);text-align:center}
+.symmetry-card h4{font-size:14px;font-weight:700;margin-bottom:10px}
+.sym-canvas-wrap{position:relative;width:200px;height:260px;margin:0 auto 10px;border-radius:var(--r);overflow:hidden;background:#000}
+.sym-canvas-wrap canvas{width:100%;height:100%}
+.sym-label{font-size:11px;color:var(--t3);margin-top:6px}
+.sym-btns{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.sym-btn{padding:7px 16px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r-full);color:var(--t2);font-size:11px;font-weight:600;cursor:pointer;font-family:inherit}
+.sym-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+
+/* Celebrity match */
+.celeb-card{margin:16px 0;padding:18px;background:linear-gradient(135deg,rgba(124,58,237,0.1),rgba(6,182,212,0.06));border:1px solid rgba(124,58,237,0.2);border-radius:var(--r-lg);text-align:center}
+.celeb-card h4{font-size:14px;font-weight:700;margin-bottom:4px}
+.celeb-name{font-size:22px;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:8px 0 4px}
+.celeb-match{font-size:12px;color:var(--accent2);font-weight:600}
+.celeb-traits{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:10px}
+.celeb-trait{padding:5px 10px;background:var(--glass);border-radius:var(--r-full);font-size:10px;color:var(--t2);font-weight:600}
 
 /* ══════ SPLASH ══════ */
 #screen-splash{display:flex;align-items:center;justify-content:center;text-align:center}

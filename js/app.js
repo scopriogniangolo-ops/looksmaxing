@@ -19,7 +19,12 @@ const App = {
     const next = document.getElementById('screen-' + s);
     if (!next || s === this.screen) return;
     if (hist && this.screen !== 'splash') this.history.push(this.screen);
-    document.querySelectorAll('.screen.active').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.screen.active').forEach(el => {
+      el.classList.add('slide-left');
+      el.classList.remove('active');
+      setTimeout(() => el.classList.remove('slide-left'), 350);
+    });
+    next.scrollTop = 0;
     next.classList.add('active');
     const nav = document.getElementById('bnav');
     const withNav = ['dashboard', 'progress', 'profile', 'programs'];
@@ -68,6 +73,9 @@ const App = {
     $('btn-sidebar').onclick = () => this.openSidebar();
     $('sb-close').onclick = () => this.closeSidebar();
     $('sidebar-overlay').onclick = () => this.closeSidebar();
+    $('sym-left').onclick = () => this.drawSymmetry('left');
+    $('sym-right').onclick = () => this.drawSymmetry('right');
+    $('sym-normal').onclick = () => this.drawSymmetry('normal');
     $('btn-reset-all').onclick = () => {
       if (confirm('Eliminare tutti i dati?')) { localStorage.clear(); location.reload(); }
     };
@@ -286,7 +294,80 @@ const App = {
       list.appendChild(row);
     });
 
+    this.renderCelebMatch(sc);
+    this.drawSymmetry('left');
     this.renderPersonalPlan(sc);
+  },
+
+  renderCelebMatch(sc) {
+    const match = CELEBRITY_MATCHES.find(m => sc.overall >= m.minScore) || CELEBRITY_MATCHES[CELEBRITY_MATCHES.length - 1];
+    const celeb = match.names[Math.floor(Math.random() * match.names.length)];
+    document.getElementById('celeb-name').textContent = celeb;
+    document.getElementById('celeb-match').textContent = 'Somiglianza strutturale — Score ' + sc.overall + '/10';
+    const traits = document.getElementById('celeb-traits');
+    traits.innerHTML = '';
+    match.traits.forEach(t => {
+      const s = document.createElement('span'); s.className = 'celeb-trait'; s.textContent = t;
+      traits.appendChild(s);
+    });
+  },
+
+  drawSymmetry(mode) {
+    document.querySelectorAll('.sym-btn').forEach(b => b.classList.remove('active'));
+    const activeBtn = mode === 'left' ? 'sym-left' : mode === 'right' ? 'sym-right' : 'sym-normal';
+    document.getElementById(activeBtn).classList.add('active');
+
+    const canvas = document.getElementById('sym-canvas');
+    const ctx = canvas.getContext('2d');
+    const src = document.getElementById('cam-canvas');
+
+    if (src.width === 0 || !this.photos.front) {
+      ctx.fillStyle = '#1a1a2e';
+      ctx.fillRect(0, 0, 200, 260);
+      ctx.fillStyle = '#a78bfa';
+      ctx.font = '12px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Fai una scansione', 100, 125);
+      ctx.fillText('per vedere la simmetria', 100, 145);
+      return;
+    }
+
+    const img = new Image();
+    img.onload = () => {
+      const w = 200, h = 260;
+      canvas.width = w; canvas.height = h;
+      ctx.clearRect(0, 0, w, h);
+
+      if (mode === 'normal') {
+        ctx.drawImage(img, 0, 0, w, h);
+      } else if (mode === 'left') {
+        ctx.drawImage(img, 0, 0, img.width / 2, img.height, 0, 0, w / 2, h);
+        ctx.save();
+        ctx.translate(w, 0);
+        ctx.scale(-1, 1);
+        ctx.drawImage(img, 0, 0, img.width / 2, img.height, 0, 0, w / 2, h);
+        ctx.restore();
+      } else {
+        ctx.save();
+        ctx.translate(w, 0);
+        ctx.scale(-1, 1);
+        ctx.drawImage(img, img.width / 2, 0, img.width / 2, img.height, 0, 0, w / 2, h);
+        ctx.restore();
+        ctx.drawImage(img, img.width / 2, 0, img.width / 2, img.height, w / 2, 0, w / 2, h);
+      }
+
+      ctx.strokeStyle = 'rgba(124,58,237,0.5)';
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(w / 2, 0);
+      ctx.lineTo(w / 2, h);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    };
+    img.src = this.photos.front;
+
+    const labels = { left: 'Metà sinistra specchiata', right: 'Metà destra specchiata', normal: 'Foto originale' };
+    document.getElementById('sym-label').textContent = labels[mode];
   },
 
   renderPersonalPlan(sc) {
