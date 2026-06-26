@@ -273,12 +273,21 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .r-item .ri-check{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s;font-size:10px}
 .r-item.done .ri-check{background:var(--green);border-color:var(--green);color:#fff}
 .r-item.done .ri-check::after{content:'✓'}
+.int-wrap{width:100%;margin-top:6px}
+.int-btns{display:flex;gap:4px;overflow:hidden;max-height:0;opacity:0;transition:max-height .25s ease,opacity .2s ease,margin .2s ease}
+.int-btns.open{max-height:40px;opacity:1;margin-top:2px}
 .int-btn{flex:1;padding:6px;background:var(--glass);border:1px solid var(--border);border-radius:8px;color:var(--t3);font-size:10px;font-weight:700;font-family:inherit;cursor:pointer;transition:all .15s}
 .int-btn:active{transform:scale(.95)}
 .int-btn.int-active{color:#fff}
 .int-btn[data-lv="base"].int-active{background:var(--green);border-color:var(--green)}
 .int-btn[data-lv="medio"].int-active{background:var(--yellow);border-color:var(--yellow);color:#000}
 .int-btn[data-lv="pro"].int-active{background:var(--red);border-color:var(--red)}
+.int-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:var(--r-full);font-size:10px;font-weight:700;cursor:pointer;transition:all .15s;margin-top:4px}
+.int-badge:active{transform:scale(.95)}
+.int-badge[data-lv="base"]{background:rgba(16,185,129,0.15);color:var(--green);border:1px solid rgba(16,185,129,0.3)}
+.int-badge[data-lv="medio"]{background:rgba(245,158,11,0.15);color:var(--yellow);border:1px solid rgba(245,158,11,0.3)}
+.int-badge[data-lv="pro"]{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3)}
+.int-badge svg{width:10px;height:10px;opacity:.6}
 
 .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
 .cat-card{padding:22px 16px;border-radius:var(--r);cursor:pointer;transition:all .25s;border:none;position:relative;overflow:hidden;min-height:110px}
@@ -3629,13 +3638,24 @@ const App = {
         const adjReps = typeof ex.reps === 'number' ? Math.round(ex.reps * multiplier) : ex.reps;
         const el = document.createElement('div'); el.className = 'r-item' + (done ? ' done' : '');
         el.style.flexWrap = 'wrap';
+        const lvLabel = currentInt === 'pro' ? 'Pro' : currentInt === 'medio' ? 'Medio' : 'Base';
         el.innerHTML = `<span class="ri-icon">${ex.icon}</span><div class="ri-info"><div class="ri-name">${ex.name}</div><div class="ri-note">${adjSets}x${adjReps} • ${ex.duration}</div></div><div class="ri-check"></div>
-          <div class="intensity-btns" style="width:100%;display:flex;gap:4px;margin-top:6px">
-            <button class="int-btn ${currentInt==='base'?'int-active':''}" data-ex="${exId}" data-lv="base">Base</button>
-            <button class="int-btn ${currentInt==='medio'?'int-active':''}" data-ex="${exId}" data-lv="medio">Medio</button>
-            <button class="int-btn ${currentInt==='pro'?'int-active':''}" data-ex="${exId}" data-lv="pro">Pro</button>
+          <div class="int-wrap">
+            <div class="int-badge" data-lv="${currentInt}" id="badge-${exId}">
+              ${lvLabel} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="int-btns" id="btns-${exId}">
+              <button class="int-btn ${currentInt==='base'?'int-active':''}" data-ex="${exId}" data-lv="base">Base</button>
+              <button class="int-btn ${currentInt==='medio'?'int-active':''}" data-ex="${exId}" data-lv="medio">Medio</button>
+              <button class="int-btn ${currentInt==='pro'?'int-active':''}" data-ex="${exId}" data-lv="pro">Pro</button>
+            </div>
           </div>`;
         el.querySelector('.ri-name').onclick = (e) => { e.stopPropagation(); if (!done) { this.doneRoutine.add(key); el.classList.add('done'); } this.openDetail(ex, catId, currentInt); };
+        el.querySelector('.int-badge').onclick = (e) => {
+          e.stopPropagation();
+          const btns = document.getElementById('btns-' + exId);
+          btns.classList.toggle('open');
+        };
         el.querySelectorAll('.int-btn').forEach(btn => {
           btn.onclick = (e) => {
             e.stopPropagation();

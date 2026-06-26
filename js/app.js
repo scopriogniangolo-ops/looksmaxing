@@ -987,13 +987,24 @@ const App = {
         const adjReps = typeof ex.reps === 'number' ? Math.round(ex.reps * multiplier) : ex.reps;
         const el = document.createElement('div'); el.className = 'r-item' + (done ? ' done' : '');
         el.style.flexWrap = 'wrap';
+        const lvLabel = currentInt === 'pro' ? 'Pro' : currentInt === 'medio' ? 'Medio' : 'Base';
         el.innerHTML = `<span class="ri-icon">${ex.icon}</span><div class="ri-info"><div class="ri-name">${ex.name}</div><div class="ri-note">${adjSets}x${adjReps} • ${ex.duration}</div></div><div class="ri-check"></div>
-          <div class="intensity-btns" style="width:100%;display:flex;gap:4px;margin-top:6px">
-            <button class="int-btn ${currentInt==='base'?'int-active':''}" data-ex="${exId}" data-lv="base">Base</button>
-            <button class="int-btn ${currentInt==='medio'?'int-active':''}" data-ex="${exId}" data-lv="medio">Medio</button>
-            <button class="int-btn ${currentInt==='pro'?'int-active':''}" data-ex="${exId}" data-lv="pro">Pro</button>
+          <div class="int-wrap">
+            <div class="int-badge" data-lv="${currentInt}" id="badge-${exId}">
+              ${lvLabel} <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+            <div class="int-btns" id="btns-${exId}">
+              <button class="int-btn ${currentInt==='base'?'int-active':''}" data-ex="${exId}" data-lv="base">Base</button>
+              <button class="int-btn ${currentInt==='medio'?'int-active':''}" data-ex="${exId}" data-lv="medio">Medio</button>
+              <button class="int-btn ${currentInt==='pro'?'int-active':''}" data-ex="${exId}" data-lv="pro">Pro</button>
+            </div>
           </div>`;
         el.querySelector('.ri-name').onclick = (e) => { e.stopPropagation(); if (!done) { this.doneRoutine.add(key); el.classList.add('done'); } this.openDetail(ex, catId, currentInt); };
+        el.querySelector('.int-badge').onclick = (e) => {
+          e.stopPropagation();
+          const btns = document.getElementById('btns-' + exId);
+          btns.classList.toggle('open');
+        };
         el.querySelectorAll('.int-btn').forEach(btn => {
           btn.onclick = (e) => {
             e.stopPropagation();
