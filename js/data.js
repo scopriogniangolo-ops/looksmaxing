@@ -1176,6 +1176,95 @@ const EXERCISES = {
           'DOPO 4 SETTIMANE: aggiungi 50 jelq/settimana, 1 serie in più agli stretch — progressione graduale'
         ],
         tips: 'La costanza batte l\'intensità. 20 minuti al giorno per 6 mesi sono più efficaci di sessioni da 2 ore fatte raramente. I risultati visibili arrivano in 3-6 mesi di pratica costante. Fotografa ogni 4 settimane per tracciare i progressi.'
+      },
+      {
+        id: 'sleeve-pump-hold', name: 'Pump & Hold', subtitle: 'Espansione con sleeve per lunghezza e girth',
+        icon: '🔃', difficulty: 'Principiante', difficultyLevel: 1, xp: 20,
+        target: 'Corpi cavernosi, Lunghezza, Circonferenza', duration: '15 min', sets: 5, reps: 1, holdTime: 60,
+        unlockLevel: 1,
+        benefits: ['Espansione dei corpi cavernosi', 'Guadagno progressivo in lunghezza', 'Desensibilizzazione controllata'],
+        steps: [
+          'Warm up 5 min con panno caldo prima di qualsiasi cosa',
+          'Lubrifica abbondantemente l\'interno dello sleeve con lubrificante a base d\'acqua',
+          'Inserisciti a 60-70% di erezione — mai completamente molle né al massimo',
+          'Spingi LENTAMENTE fino al fondo dello sleeve mantenendo una pressione costante',
+          'Una volta al fondo: TIENI la posizione per 60 secondi interi senza muoverti',
+          'Senti la tensione di espansione — i tessuti vengono tenuti in posizione allungata',
+          'Estrai lentamente, massaggia 30 sec, ripeti per 5 volte',
+          'Aumenta di 10 sec ogni settimana fino ad arrivare a 2 minuti di hold'
+        ],
+        tips: 'Il Pump & Hold funziona come uno stretcher passivo: tiene i tessuti in posizione allungata il tempo necessario per stimolare la crescita. La chiave è la costanza: 5 giorni su 7 per almeno 3 mesi.'
+      },
+      {
+        id: 'sleeve-compression-jelq', name: 'Compression Jelq con Sleeve', subtitle: 'Jelqing amplificato dallo sleeve',
+        icon: '🤜', difficulty: 'Intermedio', difficultyLevel: 2, xp: 30,
+        target: 'Girth, Pressione interna, Tessuti cavernosi', duration: '20 min', sets: 3, reps: 30, holdTime: 5,
+        unlockLevel: 1,
+        benefits: ['Pressione interna massimizzata', 'Sviluppo della circonferenza', 'Effetto girth superiore al jelq manuale'],
+        steps: [
+          'Warm up 10 min — obbligatorio per questa tecnica',
+          'Lubrifica sleeve e mani abbondantemente',
+          'Inserisciti allo sleeve a 70-80% di erezione',
+          'Con la mano libera forma il cerchio OK alla BASE, stringi moderatamente',
+          'Scorri lentamente la mano verso l\'alto MENTRE spingi lo sleeve verso il basso — le due forze si incontrano a metà',
+          'Mantieni la compressione al centro per 5 secondi',
+          'Rilascia, lascia che lo sleeve torni in posizione, ripeti 30 volte',
+          '3 serie con 1 minuto di riposo tra una serie e l\'altra. Max 3 volte a settimana.'
+        ],
+        tips: 'La doppia pressione (mano + sleeve) crea una forza di espansione molto superiore al jelq manuale. Senti una sensazione di pienezza intensa — è normale. Se senti pizzicore acuto o vedi ecchimosi, fermati e riposa 4 giorni.'
+      },
+      {
+        id: 'sleeve-slow-stretch', name: 'Slow Stroke Stretch', subtitle: 'Allungamento lento con resistenza dello sleeve',
+        icon: '🐢', difficulty: 'Principiante', difficultyLevel: 1, xp: 15,
+        target: 'Lunghezza, Legamento sospensore, Tunica', duration: '15 min', sets: 4, reps: 20, holdTime: 10,
+        unlockLevel: 1,
+        benefits: ['Allungamento graduale e sicuro', 'Stimola il legamento sospensore', 'Ottimo per i principianti'],
+        steps: [
+          'Warm up 5 min. Lubrifica lo sleeve.',
+          'Inserisciti a 50-60% di erezione — meno eretto rispetto ad altri esercizi',
+          'Afferra lo sleeve a metà con la mano e tira LENTAMENTE verso l\'esterno per 10 secondi',
+          'Il corpo non segue — crea una resistenza mentre lo sleeve tira — senti la tensione in trazione',
+          'Tieni la trazione massima per 10 secondi',
+          'Poi tira verso sinistra 10 sec, verso destra 10 sec, verso il basso 10 sec',
+          'Ripeti 20 volte per serie, 4 serie totali',
+          'Questo simula un penis extender ma con il comfort dello sleeve'
+        ],
+        tips: 'È l\'equivalente di un extender fatto con lo sleeve. Più sicuro e comodo. Il principio è uguale: mantenere i tessuti in trazione per un tempo prolungato. Risultati in 8-12 settimane di pratica regolare.'
+      },
+      {
+        id: 'sleeve-ballooning', name: 'Ballooning con Sleeve', subtitle: 'Espansione massima senza orgasmo',
+        icon: '🎈', difficulty: 'Avanzato', difficultyLevel: 3, xp: 35,
+        target: 'Volume totale, Corpi cavernosi, Capacità massima', duration: '25-30 min', sets: 1, reps: 'Sessione continua',
+        unlockLevel: 1,
+        benefits: ['Massima espansione dei tessuti erettili', 'Allena la capacità dei corpi cavernosi', 'Guadagno in volume totale'],
+        steps: [
+          'Warm up esteso: 10 minuti panno caldo',
+          'Lubrifica abbondantemente. Inizia con ritmo lentissimo allo sleeve.',
+          'Porta l\'eccitazione gradualmente all\'80% in 5 minuti — non avere fretta',
+          'All\'80%: FERMATI completamente. Contrai il PC forte per 10 secondi. Respira 4-7-8.',
+          'Quando l\'eccitazione scende al 60%, riprendi con ritmo ANCORA PIÙ LENTO',
+          'Porta all\'85%, fermati di nuovo, PC squeeze + respirazione. Nota che ogni volta sei leggermente più espanso.',
+          'Mantieni questa zona (75-85%) per 20-25 minuti senza mai superare il punto di non ritorno',
+          'Fine sessione: termina senza orgasmo oppure vai solo se vuoi — entrambi validi'
+        ],
+        tips: 'Il ballooning sfrutta il fatto che mantenendo alta eccitazione senza orgasmo i corpi cavernosi rimangono pieni di sangue per un tempo prolungato, stimolando l\'espansione del tessuto. I praticanti avanzati riferiscono guadagni significativi in girth dopo 3-6 mesi. È la tecnica più difficile ma più efficace.'
+      },
+      {
+        id: 'sleeve-plateau-breaks', name: 'Plateau Breaker', subtitle: 'Superare i plateau con intensità variabile',
+        icon: '📊', difficulty: 'Avanzato', difficultyLevel: 3, xp: 30,
+        target: 'Adattamento tissutale, Superamento plateau', duration: '25 min', sets: 5, reps: 'Cicli', holdTime: 45,
+        unlockLevel: 1,
+        benefits: ['Supera i periodi di stasi', 'Stimola nuova crescita', 'Varia lo stimolo per nuova risposta tissutale'],
+        steps: [
+          'Warm up 10 min. Per usare questa tecnica devi già avere almeno 4 settimane di pratica.',
+          'CICLO 1 (5 min): Ritmo lento con sleeve, jelq manuale alla base ogni 30 secondi',
+          'CICLO 2 (5 min): Pump & hold — spingi al fondo e tieni 45 sec, estrai, ripeti 6 volte',
+          'CICLO 3 (5 min): Slow stretch — tira verso l\'esterno con sleeve per 30 sec, pausa, ripeti',
+          'CICLO 4 (5 min): Compression jelq con sleeve — 30 reps a ritmo moderato',
+          'CICLO 5 (5 min): Ballooning finale — porta all\'80% e mantieni senza orgasmo',
+          'Variazione settimana dopo: cambia l\'ordine dei cicli — il cambio di stimolo è fondamentale'
+        ],
+        tips: 'I plateau arrivano quando il tessuto si è adattato allo stesso stimolo. La soluzione è cambiare variabile: angolo, intensità, durata, ordine degli esercizi. Questo protocollo combinato attacca il tessuto da più angoli e rompe la stasi. Usa solo se sei in plateau da almeno 4 settimane.'
       }
     ]
   }
@@ -1765,6 +1854,11 @@ const ROUTINE_ALTERNATIVES = {
     { id: 'v-stretch', name: 'V-Stretch', desc: 'Stretch avanzato per la tunica', default: false },
     { id: 'uli-squeeze', name: 'Uli Squeeze', desc: 'Tecnica per la circonferenza massima', default: false },
     { id: 'bundled-stretch', name: 'Bundled Stretch', desc: 'Stretch torsionale per la tunica profonda', default: false },
-    { id: 'pe-schedule', name: 'PE Programma Settimanale', desc: 'Schema completo ottimale', default: false }
+    { id: 'pe-schedule', name: 'PE Programma Settimanale', desc: 'Schema completo ottimale', default: false },
+    { id: 'sleeve-pump-hold', name: 'Pump & Hold', desc: 'Espansione con sleeve per lunghezza e girth', default: false },
+    { id: 'sleeve-compression-jelq', name: 'Compression Jelq Sleeve', desc: 'Jelqing amplificato dallo sleeve', default: false },
+    { id: 'sleeve-slow-stretch', name: 'Slow Stroke Stretch', desc: 'Allungamento lento con resistenza sleeve', default: false },
+    { id: 'sleeve-ballooning', name: 'Ballooning con Sleeve', desc: 'Espansione massima senza orgasmo', default: false },
+    { id: 'sleeve-plateau-breaks', name: 'Plateau Breaker', desc: 'Superare i plateau con intensità variabile', default: false }
   ]
 };
