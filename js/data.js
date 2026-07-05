@@ -1037,6 +1037,145 @@ const EXERCISES = {
           'TRACCIA I TEMPI: segna la durata di ogni sessione. Vedere i progressi è la motivazione più potente.'
         ],
         tips: 'Non forzare. Se un giorno non riesci a raggiungere l\'obiettivo, va bene. La progressione non è lineare. L\'importante è la tendenza generale nel tempo.'
+      },
+      {
+        id: 'warm-up-pe', name: 'Warm Up PE', subtitle: 'Riscaldamento prima degli esercizi',
+        icon: '🔥', difficulty: 'Principiante', difficultyLevel: 1, xp: 10,
+        target: 'Tessuti, Circolazione, Tunica', duration: '5-10 min', sets: 1, reps: 'Ogni sessione',
+        unlockLevel: 1,
+        benefits: ['Previene microtraumi', 'Aumenta l\'elasticità dei tessuti', 'Migliora la circolazione'],
+        steps: [
+          'METODO PANNO CALDO: Immergi un asciugamano in acqua calda (non bollente, ~40°C), strizzalo',
+          'Avvolgi il panno attorno e lascia agire per 5 minuti — riscalda in profondità i tessuti',
+          'Alternativa: fai una doccia calda per 5 minuti focalizzandoti sulla zona',
+          'Il tessuto deve essere caldo e morbido al tatto — questo è il momento ideale per iniziare',
+          'Dopo ogni sessione: stessa cosa come cool-down per ridurre eventuali fastidi',
+          'NON saltare mai questo step — il 90% degli infortuni avviene a freddo'
+        ],
+        tips: 'Il warm up è obbligatorio. I tessuti freddi sono rigidi e soggetti a microtraumi. Il calore aumenta l\'elasticità e rende gli esercizi 3x più efficaci e sicuri.'
+      },
+      {
+        id: 'jelqing-base', name: 'Jelqing Base', subtitle: 'Tecnica fondamentale per lunghezza e circonferenza',
+        icon: '📏', difficulty: 'Principiante', difficultyLevel: 1, xp: 20,
+        target: 'Lunghezza, Circonferenza, Tessuti cavernosi', duration: '10-15 min', sets: 1, reps: 100, holdTime: 3,
+        unlockLevel: 1,
+        benefits: ['Stimola la crescita dei tessuti cavernosi', 'Migliora la circolazione interna', 'Aumenta gradualmente le dimensioni'],
+        steps: [
+          'Fai il warm up con panno caldo per almeno 5 minuti',
+          'Applica lubrificante a base d\'acqua (olio d\'oliva o vasellina vanno bene)',
+          'Stato: semi-eretto (60-70%) — mai completamente molle né completamente eretto',
+          'Forma un cerchio OK con pollice e indice alla base',
+          'Stringi moderatamente e scorri lentamente verso l\'alto in 3 secondi — stop 1 cm prima della glande',
+          'Subito l\'altra mano fa lo stesso movimento — mani alternate, ritmo costante',
+          'Inizia con 100 jelq al giorno per 2 settimane, poi aumenta di 50 ogni settimana',
+          'Limite massimo: 300-500 jelq per sessione. Max 5 giorni/settimana, 2 giorni riposo.'
+        ],
+        tips: 'La pressione deve essere moderata — senti il sangue spingersi verso l\'alto, non dolore. Se senti dolore o vedi punti rossi, fermati. Il riposo è quando cresci, non durante l\'esercizio.'
+      },
+      {
+        id: 'jelqing-avanzato', name: 'Jelqing Avanzato', subtitle: 'Jelq con rotazione per circonferenza massima',
+        icon: '🔄', difficulty: 'Intermedio', difficultyLevel: 2, xp: 30,
+        target: 'Circonferenza, Tessuti laterali, Girth', duration: '20 min', sets: 3, reps: 50, holdTime: 4,
+        unlockLevel: 1,
+        benefits: ['Focus sulla circonferenza', 'Sviluppo dei tessuti laterali', 'Effetto girth pronunciato'],
+        steps: [
+          'Warm up obbligatorio — 10 minuti di panno caldo',
+          'Dopo 4 settimane di jelqing base con buona tecnica',
+          'Jelq normale fino a metà del percorso, poi RUOTA delicatamente il polso di 45°',
+          'Ruota verso sinistra 50 volte, poi verso destra 50 volte — questo sviluppa i tessuti laterali',
+          'JELQ A V: forma una V con indice e medio invece del cerchio OK — pressione più distribuita',
+          'Mantieni 60-70% di erezione — l\'eccessiva pressione a piena erezione è pericolosa',
+          '2-3 sessioni a settimana con almeno 1 giorno di riposo tra una sessione e l\'altra'
+        ],
+        tips: 'Non saltare al jelqing avanzato prima delle 4 settimane base. I tessuti hanno bisogno di adattarsi gradualmente. Qualsiasi dolore acuto = stop immediato.'
+      },
+      {
+        id: 'stretch-manuale', name: 'Stretching Manuale', subtitle: 'Allungamento per la lunghezza',
+        icon: '📐', difficulty: 'Principiante', difficultyLevel: 1, xp: 15,
+        target: 'Lunghezza, Legamento sospensore, Tunica albuginea', duration: '10 min', sets: 5, reps: 1, holdTime: 30,
+        unlockLevel: 1,
+        benefits: ['Allunga il legamento sospensore', 'Guadagno in lunghezza a riposo e eretto', 'Base per tecniche avanzate'],
+        steps: [
+          'Stato: completamente molle — lo stretching si fa sempre da flaccido',
+          'Afferra delicatamente appena sotto la glande con pollice e indice',
+          'Tira verso il BASSO con forza costante ma mai dolorosa per 30 secondi',
+          'Poi tira verso SINISTRA 30 secondi, verso DESTRA 30 secondi, verso l\'ALTO 30 secondi',
+          'Tra ogni direzione ruota lentamente (movimento circolare) per 10 secondi',
+          'Ripeti il giro completo (basso, sx, dx, su) per 5 volte',
+          'Dopo: massaggia delicatamente per ripristinare la circolazione',
+          'Fai 5 giorni sì, 2 giorni no — il riposo è quando il legamento si adatta allungato'
+        ],
+        tips: 'Il legamento sospensore è il principale responsabile della lunghezza flaccida. Allungarlo gradualmente lo porta ad adattarsi a una posizione più bassa. Senti tensione, mai dolore acuto.'
+      },
+      {
+        id: 'v-stretch', name: 'V-Stretch', subtitle: 'Stretch avanzato per la tunica',
+        icon: '✌️', difficulty: 'Intermedio', difficultyLevel: 2, xp: 25,
+        target: 'Tunica albuginea, Lunghezza interna', duration: '10 min', sets: 3, reps: 1, holdTime: 60,
+        unlockLevel: 1,
+        benefits: ['Target profondo sulla tunica', 'Allungamento da eretto', 'Guadagno in lunghezza eretto'],
+        steps: [
+          'Stato: semi-eretto (50-60%)',
+          'Afferra la glande con una mano e tira in avanti con forza moderata',
+          'Con l\'altra mano usa il pollice come punto di leva a metà del pene, premi verso il basso',
+          'Senti la tensione crearsi a forma di V — questo allunga la tunica superiore',
+          'Mantieni 60 secondi, poi inverti: leva in alto e tira verso il basso',
+          'Ripeti con la leva in diverse posizioni lungo il corpo (base, metà, 3/4)',
+          '3 serie per posizione. Max 2-3 volte a settimana — è uno stretch intenso'
+        ],
+        tips: 'Il V-stretch target la tunica albuginea, il tessuto connettivo più resistente. È più efficace del jelqing per la lunghezza eretto. Non fare più di 3 volte a settimana — i tessuti hanno bisogno di recupero.'
+      },
+      {
+        id: 'uli-squeeze', name: 'Uli Squeeze', subtitle: 'Tecnica per la circonferenza massima',
+        icon: '💪', difficulty: 'Avanzato', difficultyLevel: 3, xp: 30,
+        target: 'Girth, Tessuti cavernosi, Pressione interna', duration: '10 min', sets: 10, reps: 1, holdTime: 30,
+        unlockLevel: 1,
+        benefits: ['Massima espansione dei corpi cavernosi', 'Guadagno in circonferenza', 'Effetto girth immediato e a lungo termine'],
+        steps: [
+          'Warm up esteso: 10 minuti panno caldo',
+          'Porta all\'80-90% di erezione — questa tecnica richiede quasi piena erezione',
+          'Forma il cerchio OK alla BASE con la mano dominante, stringi moderatamente',
+          'La pressione blocca il sangue all\'interno — sentirai espansione nella testa e nel corpo',
+          'Mantieni la stretta per 30 secondi mentre respiri normalmente',
+          'Rilascia, massaggia delicatamente per 30 secondi, poi ripeti',
+          '10 ripetizioni per sessione. Non superare — è uno degli esercizi più intensi',
+          'Massimo 3 volte a settimana. Sempre seguito da massaggio'
+        ],
+        tips: 'L\'Uli è l\'esercizio più efficace per la circonferenza ma anche quello con più rischio se fatto male. MAI fare a piena erezione al 100%. Se vedi punti rossi (petecchie) o senti dolore, fermati subito e riposa 3-4 giorni.'
+      },
+      {
+        id: 'bundled-stretch', name: 'Bundled Stretch', subtitle: 'Stretch torsionale per la tunica profonda',
+        icon: '🌀', difficulty: 'Avanzato', difficultyLevel: 3, xp: 25,
+        target: 'Tunica albuginea profonda, Strutture interne', duration: '8 min', sets: 4, reps: 1, holdTime: 45,
+        unlockLevel: 1,
+        benefits: ['Raggiunge aree difficili della tunica', 'Allungamento in profondità', 'Complementa il V-stretch'],
+        steps: [
+          'Stato: completamente molle — obbligatorio',
+          'Afferra appena sotto la glande e RUOTA (torci) il corpo di 180° come se stessi torcendo un asciugamano',
+          'Mentre mantieni la torsione, tira verso il basso per 45 secondi',
+          'Poi tira verso l\'alto per altri 45 secondi — sempre mantenendo la torsione',
+          'Rilascia, massaggia 30 secondi per ripristinare la circolazione',
+          'Ripeti con torsione nel verso opposto: 4 serie totali (2 per ogni verso)',
+          'Massimo 2 volte a settimana — lascia 3 giorni di recupero tra le sessioni'
+        ],
+        tips: 'Il bundled stretch crea un allungamento multidirezionale che raggiunge parti della tunica che gli stretch normali non colpiscono. È un esercizio avanzato — fai almeno 4 settimane di stretch normale prima di aggiungerlo.'
+      },
+      {
+        id: 'pe-schedule', name: 'PE Programma Settimanale', subtitle: 'Schema completo per risultati ottimali',
+        icon: '📅', difficulty: 'Principiante', difficultyLevel: 1, xp: 20,
+        target: 'Tutti i tessuti, Recupero, Progressione', duration: 'Piano settimanale', sets: 1, reps: '7 giorni',
+        unlockLevel: 1,
+        benefits: ['Massimizza i risultati', 'Previene il sovrallenamento', 'Struttura progressiva'],
+        steps: [
+          'LUNEDÌ: Warm up 10 min + Jelqing 200 reps + Stretching manuale 10 min + Cool down 5 min',
+          'MARTEDÌ: Warm up 10 min + V-stretch 3 serie da 60 sec per direzione + Cool down 5 min',
+          'MERCOLEDÌ: RIPOSO — fondamentale per la crescita del tessuto',
+          'GIOVEDÌ: Warm up 10 min + Jelqing avanzato 150 reps + Uli squeeze 8 reps + Cool down',
+          'VENERDÌ: Warm up 10 min + Bundled stretch (se avanzato) o Stretching base + Cool down',
+          'SABATO: RIPOSO',
+          'DOMENICA: RIPOSO — i tessuti crescono nel recupero, non durante l\'allenamento',
+          'DOPO 4 SETTIMANE: aggiungi 50 jelq/settimana, 1 serie in più agli stretch — progressione graduale'
+        ],
+        tips: 'La costanza batte l\'intensità. 20 minuti al giorno per 6 mesi sono più efficaci di sessioni da 2 ore fatte raramente. I risultati visibili arrivano in 3-6 mesi di pratica costante. Fotografa ogni 4 settimane per tracciare i progressi.'
       }
     ]
   }
@@ -1618,6 +1757,14 @@ const ROUTINE_ALTERNATIVES = {
     { id: 'edging-protocol', name: 'Edging Protocol', desc: 'Allenamento con sleeve trainer', default: false },
     { id: 'breathing-sync', name: 'Breathing Sync', desc: 'Ritmo sincronizzato al respiro', default: false },
     { id: 'pc-engagement', name: 'PC Muscle Engagement', desc: 'Contrazione attiva durante uso', default: false },
-    { id: 'progressive-duration', name: 'Progressive Duration', desc: 'Aumento graduale della durata', default: false }
+    { id: 'progressive-duration', name: 'Progressive Duration', desc: 'Aumento graduale della durata', default: false },
+    { id: 'warm-up-pe', name: 'Warm Up PE', desc: 'Riscaldamento pre-esercizi (obbligatorio)', default: true },
+    { id: 'jelqing-base', name: 'Jelqing Base', desc: 'Tecnica fondamentale lunghezza e girth', default: false },
+    { id: 'jelqing-avanzato', name: 'Jelqing Avanzato', desc: 'Jelq con rotazione per circonferenza', default: false },
+    { id: 'stretch-manuale', name: 'Stretching Manuale', desc: 'Allungamento per la lunghezza', default: false },
+    { id: 'v-stretch', name: 'V-Stretch', desc: 'Stretch avanzato per la tunica', default: false },
+    { id: 'uli-squeeze', name: 'Uli Squeeze', desc: 'Tecnica per la circonferenza massima', default: false },
+    { id: 'bundled-stretch', name: 'Bundled Stretch', desc: 'Stretch torsionale per la tunica profonda', default: false },
+    { id: 'pe-schedule', name: 'PE Programma Settimanale', desc: 'Schema completo ottimale', default: false }
   ]
 };
