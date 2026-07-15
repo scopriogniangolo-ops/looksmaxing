@@ -1178,93 +1178,94 @@ const EXERCISES = {
         tips: 'La costanza batte l\'intensità. 20 minuti al giorno per 6 mesi sono più efficaci di sessioni da 2 ore fatte raramente. I risultati visibili arrivano in 3-6 mesi di pratica costante. Fotografa ogni 4 settimane per tracciare i progressi.'
       },
       {
-        id: 'sleeve-pump-hold', name: 'Pump & Hold', subtitle: 'Espansione con sleeve per lunghezza e girth',
+        id: 'sleeve-tunnel-traction', name: 'Tunnel Traction Stretch', subtitle: 'Trazione sostenuta sfruttando il canale aperto',
         icon: '🔃', difficulty: 'Principiante', difficultyLevel: 1, xp: 20,
-        target: 'Corpi cavernosi, Lunghezza, Circonferenza', duration: '15 min', sets: 5, reps: 1, holdTime: 60,
+        target: 'Legamento sospensore, Lunghezza', duration: '15 min', sets: 5, reps: 1, holdTime: 60,
         unlockLevel: 1,
-        benefits: ['Espansione dei corpi cavernosi', 'Guadagno progressivo in lunghezza', 'Desensibilizzazione controllata'],
+        benefits: ['Trazione costante come un extender', 'Sfrutta la lunghezza extra del canale', 'Allungamento progressivo del legamento'],
         steps: [
           'Warm up 5 min con panno caldo prima di qualsiasi cosa',
-          'Lubrifica abbondantemente l\'interno dello sleeve con lubrificante a base d\'acqua',
-          'Inserisciti a 60-70% di erezione — mai completamente molle né al massimo',
-          'Spingi LENTAMENTE fino al fondo dello sleeve mantenendo una pressione costante',
-          'Una volta al fondo: TIENI la posizione per 60 secondi interi senza muoverti',
-          'Senti la tensione di espansione — i tessuti vengono tenuti in posizione allungata',
-          'Estrai lentamente, massaggia 30 sec, ripeti per 5 volte',
+          'Lubrifica abbondantemente l\'interno del canale con lubrificante a base d\'acqua',
+          'Inserisciti a 50-60% di erezione — il canale è più lungo del pene, quindi resta spazio in eccesso in fondo',
+          'Afferra la scanalatura esterna nella parte finale (quella libera) con la mano e tira DELICATAMENTE verso l\'esterno, mantenendo il corpo fermo',
+          'Il canale extra funge da leva: crei trazione assiale sostenuta senza dover stringere forte',
+          'Mantieni la trazione per 60 secondi interi, respirando normalmente',
+          'Rilascia lentamente, massaggia 30 sec, ripeti per 5 volte',
           'Aumenta di 10 sec ogni settimana fino ad arrivare a 2 minuti di hold'
         ],
-        tips: 'Il Pump & Hold funziona come uno stretcher passivo: tiene i tessuti in posizione allungata il tempo necessario per stimolare la crescita. La chiave è la costanza: 5 giorni su 7 per almeno 3 mesi.'
+        tips: 'Il vantaggio di un canale più lungo del pene (15-20 cm) è che la parte finale libera diventa un punto di leva naturale per la trazione, come un mini-extender. Mai tirare con scatti: la forza deve essere costante e mai dolorosa.'
       },
       {
-        id: 'sleeve-compression-jelq', name: 'Compression Jelq con Sleeve', subtitle: 'Jelqing amplificato dallo sleeve',
+        id: 'sleeve-canal-glide-jelq', name: 'Canal Glide Jelq', subtitle: 'Jelqing guidato dalla texture interna scanalata',
         icon: '🤜', difficulty: 'Intermedio', difficultyLevel: 2, xp: 30,
         target: 'Girth, Pressione interna, Tessuti cavernosi', duration: '20 min', sets: 3, reps: 30, holdTime: 5,
         unlockLevel: 1,
-        benefits: ['Pressione interna massimizzata', 'Sviluppo della circonferenza', 'Effetto girth superiore al jelq manuale'],
+        benefits: ['La texture interna crea resistenza variabile naturale', 'Sviluppo della circonferenza', 'Effetto girth superiore al jelq a mano nuda'],
         steps: [
           'Warm up 10 min — obbligatorio per questa tecnica',
-          'Lubrifica sleeve e mani abbondantemente',
-          'Inserisciti allo sleeve a 70-80% di erezione',
-          'Con la mano libera forma il cerchio OK alla BASE, stringi moderatamente',
-          'Scorri lentamente la mano verso l\'alto MENTRE spingi lo sleeve verso il basso — le due forze si incontrano a metà',
-          'Mantieni la compressione al centro per 5 secondi',
-          'Rilascia, lascia che lo sleeve torni in posizione, ripeti 30 volte',
+          'Lubrifica generosamente il canale interno scanalato e le mani',
+          'Inserisciti a 70-80% di erezione',
+          'Con la mano libera forma il cerchio OK alla BASE, appena fuori dall\'apertura, stringi moderatamente',
+          'Fai scorrere lentamente il canale verso l\'alto in 3-4 secondi: le creste interne alternano punti di pressione mentre scorri',
+          'Quando la mano OK raggiunge la base del canale, mantieni la compressione per 5 secondi',
+          'Fai tornare il canale in posizione, ripeti 30 volte',
           '3 serie con 1 minuto di riposo tra una serie e l\'altra. Max 3 volte a settimana.'
         ],
-        tips: 'La doppia pressione (mano + sleeve) crea una forza di espansione molto superiore al jelq manuale. Senti una sensazione di pienezza intensa — è normale. Se senti pizzicore acuto o vedi ecchimosi, fermati e riposa 4 giorni.'
+        tips: 'La superficie interna non liscia (a differenza di un tubo liscio) crea una pressione che varia lungo la corsa invece che costante — molti la trovano più efficace di uno sleeve liscio. Se senti pizzicore acuto o vedi ecchimosi, fermati e riposa 4 giorni.'
       },
       {
-        id: 'sleeve-slow-stretch', name: 'Slow Stroke Stretch', subtitle: 'Allungamento lento con resistenza dello sleeve',
+        id: 'sleeve-open-end-pull', name: 'Open-End Extension Pull', subtitle: 'Allungamento a doppia apertura',
         icon: '🐢', difficulty: 'Principiante', difficultyLevel: 1, xp: 15,
         target: 'Lunghezza, Legamento sospensore, Tunica', duration: '15 min', sets: 4, reps: 20, holdTime: 10,
         unlockLevel: 1,
         benefits: ['Allungamento graduale e sicuro', 'Stimola il legamento sospensore', 'Ottimo per i principianti'],
         steps: [
-          'Warm up 5 min. Lubrifica lo sleeve.',
+          'Warm up 5 min. Lubrifica il canale, che essendo aperto da entrambi i lati permette di afferrarlo comodamente in fondo.',
           'Inserisciti a 50-60% di erezione — meno eretto rispetto ad altri esercizi',
-          'Afferra lo sleeve a metà con la mano e tira LENTAMENTE verso l\'esterno per 10 secondi',
-          'Il corpo non segue — crea una resistenza mentre lo sleeve tira — senti la tensione in trazione',
+          'Afferra l\'estremità finale aperta con la mano e tira LENTAMENTE verso l\'esterno per 10 secondi',
+          'Il corpo non segue — crea resistenza mentre il canale tira — senti la tensione in trazione',
           'Tieni la trazione massima per 10 secondi',
-          'Poi tira verso sinistra 10 sec, verso destra 10 sec, verso il basso 10 sec',
+          'Poi tira verso sinistra 10 sec, verso destra 10 sec, verso il basso 10 sec, ruotando leggermente il polso sulla scanalatura esterna per non perdere la presa',
           'Ripeti 20 volte per serie, 4 serie totali',
-          'Questo simula un penis extender ma con il comfort dello sleeve'
+          'Questo simula un penis extender ma con il comfort del canale morbido'
         ],
-        tips: 'È l\'equivalente di un extender fatto con lo sleeve. Più sicuro e comodo. Il principio è uguale: mantenere i tessuti in trazione per un tempo prolungato. Risultati in 8-12 settimane di pratica regolare.'
+        tips: 'Avere l\'apertura su entrambi i lati è ciò che rende possibile questa presa dal fondo — è l\'equivalente di un extender fatto con lo sleeve, più sicuro e comodo. Risultati in 8-12 settimane di pratica regolare.'
       },
       {
-        id: 'sleeve-ballooning', name: 'Ballooning con Sleeve', subtitle: 'Espansione massima senza orgasmo',
+        id: 'sleeve-progressive-hold', name: 'Progressive Depth Hold', subtitle: 'Allungamento a profondità massima progressiva',
         icon: '🎈', difficulty: 'Avanzato', difficultyLevel: 3, xp: 35,
-        target: 'Volume totale, Corpi cavernosi, Capacità massima', duration: '25-30 min', sets: 1, reps: 'Sessione continua',
+        target: 'Lunghezza, Corpi cavernosi, Legamento sospensore', duration: '25-30 min', sets: 5, reps: 1, holdTime: 90,
         unlockLevel: 1,
-        benefits: ['Massima espansione dei tessuti erettili', 'Allena la capacità dei corpi cavernosi', 'Guadagno in volume totale'],
+        benefits: ['Sfrutta tutta la lunghezza disponibile del canale (15-20 cm)', 'Stimolo di allungamento massimale controllato', 'Guadagno progressivo in lunghezza'],
         steps: [
           'Warm up esteso: 10 minuti panno caldo',
-          'Lubrifica abbondantemente. Inizia con ritmo lentissimo allo sleeve.',
-          'Porta l\'eccitazione gradualmente all\'80% in 5 minuti — non avere fretta',
-          'All\'80%: FERMATI completamente. Contrai il PC forte per 10 secondi. Respira 4-7-8.',
-          'Quando l\'eccitazione scende al 60%, riprendi con ritmo ANCORA PIÙ LENTO',
-          'Porta all\'85%, fermati di nuovo, PC squeeze + respirazione. Nota che ogni volta sei leggermente più espanso.',
-          'Mantieni questa zona (75-85%) per 20-25 minuti senza mai superare il punto di non ritorno',
-          'Fine sessione: termina senza orgasmo oppure vai solo se vuoi — entrambi validi'
+          'Lubrifica abbondantemente tutto il canale interno',
+          'Inserisciti a 60-70% di erezione, spingendo LENTAMENTE fino a coprire tutta la lunghezza disponibile',
+          'Poiché il canale è più lungo della lunghezza media, all\'inizio arriverai solo a metà — va bene, non forzare',
+          'Una volta a battuta comoda: TIENI la posizione per 90 secondi, respirando profondamente, senza spingere oltre il limite naturale',
+          'Estrai lentamente, massaggia 30 sec',
+          'Ripeti per 5 volte, cercando ad ogni serie di coprire qualche mm in più del canale senza mai forzare',
+          'Traccia settimanalmente quanta parte del canale riesci a coprire comodamente — è il tuo indicatore di progresso'
         ],
-        tips: 'Il ballooning sfrutta il fatto che mantenendo alta eccitazione senza orgasmo i corpi cavernosi rimangono pieni di sangue per un tempo prolungato, stimolando l\'espansione del tessuto. I praticanti avanzati riferiscono guadagni significativi in girth dopo 3-6 mesi. È la tecnica più difficile ma più efficace.'
+        tips: 'Il canale più lungo del corpo diventa un obiettivo di progressione naturale: invece di misurare in cm, misuri quanto del tunnel riesci a percorrere comodamente. Mai spingere con forza per "arrivare in fondo" — il progresso è lento e il dolore acuto è sempre un segnale di stop.'
       },
       {
-        id: 'sleeve-plateau-breaks', name: 'Plateau Breaker', subtitle: 'Superare i plateau con intensità variabile',
+        id: 'sleeve-twist-grip-stretch', name: 'Ribbed Grip Twist Stretch', subtitle: 'Stretch torsionale con presa sulle scanalature esterne',
         icon: '📊', difficulty: 'Avanzato', difficultyLevel: 3, xp: 30,
-        target: 'Adattamento tissutale, Superamento plateau', duration: '25 min', sets: 5, reps: 'Cicli', holdTime: 45,
+        target: 'Tunica albuginea, Legamento sospensore, Lunghezza', duration: '20 min', sets: 5, reps: 1, holdTime: 45,
         unlockLevel: 1,
-        benefits: ['Supera i periodi di stasi', 'Stimola nuova crescita', 'Varia lo stimolo per nuova risposta tissutale'],
+        benefits: ['Le scanalature esterne offrono una presa salda per la torsione', 'Allungamento multidirezionale', 'Complementa gli altri stretch con sleeve'],
         steps: [
-          'Warm up 10 min. Per usare questa tecnica devi già avere almeno 4 settimane di pratica.',
-          'CICLO 1 (5 min): Ritmo lento con sleeve, jelq manuale alla base ogni 30 secondi',
-          'CICLO 2 (5 min): Pump & hold — spingi al fondo e tieni 45 sec, estrai, ripeti 6 volte',
-          'CICLO 3 (5 min): Slow stretch — tira verso l\'esterno con sleeve per 30 sec, pausa, ripeti',
-          'CICLO 4 (5 min): Compression jelq con sleeve — 30 reps a ritmo moderato',
-          'CICLO 5 (5 min): Ballooning finale — porta all\'80% e mantieni senza orgasmo',
-          'Variazione settimana dopo: cambia l\'ordine dei cicli — il cambio di stimolo è fondamentale'
+          'Warm up 10 min. Serve già familiarità con gli altri esercizi con questo sleeve.',
+          'Lubrifica il canale, inseriscii a 50-60% di erezione',
+          'Afferra le scanalature esterne rigide vicino alla base con presa salda — sono pensate per non scivolare durante la torsione',
+          'Ruota (torci) delicatamente il canale di circa 90° mantenendo la presa, mentre tiri verso il basso',
+          'Mantieni torsione + trazione per 45 secondi',
+          'Torna al centro, poi ripeti la torsione nel verso opposto tirando verso l\'alto per altri 45 secondi',
+          'Massaggia 30 sec tra una serie e l\'altra, 5 serie totali (alternando i versi)',
+          'Massimo 2 volte a settimana — lascia 3 giorni di recupero tra le sessioni'
         ],
-        tips: 'I plateau arrivano quando il tessuto si è adattato allo stesso stimolo. La soluzione è cambiare variabile: angolo, intensità, durata, ordine degli esercizi. Questo protocollo combinato attacca il tessuto da più angoli e rompe la stasi. Usa solo se sei in plateau da almeno 4 settimane.'
+        tips: 'Le costolature esterne del canale servono proprio da punto di leva per la torsione senza far scivolare la mano — permettono un controllo della direzione che a mano nuda è più difficile da mantenere per 45 secondi. Fermati subito a qualunque dolore acuto.'
       }
     ]
   }
@@ -1855,10 +1856,10 @@ const ROUTINE_ALTERNATIVES = {
     { id: 'uli-squeeze', name: 'Uli Squeeze', desc: 'Tecnica per la circonferenza massima', default: false },
     { id: 'bundled-stretch', name: 'Bundled Stretch', desc: 'Stretch torsionale per la tunica profonda', default: false },
     { id: 'pe-schedule', name: 'PE Programma Settimanale', desc: 'Schema completo ottimale', default: false },
-    { id: 'sleeve-pump-hold', name: 'Pump & Hold', desc: 'Espansione con sleeve per lunghezza e girth', default: false },
-    { id: 'sleeve-compression-jelq', name: 'Compression Jelq Sleeve', desc: 'Jelqing amplificato dallo sleeve', default: false },
-    { id: 'sleeve-slow-stretch', name: 'Slow Stroke Stretch', desc: 'Allungamento lento con resistenza sleeve', default: false },
-    { id: 'sleeve-ballooning', name: 'Ballooning con Sleeve', desc: 'Espansione massima senza orgasmo', default: false },
-    { id: 'sleeve-plateau-breaks', name: 'Plateau Breaker', desc: 'Superare i plateau con intensità variabile', default: false }
+    { id: 'sleeve-tunnel-traction', name: 'Tunnel Traction Stretch', desc: 'Trazione sostenuta con canale aperto', default: false },
+    { id: 'sleeve-canal-glide-jelq', name: 'Canal Glide Jelq', desc: 'Jelqing guidato dalla texture interna', default: false },
+    { id: 'sleeve-open-end-pull', name: 'Open-End Extension Pull', desc: 'Allungamento a doppia apertura', default: false },
+    { id: 'sleeve-progressive-hold', name: 'Progressive Depth Hold', desc: 'Allungamento a profondità progressiva', default: false },
+    { id: 'sleeve-twist-grip-stretch', name: 'Ribbed Grip Twist Stretch', desc: 'Stretch torsionale con presa esterna', default: false }
   ]
 };

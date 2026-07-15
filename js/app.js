@@ -660,6 +660,7 @@ const App = {
 
   getStepIllustrations(exId) {
     const face = (extras) => `<svg viewBox="0 0 160 100" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="80" cy="45" rx="35" ry="42" stroke="#7c3aed" stroke-width="1.5" fill="rgba(124,58,237,0.05)"/><circle cx="68" cy="38" r="3" fill="#7c3aed" opacity="0.5"/><circle cx="92" cy="38" r="3" fill="#7c3aed" opacity="0.5"/><path d="M75 52 L80 58 L85 52" stroke="#7c3aed" stroke-width="1" fill="none"/><path d="M68 65 Q80 74 92 65" stroke="#7c3aed" stroke-width="1.5"/>${extras}</svg>`;
+    const sleeve = (extras) => `<svg viewBox="0 0 160 100" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="62" y="8" width="36" height="78" rx="18" stroke="#e11d48" stroke-width="2" fill="rgba(225,29,72,0.06)"/><line x1="70" y1="16" x2="70" y2="78" stroke="#e11d48" stroke-width="1" opacity="0.3"/><line x1="80" y1="12" x2="80" y2="82" stroke="#e11d48" stroke-width="1" opacity="0.3"/><line x1="90" y1="16" x2="90" y2="78" stroke="#e11d48" stroke-width="1" opacity="0.3"/>${extras}</svg>`;
     const db = {
       'gua-sha': [
         face('<rect x="60" y="62" width="40" height="6" rx="3" fill="#22d3ee" opacity="0.4"/><path d="M80 68 L100 62" stroke="#22d3ee" stroke-width="2" marker-end="url(#a1)"/><text x="80" y="95" text-anchor="middle" fill="#22d3ee" font-size="8">Applica olio/siero</text><defs><marker id="a1" viewBox="0 0 6 6" refX="6" refY="3" markerWidth="5" markerHeight="5"><path d="M0 0L6 3L0 6" fill="#22d3ee"/></marker></defs>'),
@@ -706,6 +707,34 @@ const App = {
         face('<path d="M65 60 Q80 50 95 60" stroke="#f97316" stroke-width="2"/><path d="M72 58 L72 52" stroke="#f97316" stroke-width="1.5"/><path d="M88 58 L88 52" stroke="#f97316" stroke-width="1.5"/><text x="80" y="95" text-anchor="middle" fill="#f97316" font-size="8">FISH FACE: aspira guance</text>'),
         face('<path d="M62 72 Q80 88 98 72" stroke="#ef4444" stroke-width="2.5"/><circle cx="68" cy="35" r="5" fill="none" stroke="#ef4444" stroke-width="1.5"/><circle cx="92" cy="35" r="5" fill="none" stroke="#ef4444" stroke-width="1.5"/><text x="80" y="95" text-anchor="middle" fill="#ef4444" font-size="8">LION FACE: bocca + occhi aperti</text>'),
         face('<ellipse cx="68" cy="55" rx="8" ry="6" fill="#22d3ee" opacity="0.3"/><path d="M68 55 L92 55" stroke="#22d3ee" stroke-width="2" marker-end="url(#fy3)"/><text x="80" y="95" text-anchor="middle" fill="#22d3ee" font-size="8">CHEEK PUFFS: aria dx ↔ sx</text><defs><marker id="fy3" viewBox="0 0 6 6" refX="6" refY="3" markerWidth="5" markerHeight="5"><path d="M0 0L6 3L0 6" fill="#22d3ee"/></marker></defs>')
+      ],
+      'sleeve-tunnel-traction': [
+        null, null, null,
+        sleeve('<ellipse cx="80" cy="78" rx="22" ry="8" fill="none" stroke="#22d3ee" stroke-width="2" stroke-dasharray="4,2"/><path d="M80 86 L80 95" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#tt3)"/><text x="80" y="98" text-anchor="middle" fill="#22d3ee" font-size="7">Afferra il fondo, tira piano</text><defs><marker id="tt3" viewBox="0 0 6 6" refX="3" refY="6" markerWidth="5" markerHeight="5"><path d="M0 0L3 6L6 0" fill="#22d3ee"/></marker></defs>'),
+        null,
+        sleeve('<circle cx="80" cy="78" r="10" fill="none" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2,2"><animate attributeName="r" values="8;13;8" dur="1.5s" repeatCount="indefinite"/></circle><text x="80" y="45" text-anchor="middle" fill="#10b981" font-size="12" font-weight="bold">60s</text><text x="80" y="98" text-anchor="middle" fill="#10b981" font-size="7">Mantieni la trazione</text>')
+      ],
+      'sleeve-canal-glide-jelq': [
+        null, null, null, null,
+        sleeve('<path d="M80 78 L80 20" stroke="#f59e0b" stroke-width="2.5" marker-end="url(#cg4)"/><path d="M70 66 L90 66" stroke="#f59e0b" stroke-width="1.5" opacity="0.5"/><path d="M70 46 L90 46" stroke="#f59e0b" stroke-width="1.5" opacity="0.5"/><text x="80" y="98" text-anchor="middle" fill="#f59e0b" font-size="7">Scorri lento verso l\'alto</text><defs><marker id="cg4" viewBox="0 0 6 6" refX="3" refY="0" markerWidth="5" markerHeight="5"><path d="M0 6L3 0L6 6" fill="#f59e0b"/></marker></defs>'),
+        sleeve('<ellipse cx="80" cy="74" rx="14" ry="7" fill="#ef4444" opacity="0.15" stroke="#ef4444" stroke-width="1.5"/><text x="80" y="50" text-anchor="middle" fill="#ef4444" font-size="12" font-weight="bold">5s</text><text x="80" y="98" text-anchor="middle" fill="#ef4444" font-size="7">Compressione al centro</text>')
+      ],
+      'sleeve-open-end-pull': [
+        null, null,
+        sleeve('<ellipse cx="80" cy="80" rx="20" ry="7" fill="none" stroke="#22d3ee" stroke-width="2"/><path d="M80 87 L80 95" stroke="#22d3ee" stroke-width="2.5" marker-end="url(#oe2)"/><text x="80" y="50" text-anchor="middle" fill="#22d3ee" font-size="11" font-weight="bold">10s</text><text x="80" y="98" text-anchor="middle" fill="#22d3ee" font-size="7">Tira dall\'estremità aperta</text><defs><marker id="oe2" viewBox="0 0 6 6" refX="3" refY="6" markerWidth="5" markerHeight="5"><path d="M0 0L3 6L6 0" fill="#22d3ee"/></marker></defs>'),
+        null, null,
+        sleeve('<path d="M62 76 L48 82" stroke="#7c3aed" stroke-width="2" marker-end="url(#oe5a)"/><path d="M98 76 L112 82" stroke="#7c3aed" stroke-width="2" marker-end="url(#oe5b)"/><path d="M80 86 L80 96" stroke="#7c3aed" stroke-width="2" marker-end="url(#oe5c)"/><text x="80" y="18" text-anchor="middle" fill="#7c3aed" font-size="7">Sx · Dx · Giù, 10s ciascuno</text><defs><marker id="oe5a" viewBox="0 0 6 6" refX="6" refY="3" markerWidth="5" markerHeight="5"><path d="M0 0L6 3L0 6" fill="#7c3aed"/></marker><marker id="oe5b" viewBox="0 0 6 6" refX="0" refY="3" markerWidth="5" markerHeight="5"><path d="M6 0L0 3L6 6" fill="#7c3aed"/></marker><marker id="oe5c" viewBox="0 0 6 6" refX="3" refY="6" markerWidth="5" markerHeight="5"><path d="M0 0L3 6L6 0" fill="#7c3aed"/></marker></defs>')
+      ],
+      'sleeve-progressive-hold': [
+        null, null, null,
+        sleeve('<line x1="64" y1="48" x2="96" y2="48" stroke="#f59e0b" stroke-width="2" stroke-dasharray="3,2"/><text x="80" y="42" text-anchor="middle" fill="#f59e0b" font-size="7">Metà canale ok, non forzare</text>'),
+        sleeve('<circle cx="80" cy="70" r="12" fill="none" stroke="#10b981" stroke-width="1.5" stroke-dasharray="2,2"><animate attributeName="r" values="10;15;10" dur="1.8s" repeatCount="indefinite"/></circle><text x="80" y="45" text-anchor="middle" fill="#10b981" font-size="12" font-weight="bold">90s</text><text x="80" y="98" text-anchor="middle" fill="#10b981" font-size="7">Tieni fermo, respira</text>')
+      ],
+      'sleeve-twist-grip-stretch': [
+        null, null, null,
+        sleeve('<path d="M62 30 A20 12 0 1 1 62 40" stroke="#ec4899" stroke-width="2" fill="none" marker-end="url(#tw3)"/><path d="M80 60 L80 84" stroke="#ec4899" stroke-width="2" marker-end="url(#tw3b)"/><text x="80" y="98" text-anchor="middle" fill="#ec4899" font-size="7">Torci 90° e tira giù</text><defs><marker id="tw3" viewBox="0 0 6 6" refX="3" refY="6" markerWidth="5" markerHeight="5"><path d="M0 0L3 6L6 0" fill="#ec4899"/></marker><marker id="tw3b" viewBox="0 0 6 6" refX="3" refY="6" markerWidth="5" markerHeight="5"><path d="M0 0L3 6L6 0" fill="#ec4899"/></marker></defs>'),
+        null,
+        sleeve('<path d="M98 60 A20 12 0 1 0 98 70" stroke="#06b6d4" stroke-width="2" fill="none" marker-end="url(#tw5)"/><path d="M80 40 L80 14" stroke="#06b6d4" stroke-width="2" marker-end="url(#tw5b)"/><text x="80" y="98" text-anchor="middle" fill="#06b6d4" font-size="7">Verso opposto, tira su</text><defs><marker id="tw5" viewBox="0 0 6 6" refX="3" refY="6" markerWidth="5" markerHeight="5"><path d="M0 0L3 6L6 0" fill="#06b6d4"/></marker><marker id="tw5b" viewBox="0 0 6 6" refX="3" refY="0" markerWidth="5" markerHeight="5"><path d="M0 6L3 0L6 6" fill="#06b6d4"/></marker></defs>')
       ]
     };
     return db[exId] || [];
