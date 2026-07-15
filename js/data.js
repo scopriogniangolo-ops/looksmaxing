@@ -1178,94 +1178,94 @@ const EXERCISES = {
         tips: 'La costanza batte l\'intensità. 20 minuti al giorno per 6 mesi sono più efficaci di sessioni da 2 ore fatte raramente. I risultati visibili arrivano in 3-6 mesi di pratica costante. Fotografa ogni 4 settimane per tracciare i progressi.'
       },
       {
-        id: 'sleeve-tunnel-traction', name: 'Tunnel Traction Stretch', subtitle: 'Trazione sostenuta sfruttando il canale aperto',
+        id: 'sleeve-tunnel-traction', name: 'Tip Traction Stretch', subtitle: 'Trazione afferrando la punta chiusa della sleeve',
         icon: '🔃', difficulty: 'Principiante', difficultyLevel: 1, xp: 20,
         target: 'Legamento sospensore, Lunghezza', duration: '15 min', sets: 5, reps: 1, holdTime: 60,
         unlockLevel: 1,
-        benefits: ['Trazione costante come un extender', 'Sfrutta la lunghezza extra del canale', 'Allungamento progressivo del legamento'],
+        benefits: ['Presa salda per tirare senza stringere la pelle', 'Trazione costante come un mini-extender', 'Allungamento progressivo del legamento'],
         steps: [
-          'Warm up 5 min con panno caldo prima di qualsiasi cosa',
-          'Lubrifica abbondantemente l\'interno del canale con lubrificante a base d\'acqua',
-          'Inserisciti a 50-60% di erezione — il canale è più lungo del pene, quindi resta spazio in eccesso in fondo',
-          'Afferra la scanalatura esterna nella parte finale (quella libera) con la mano e tira DELICATAMENTE verso l\'esterno, mantenendo il corpo fermo',
-          'Il canale extra funge da leva: crei trazione assiale sostenuta senza dover stringere forte',
-          'Mantieni la trazione per 60 secondi interi, respirando normalmente',
-          'Rilascia lentamente, massaggia 30 sec, ripeti per 5 volte',
-          'Aumenta di 10 sec ogni settimana fino ad arrivare a 2 minuti di hold'
+          'Scalda 5 minuti con un panno caldo',
+          'Metti lubrificante DENTRO la sleeve, nell\'apertura',
+          'Inseriscilo nella sleeve dall\'apertura, a erezione media (circa 60%)',
+          'Afferra con una mano la PUNTA CHIUSA della sleeve (l\'estremità arrotondata in fondo, non l\'apertura) — è il punto più saldo per tirare',
+          'Tira la sleeve dritto verso l\'esterno, lentamente, senza strappare',
+          'Mantieni la tensione per 60 secondi, respirando con calma',
+          'Rilascia piano, massaggia 30 secondi, ripeti 5 volte',
+          'Aumenta di 10 secondi ogni settimana, fino ad arrivare a 2 minuti di tenuta'
         ],
-        tips: 'Il vantaggio di un canale più lungo del pene (15-20 cm) è che la parte finale libera diventa un punto di leva naturale per la trazione, come un mini-extender. Mai tirare con scatti: la forza deve essere costante e mai dolorosa.'
+        tips: 'La punta chiusa della sleeve è comoda perché ti dà una presa salda su cui tirare, invece di dover stringere la pelle direttamente. Tira sempre con forza costante, mai a scatti: se senti dolore, fermati subito.'
       },
       {
-        id: 'sleeve-canal-glide-jelq', name: 'Canal Glide Jelq', subtitle: 'Jelqing guidato dalla texture interna scanalata',
+        id: 'sleeve-canal-glide-jelq', name: 'Canal Glide Jelq', subtitle: 'Jelqing guidato dalla texture interna della sleeve',
         icon: '🤜', difficulty: 'Intermedio', difficultyLevel: 2, xp: 30,
-        target: 'Girth, Pressione interna, Tessuti cavernosi', duration: '20 min', sets: 3, reps: 30, holdTime: 5,
+        target: 'Girth, Pressione interna', duration: '20 min', sets: 3, reps: 30, holdTime: 5,
         unlockLevel: 1,
-        benefits: ['La texture interna crea resistenza variabile naturale', 'Sviluppo della circonferenza', 'Effetto girth superiore al jelq a mano nuda'],
+        benefits: ['La trama interna crea pressione naturale mentre scorri', 'Sviluppo della circonferenza', 'Effetto girth superiore al jelq a mano nuda'],
         steps: [
-          'Warm up 10 min — obbligatorio per questa tecnica',
-          'Lubrifica generosamente il canale interno scanalato e le mani',
-          'Inserisciti a 70-80% di erezione',
-          'Con la mano libera forma il cerchio OK alla BASE, appena fuori dall\'apertura, stringi moderatamente',
-          'Fai scorrere lentamente il canale verso l\'alto in 3-4 secondi: le creste interne alternano punti di pressione mentre scorri',
-          'Quando la mano OK raggiunge la base del canale, mantieni la compressione per 5 secondi',
-          'Fai tornare il canale in posizione, ripeti 30 volte',
-          '3 serie con 1 minuto di riposo tra una serie e l\'altra. Max 3 volte a settimana.'
+          'Scalda 10 minuti — obbligatorio per questa tecnica',
+          'Metti lubrificante dentro la sleeve e sulle mani',
+          'Inseriscilo nella sleeve a erezione 70-80%',
+          'Con la mano libera forma un anello con pollice e indice ALLA BASE, appena fuori dall\'apertura',
+          'Con l\'altra mano tieni la sleeve e falla scorrere lentamente verso la punta in 3-4 secondi — la trama interna crea pressione mentre scorri',
+          'Quando l\'anello di mano arriva alla base, mantieni la pressione 5 secondi',
+          'Fai tornare la sleeve in posizione, ripeti 30 volte',
+          '3 serie con 1 minuto di pausa tra una e l\'altra. Massimo 3 volte a settimana.'
         ],
-        tips: 'La superficie interna non liscia (a differenza di un tubo liscio) crea una pressione che varia lungo la corsa invece che costante — molti la trovano più efficace di uno sleeve liscio. Se senti pizzicore acuto o vedi ecchimosi, fermati e riposa 4 giorni.'
+        tips: 'La superficie interna non liscia (a differenza di un tubo liscio) crea pressione che varia lungo la corsa invece che restare costante — molti la trovano più efficace del jelq a mano nuda. Se senti pizzicore acuto o vedi lividi, fermati e riposa 4 giorni.'
       },
       {
-        id: 'sleeve-open-end-pull', name: 'Open-End Extension Pull', subtitle: 'Allungamento a doppia apertura',
+        id: 'sleeve-two-point-stretch', name: 'Two-Point Stretch', subtitle: 'Trazione incrociata: una mano alla base, una sulla punta',
         icon: '🐢', difficulty: 'Principiante', difficultyLevel: 1, xp: 15,
-        target: 'Lunghezza, Legamento sospensore, Tunica', duration: '15 min', sets: 4, reps: 20, holdTime: 10,
+        target: 'Lunghezza, Legamento sospensore', duration: '15 min', sets: 4, reps: 1, holdTime: 10,
         unlockLevel: 1,
         benefits: ['Allungamento graduale e sicuro', 'Stimola il legamento sospensore', 'Ottimo per i principianti'],
         steps: [
-          'Warm up 5 min. Lubrifica il canale, che essendo aperto da entrambi i lati permette di afferrarlo comodamente in fondo.',
-          'Inserisciti a 50-60% di erezione — meno eretto rispetto ad altri esercizi',
-          'Afferra l\'estremità finale aperta con la mano e tira LENTAMENTE verso l\'esterno per 10 secondi',
-          'Il corpo non segue — crea resistenza mentre il canale tira — senti la tensione in trazione',
-          'Tieni la trazione massima per 10 secondi',
-          'Poi tira verso sinistra 10 sec, verso destra 10 sec, verso il basso 10 sec, ruotando leggermente il polso sulla scanalatura esterna per non perdere la presa',
-          'Ripeti 20 volte per serie, 4 serie totali',
-          'Questo simula un penis extender ma con il comfort del canale morbido'
+          'Scalda 5 minuti, poi metti lubrificante dentro la sleeve',
+          'Inseriscilo nella sleeve a erezione 50-60%',
+          'Con UNA mano afferra la sleeve VICINO ALLA BASE (vicino al corpo) e tienila ferma, come un\'ancora',
+          'Con l\'ALTRA mano afferra la PUNTA CHIUSA in fondo e tira lentamente in direzione opposta alla prima mano',
+          'Mantieni la trazione per 10 secondi',
+          'Poi, sempre tenendo ferma la base, sposta la mano sulla punta: tira verso sinistra 10 sec, verso destra 10 sec, verso il basso 10 sec',
+          'Ripeti il ciclo completo 4 volte',
+          'Questo funziona come un extender fatto in casa, ma con il comfort della sleeve morbida'
         ],
-        tips: 'Avere l\'apertura su entrambi i lati è ciò che rende possibile questa presa dal fondo — è l\'equivalente di un extender fatto con lo sleeve, più sicuro e comodo. Risultati in 8-12 settimane di pratica regolare.'
+        tips: 'La mano sulla base fa da punto fermo, quella sulla punta fa la trazione — le due mani lavorano in direzioni opposte. Non serve tirare forte: la tensione deve essere ferma ma mai dolorosa.'
       },
       {
-        id: 'sleeve-progressive-hold', name: 'Progressive Depth Hold', subtitle: 'Allungamento a profondità massima progressiva',
+        id: 'sleeve-progressive-hold', name: 'Progressive Depth Hold', subtitle: 'Allungamento a profondità progressiva',
         icon: '🎈', difficulty: 'Avanzato', difficultyLevel: 3, xp: 35,
-        target: 'Lunghezza, Corpi cavernosi, Legamento sospensore', duration: '25-30 min', sets: 5, reps: 1, holdTime: 90,
+        target: 'Lunghezza, Legamento sospensore', duration: '25-30 min', sets: 5, reps: 1, holdTime: 90,
         unlockLevel: 1,
-        benefits: ['Sfrutta tutta la lunghezza disponibile del canale (15-20 cm)', 'Stimolo di allungamento massimale controllato', 'Guadagno progressivo in lunghezza'],
+        benefits: ['Sfrutta tutta la lunghezza della sleeve (15-20 cm)', 'Allungamento controllato e progressivo', 'Obiettivo misurabile settimana dopo settimana'],
         steps: [
-          'Warm up esteso: 10 minuti panno caldo',
-          'Lubrifica abbondantemente tutto il canale interno',
-          'Inserisciti a 60-70% di erezione, spingendo LENTAMENTE fino a coprire tutta la lunghezza disponibile',
-          'Poiché il canale è più lungo della lunghezza media, all\'inizio arriverai solo a metà — va bene, non forzare',
-          'Una volta a battuta comoda: TIENI la posizione per 90 secondi, respirando profondamente, senza spingere oltre il limite naturale',
-          'Estrai lentamente, massaggia 30 sec',
-          'Ripeti per 5 volte, cercando ad ogni serie di coprire qualche mm in più del canale senza mai forzare',
-          'Traccia settimanalmente quanta parte del canale riesci a coprire comodamente — è il tuo indicatore di progresso'
+          'Scalda 10 minuti con un panno caldo',
+          'Metti lubrificante abbondante dentro tutta la sleeve',
+          'Inseriscilo lentamente, andando più a fondo possibile SENZA FORZARE',
+          'La sleeve è più lunga del necessario: all\'inizio non arriverai fino alla punta chiusa, ed è del tutto normale',
+          'Quando senti una resistenza naturale, fermati lì e mantieni la posizione per 90 secondi, respirando con calma',
+          'Sfilalo lentamente, massaggia 30 secondi',
+          'Ripeti 5 volte, cercando ogni volta di arrivare qualche millimetro più vicino alla punta chiusa, senza mai forzare',
+          'Segna ogni settimana quanto ti manca per arrivare alla punta — è il tuo indicatore di progresso'
         ],
-        tips: 'Il canale più lungo del corpo diventa un obiettivo di progressione naturale: invece di misurare in cm, misuri quanto del tunnel riesci a percorrere comodamente. Mai spingere con forza per "arrivare in fondo" — il progresso è lento e il dolore acuto è sempre un segnale di stop.'
+        tips: 'Invece di misurare in centimetri, misuri quanta strada dentro la sleeve riesci a fare comodamente: è un obiettivo chiaro da tracciare nel tempo. Mai spingere con forza per "arrivare in fondo" — il dolore acuto è sempre un segnale di stop.'
       },
       {
-        id: 'sleeve-twist-grip-stretch', name: 'Ribbed Grip Twist Stretch', subtitle: 'Stretch torsionale con presa sulle scanalature esterne',
+        id: 'sleeve-twist-grip-stretch', name: 'Ribbed Grip Twist Stretch', subtitle: 'Stretch torsionale con doppia presa sulle scanalature',
         icon: '📊', difficulty: 'Avanzato', difficultyLevel: 3, xp: 30,
-        target: 'Tunica albuginea, Legamento sospensore, Lunghezza', duration: '20 min', sets: 5, reps: 1, holdTime: 45,
+        target: 'Legamento sospensore, Lunghezza', duration: '20 min', sets: 5, reps: 1, holdTime: 45,
         unlockLevel: 1,
-        benefits: ['Le scanalature esterne offrono una presa salda per la torsione', 'Allungamento multidirezionale', 'Complementa gli altri stretch con sleeve'],
+        benefits: ['Le scanalature esterne danno una presa salda per torcere', 'Allungamento multidirezionale', 'Completa gli altri esercizi con la sleeve'],
         steps: [
-          'Warm up 10 min. Serve già familiarità con gli altri esercizi con questo sleeve.',
-          'Lubrifica il canale, inseriscii a 50-60% di erezione',
-          'Afferra le scanalature esterne rigide vicino alla base con presa salda — sono pensate per non scivolare durante la torsione',
-          'Ruota (torci) delicatamente il canale di circa 90° mantenendo la presa, mentre tiri verso il basso',
+          'Scalda 10 minuti. Fai questo esercizio solo dopo aver già provato gli altri con questa sleeve.',
+          'Metti lubrificante, inseriscilo a erezione 50-60%',
+          'Afferra la sleeve con UNA mano vicino alla base e con l\'ALTRA mano vicino alla punta chiusa, usando le scanalature esterne come presa',
+          'Torci le due mani in direzioni opposte, come se strizzassi un asciugamano, di circa un quarto di giro, mentre la mano sulla punta tira leggermente verso il basso',
           'Mantieni torsione + trazione per 45 secondi',
-          'Torna al centro, poi ripeti la torsione nel verso opposto tirando verso l\'alto per altri 45 secondi',
-          'Massaggia 30 sec tra una serie e l\'altra, 5 serie totali (alternando i versi)',
+          'Torna dritto, poi ripeti torcendo nel verso opposto, tirando stavolta verso l\'alto, per altri 45 secondi',
+          'Massaggia 30 secondi tra una serie e l\'altra, 5 serie totali alternando il verso',
           'Massimo 2 volte a settimana — lascia 3 giorni di recupero tra le sessioni'
         ],
-        tips: 'Le costolature esterne del canale servono proprio da punto di leva per la torsione senza far scivolare la mano — permettono un controllo della direzione che a mano nuda è più difficile da mantenere per 45 secondi. Fermati subito a qualunque dolore acuto.'
+        tips: 'Le scanalature esterne servono proprio da punto di presa per torcere senza far scivolare le mani — è più facile mantenere il controllo della direzione rispetto a farlo a mano nuda per 45 secondi. Fermati subito a qualunque dolore acuto.'
       }
     ]
   }
@@ -1858,7 +1858,7 @@ const ROUTINE_ALTERNATIVES = {
     { id: 'pe-schedule', name: 'PE Programma Settimanale', desc: 'Schema completo ottimale', default: false },
     { id: 'sleeve-tunnel-traction', name: 'Tunnel Traction Stretch', desc: 'Trazione sostenuta con canale aperto', default: false },
     { id: 'sleeve-canal-glide-jelq', name: 'Canal Glide Jelq', desc: 'Jelqing guidato dalla texture interna', default: false },
-    { id: 'sleeve-open-end-pull', name: 'Open-End Extension Pull', desc: 'Allungamento a doppia apertura', default: false },
+    { id: 'sleeve-two-point-stretch', name: 'Two-Point Stretch', desc: 'Trazione incrociata base + punta', default: false },
     { id: 'sleeve-progressive-hold', name: 'Progressive Depth Hold', desc: 'Allungamento a profondità progressiva', default: false },
     { id: 'sleeve-twist-grip-stretch', name: 'Ribbed Grip Twist Stretch', desc: 'Stretch torsionale con presa esterna', default: false }
   ]
